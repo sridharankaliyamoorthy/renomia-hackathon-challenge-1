@@ -1,0 +1,50 @@
+{
+  "segment": "odpovědnost",
+  "offers": [
+    {
+      "id": "allianz_1",
+      "insurer": "Allianz pojišťovna",
+      "label": "Nabídka Allianz",
+      "documents": [
+        {
+          "filename": "nabidka_allianz_2024.pdf",
+          "ocr_text": "NABÍDKA POJIŠTĚNÍ ODPOVĚDNOSTI ZA ŠKODU\nAllianz pojišťovna, a.s.\n\nPojistník: ABC Stavební s.r.o., IČ: 12345678\nSídlo: Brno, Veveří 102\n\nPojistné činnosti: provádění stavebních a montážních prací, výstavba bytových a nebytových objektů\n\nÚzemní rozsah pojištění: Česká republika\n\nLimit pojistného plnění (základní): 30 000 000 Kč\nZ toho sublimit — škody na věci: 10 000 000 Kč\nZ toho sublimit — škody na zdraví: 30 000 000 Kč\n\nZákladní spoluúčast: 15 000 Kč\n\nRoční pojistné celkem: 72 000 Kč\n\nPlatnost nabídky: 30 dní od data vystavení\nDatum: 15.03.2024\n\nTato nabídka byla zpracována na základě poptávky zaslané pojistníkem dne 10.03.2024.\n"
+        },
+        {
+          "filename": "vpp_allianz_odpov_2022.pdf",
+          "ocr_text": "VŠEOBECNÉ POJISTNÉ PODMÍNKY\nALZ-VPP-ODP-2022\n\nAllianz pojišťovna, a.s.\n\nČlánek 1 — Předmět pojištění\nPojištění odpovědnosti za škodu se vztahuje na právní povinnost pojištěného nahradit škodu, kterou způsobil jinému v důsledku provozní činnosti.\n\nČlánek 2 — Územní platnost\nPojištění se vztahuje na škodné události, které nastaly na území České republiky, pokud není v pojistné smlouvě sjednáno jinak.\n\nČlánek 3 — Výluky z pojištění\n3.1 Z pojištění jsou vyloučeny škody způsobené úmyslně.\n3.2 Z pojištění jsou vyloučeny pokuty a penále.\n3.3 Pojistitel neplní za škody vzniklé v důsledku války nebo teroristických útoků.\n\nČlánek 4 — Spoluúčast\nPojistník se podílí na každé pojistné události spoluúčastí ve výši sjednané v pojistné smlouvě.\n\nČlánek 5 — Pojistné plnění\nHorní hranice pojistného plnění je omezena limitem sjednaným v pojistné smlouvě.\n"
+        }
+      ]
+    },
+    {
+      "id": "kooperativa_1",
+      "insurer": "Kooperativa pojišťovna",
+      "label": "Nabídka Kooperativa",
+      "documents": [
+        {
+          "filename": "nabidka_kooperativa_odp.pdf",
+          "ocr_text": "NABÍDKA — Pojištění odpovědnosti podnikatele\nKooperativa pojišťovna, a.s., Vienna Insurance Group\n\nPojistník: ABC Stavební s.r.o.\n\nPředmět pojištění: provádění stavebních a montážních prací\n\nLimit plnění: 50 000 000 Kč\nSpoluúčast: 10 000 Kč\nPojistné: 89 000 Kč / rok\n\nNabídka č. KO-2024-1122\n"
+        },
+        {
+          "filename": "ujednani_kooperativa_abc.pdf",
+          "ocr_text": "ZVLÁŠTNÍ UJEDNÁNÍ K POJISTNÉ SMLOUVĚ\nKooperativa pojišťovna, a.s.\n\nPojistná smlouva č. 7890001234\nPojistník: ABC Stavební s.r.o.\n\nÚzemní rozsah: Evropa (státy EU + Norsko, Island, Lichtenštejnsko, Švýcarsko)\n\nRozsah pojištěné činnosti: stavební a montážní práce na pozemních stavbách, rekonstrukce a modernizace stávajících objektů\n\nSublimity:\n— škody na zdraví: 50 000 000 Kč\n— škody na věci: 20 000 000 Kč\n— čistá finanční škoda: 5 000 000 Kč\n\nToto ujednání tvoří nedílnou součást pojistné smlouvy.\nDatum: 18.03.2024\n"
+        }
+      ]
+    },
+    {
+      "id": "cpp_1",
+      "insurer": "Česká podnikatelská pojišťovna",
+      "label": "Nabídka ČPP",
+      "documents": [
+        {
+          "filename": "smlouva_ps_cpp_2024.pdf",
+          "ocr_text": "POJISTNÁ SMLOUVA č. CPP-2024-88771\nČeská podnikatelská pojišťovna, a.s., Vienna Insurance Group\n\nSmluvní strany:\nPojistitel: Česká podnikatelská pojišťovna, a.s.\nPojistník / Pojištěný: ABC Stavební s.r.o., IČ: 12345678\n\nPojištěná činnost: provádění stavebních prací, montáž technologických zařízení\n\nLimit pojistného plnění: 25 000 000 Kč\nZákladní spoluúčast pojistníka: 20 000 Kč\n\nPojistné za první pojistné období: 65 000 Kč\nSplatnost pojistného: ročně\n\nPočátek pojištění: 01.04.2024\nKonec pojistné doby: 31.03.2025\n\nPojistné podmínky: VPP CPP ODP 1/2019, PP CPP ODP D 1/2019\n"
+        },
+        {
+          "filename": "vpp_cpp_odp_2019.pdf",
+          "ocr_text": "VŠEOBECNÉ POJISTNÉ PODMÍNKY\nVPP CPP ODP 1/2019\n\nČeská podnikatelská pojišťovna, a.s.\n\nČl. 1 Úvodní ustanovení\nTyto všeobecné pojistné podmínky upravují pojištění odpovědnosti za újmu.\n\nČl. 2 Územní platnost\nNestanoví-li pojistná smlouva jinak, pojištění se vztahuje na újmy způsobené na území celého světa (worldwide), s výjimkou USA a Kanady.\n\nČl. 3 Předmět pojištění\nPředmětem pojištění je zákonná povinnost pojištěného nahradit újmu způsobenou třetí osobě.\n\nČl. 4 Výluky\n4.1 Pojistitel neposkytuje pojistné plnění za újmy způsobené úmyslným jednáním.\n4.2 Pojistitel neposkytuje plnění za smluvní pokuty.\n\nČl. 5 Spoluúčast\nPojistník nese spoluúčast ve výši sjednané v pojistné smlouvě.\n"
+        }
+      ]
+    }
+  ]
+}

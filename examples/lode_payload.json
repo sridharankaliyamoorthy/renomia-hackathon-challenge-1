@@ -1,0 +1,35 @@
+{
+  "segment": "lode",
+  "offers": [
+    {
+      "id": "yacht_pool_a",
+      "insurer": "YACHT POOL International",
+      "label": "Yacht Pool – Offer A",
+      "documents": [
+        {
+          "filename": "YACHT POOL.pdf",
+          "ocr_text": "YACHT POOL INTERNATIONAL\nInsurance Quotation\n\nInsured: Jan Novák\nVessel: Bavaria 40 Cruiser\n\nBoat value: 2 500 000 Kč\nBoat Inventory value: 180 000 Kč\nTrailer value: 95 000 Kč\n\nHull insurance premium: 1 800 EUR\nTPL premium: 350 EUR\nPassenger accident insurance premium: 120 EUR\nTotal insurance cost: 2 270 EUR\n\nHull insurance deductible: 1 500 EUR\nTPL limit: Up to 7,5mil €\n\nCruising area: Mediterranean including Black Sea\n"
+        },
+        {
+          "filename": "Conditions.pdf",
+          "ocr_text": "GENERAL CONDITIONS FOR YACHT INSURANCE\n\nSection 1 – Hull\nThe hull deductible applies per incident.\n\nSection 2 – Third Party Liability\nThe standard TPL limit is up to 7,5mil €.\nExtensions available on request.\n\nSection 3 – Crew and Passengers\nPersonal accident cover for up to 8 persons.\n"
+        }
+      ]
+    },
+    {
+      "id": "yacht_pool_b",
+      "insurer": "YACHT POOL International",
+      "label": "Yacht Pool – Offer B (wider cover)",
+      "documents": [
+        {
+          "filename": "YACHT POOL.pdf",
+          "ocr_text": "YACHT POOL INTERNATIONAL\nInsurance Quotation – Extended Cover\n\nInsured: Jan Novák\nVessel: Bavaria 40 Cruiser\n\nBoat value: 2 500 000 Kč\nBoat Inventory value: 180 000 Kč\nTrailer value: 95 000 Kč\n\nHull insurance premium: 2 100 EUR\nTPL premium: 420 EUR\nPassenger accident insurance premium: 180 EUR\nTotal insurance cost: 2 700 EUR\n\nHull insurance deductible: 800 EUR\nTPL limit: Up to 7,5mil €\n\nCruising area: Europe including Atlantic coast and Baltic Sea\n"
+        },
+        {
+          "filename": "Mandatory Information.pdf",
+          "ocr_text": "MANDATORY PRE-CONTRACTUAL INFORMATION\n\nThis document is a summary for information purposes only.\nPlease refer to the policy wording for full terms.\n\nInsurer: YACHT POOL International Insurance Brokers GmbH\nRegulated by: FMA Austria\n"
+        }
+      ]
+    }
+  ]
+}

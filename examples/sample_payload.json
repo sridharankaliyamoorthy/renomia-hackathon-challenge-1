@@ -1,0 +1,27 @@
+{
+  "segment": "odpovědnost",
+  "offers": [
+    {
+      "id": "generali_1",
+      "insurer": "Generali ČP",
+      "label": "Nabídka Generali",
+      "documents": [
+        {
+          "filename": "nabidka_generali.pdf",
+          "ocr_text": "NABÍDKA POJIŠTĚNÍ ODPOVĚDNOSTI\n\nPojistník: XYZ s.r.o.\n\nPojistné činnosti: výroba a prodej průmyslových komponentů\n\nÚzemní rozsah: Česká republika\n\nLimit pojistného plnění: 50 000 000 Kč\n\nZákladní spoluúčast: 10 000 Kč\n\nRoční pojistné celkem: 85 000 Kč\n"
+        }
+      ]
+    },
+    {
+      "id": "csob_1",
+      "insurer": "ČSOB Pojišťovna",
+      "label": "Nabídka ČSOB",
+      "documents": [
+        {
+          "filename": "nabidka_csob.pdf",
+          "ocr_text": "NABÍDKA POJIŠTĚNÍ ODPOVĚDNOSTI ZA ŠKODU\n\nPojistník: XYZ s.r.o.\n\nPojistné činnosti: výroba a prodej průmyslových komponentů\n\nÚzemní rozsah: Evropa\n\nLimit pojistného plnění: 75 000 000 Kč\n\nZákladní spoluúčast: 5 000 Kč\n\nRoční pojistné celkem: 95 000 Kč\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "segment": "auta",
+  "offers": [
+    {
+      "id": "generali_komfort",
+      "insurer": "Generali ČP",
+      "label": "Komfort",
+      "documents": [
+        {
+          "filename": "nabidka_generali_auto.pdf",
+          "ocr_text": "Nabídka pojištění vozidla\n\nVozidlo: Škoda Octavia 2.0 TDI\nRoční nájezd: 15 000 km\n\nPovinné ručení\nLimit povinného ručení: 200 / 200 mil. Kč\nRoční pojistné: 4 200 Kč\n\nHavarijní pojištění\nPojistná částka: 450 000 Kč\nSpoluúčast: 5 % / 5 000 Kč\nRoční pojistné: 8 500 Kč\n\nAsistenční služba\nÚrazové pojištění řidiče\nŽivel\nOdcizení\nSklo\n\nCena celkem: 12 700 Kč\n"
+        }
+      ]
+    },
+    {
+      "id": "csob_plus",
+      "insurer": "ČSOB Pojišťovna",
+      "label": "Plus",
+      "documents": [
+        {
+          "filename": "nabidka_csob_auto.pdf",
+          "ocr_text": "Kalkulace pojistného – osobní automobil\n\nTyp vozidla: Škoda Octavia 2.0 TDI\nPředpokládaný roční nájezd: 15 000 km\n\nPovinné ručení\nLimit povinného ručení: 100 / 100 mil. Kč\nPojistné za rok: 3 800 Kč\n\nHavarijní pojištění\nPojistná hodnota vozidla: 450 000 Kč\nSpoluúčast: 3 % / 3 000 Kč\nPojistné za rok: 9 100 Kč\n\nHavarijní pojištění\nAsistenční služba\nÚrazové pojištění\nŽivel\nOdcizení\nStřet se zvěří\n\nCelkem / rok: 12 900 Kč\n"
+        }
+      ]
+    },
+    {
+      "id": "allianz_extra",
+      "insurer": "Allianz pojišťovna",
+      "label": "Extra",
+      "documents": [
+        {
+          "filename": "nabidka_allianz_auto.pdf",
+          "ocr_text": "Allianz – Nabídka autopojištění\n\nModel: Škoda Octavia 2.0 TDI\nRoční nájezd: 15 000 km\n\nPovinné ručení\nLimit povinného ručení: 200 / 200 mil. Kč\nRoční pojistné: 3 950 Kč\n\nHavarijní pojištění\nPojistná částka: 450 000 Kč\nSpoluúčast havarijního pojištění: 5 % / 10 000 Kč\nRoční pojistné: 7 800 Kč\n\nPovinné ručení\nHavarijní pojištění\nAsistenční služba\nÚrazové pojištění\nŽivel\nOdcizení\nStřet se zvěří\nSklo\nZavazadla\nNáhradní vozidlo\n\nRoční pojistné celkem: 11 750 Kč\n"
+        }
+      ]
+    }
+  ]
+}
