@@ -1,0 +1,8 @@
+*.txt
+__pycache__/
+*.py[cod]
+.env
+.env.*
+pgdata/
+.cursor/
+.git/
