@@ -165,21 +165,6 @@ def rank_offers_dynamic(
                 wins[offer_id] += weight
 
     # -----------------------------------------------------------------------
-    # N/A penalty: offers with >50% missing fields should not win by default
-    # -----------------------------------------------------------------------
-    total_fields = len(fields_to_extract)
-    if total_fields > 0:
-        for offer in offers_parsed:
-            na_count = sum(
-                1 for f in fields_to_extract
-                if offer["fields"].get(f, "N/A") == "N/A"
-            )
-            na_ratio = na_count / total_fields
-            if na_ratio > 0.50:
-                penalty = wins[offer["id"]] * na_ratio * 0.5
-                wins[offer["id"]] -= penalty
-
-    # -----------------------------------------------------------------------
     # Tiebreakers
     # -----------------------------------------------------------------------
 

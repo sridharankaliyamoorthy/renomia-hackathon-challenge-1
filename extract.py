@@ -58,17 +58,9 @@ _SEGMENT_CONTEXT = {
         "- NUMBER fields: return value WITH CZK prefix verbatim\n"
         "  e.g. 'CZK 50,000,000' for a 50M CZK limit\n"
         "- STRING fields: return full descriptive text verbatim\n\n"
-        "RANGE VALUES — critically important:\n"
-        "Many NUMBER fields in this segment have TWO bounds.\n"
-        "Return BOTH bounds with en dash between them.\n"
-        "Format: 'CZK lower–upper' e.g.:\n"
-        "  'CZK 50,000,000–100,000,000'\n"
-        "  'CZK 248,923–281,136'\n"
-        "  'CZK 2,000,000–50,000,000'\n"
-        "If you see two amounts for the same field, always\n"
-        "return both — NEVER just one.\n"
-        "The scorer gives 0 points if you return only one\n"
-        "bound of a range.\n\n"
+        "RANGE VALUES are common — return both ends:\n"
+        "- 'CZK 248,923–281,136' not just one number\n"
+        "- 'CZK 10,000–50,000' not just '10,000'\n\n"
         "SUBLIMIT FIELDS — look for sublimit tables:\n"
         "Fields like 'Věci zaměstnanců', 'Věci převzaté',\n"
         "'Finanční škody', 'Škody na životním prostředí' etc.\n"
@@ -534,9 +526,34 @@ def extract_offer(
         )
 
     # Step 4 — Pass 1
-    fields = extract_fields_gemini(
-        gemini, combined_text, fields_to_extract, field_types, segment, rfp_hints
-    )
+    # For odpovědnost: split into two focused calls (number fields, then string fields)
+    # so Gemini isn't overwhelmed by 66 mixed fields in one 200K+ token prompt.
+    if segment == "odpovědnost":
+        number_fields = [f for f in fields_to_extract if field_types.get(f) == "number"]
+        string_fields = [f for f in fields_to_extract if field_types.get(f) == "string"]
+
+        fields_call1 = extract_fields_gemini(
+            gemini, combined_text, number_fields,
+            {f: "number" for f in number_fields},
+            segment, rfp_hints,
+        )
+        fields_call2 = extract_fields_gemini(
+            gemini, combined_text, string_fields,
+            {f: "string" for f in string_fields},
+            segment, rfp_hints,
+        )
+
+        fields = {}
+        fields.update(fields_call1)
+        fields.update(fields_call2)
+
+        for f in fields_to_extract:
+            if f not in fields:
+                fields[f] = "N/A"
+    else:
+        fields = extract_fields_gemini(
+            gemini, combined_text, fields_to_extract, field_types, segment, rfp_hints
+        )
 
     # Step 5 — Two-pass for odpovědnost only
     if segment == "odpovědnost":
