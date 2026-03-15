@@ -1,0 +1,509 @@
+INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1566, completion: 1181, total: 7432
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: odpovědnost
+Czech liability insurance policy. Limits are in CZK millions.
+Look for: limit plnění, sublimit, spoluúčast, územní rozsah.
+This is NOT vehicle insurance.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Obecná odpovědnost limit I
+Obecná odpovědnost limit II
+Regres pojišťoven limit I
+Věci zaměstnanců limit II
+Křížová odpovědnost limit II
+Výkon trestu škody limit I
+Limit pojistného plnění
+Roční pojistné
+Osoby ve výkonu trestu
+Použití zvýšených limitů
+
+STRING fields (return text description as found):
+Odpovědnost za věci limit
+Obecná odpovědnost spoluúčast I
+Obecná odpovědnost spoluúčast II
+Regres pojišťoven spoluúčast I
+Regres pojišťoven limit II
+Regres pojišťoven spoluúčast II
+Regres nemocenské limit I
+Regres nemocenské spoluúčast I
+Regres nemocenské limit II
+Regres nemocenské spoluúčast II
+Osobnostní újma limit I
+Osobnostní újma spoluúčast I
+Osobnostní újma limit II
+Osobnostní újma spoluúčast II
+Věci převzaté/užívané limit I
+Věci převzaté/užívané spoluúčast I
+Věci převzaté/užívané limit II
+Věci převzaté/užívané spoluúčast II
+Věci zaměstnanců limit I
+Věci zaměstnanců spoluúčast I
+Věci zaměstnanců spoluúčast II
+Věci návštěv limit I
+Věci návštěv spoluúčast I
+Věci návštěv limit II
+Věci návštěv spoluúčast II
+Finanční škody limit I
+Finanční škody spoluúčast I
+Finanční škody limit II
+Finanční škody spoluúčast II
+Křížová odpovědnost limit I
+Křížová odpovědnost spoluúčast I
+Křížová odpovědnost spoluúčast II
+Výkon trestu škody spoluúčast I
+Výkon trestu škody limit II
+Výkon trestu škody spoluúčast II
+Spoluúčast
+Územní rozsah
+Limit na věci převzaté
+Limit čistých finančních škod
+Limit nemajetkové újmy
+Regresní náhrady
+Věci zam
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: odpovědnost
+Czech liability insurance policy. Limits are in CZK millions.
+Look for: limit plnění, sublimit, spoluúčast, územní rozsah.
+This is NOT vehicle insurance.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Obecná odpovědnost limit I
+Obecná odpovědnost limit II
+Regres pojišťoven limit I
+Věci zaměstnanců limit II
+Křížová odpovědnost limit II
+Výkon trestu škody limit I
+Limit pojistného plnění
+Roční pojistné
+Osoby ve výkonu trestu
+Použití zvýšených limitů
+
+STRING fields (return text description as found):
+Odpovědnost za věci limit
+Obecná odpovědnost spoluúčast I
+Obecná odpovědnost spoluúčast II
+Regres pojišťoven spoluúčast I
+Regres pojišťoven limit II
+Regres pojišťoven spoluúčast II
+Regres nemocenské limit I
+Regres nemocenské spoluúčast I
+Regres nemocenské limit II
+Regres nemocenské spoluúčast II
+Osobnostní újma limit I
+Osobnostní újma spoluúčast I
+Osobnostní újma limit II
+Osobnostní újma spoluúčast II
+Věci převzaté/užívané limit I
+Věci převzaté/užívané spoluúčast I
+Věci převzaté/užívané limit II
+Věci převzaté/užívané spoluúčast II
+Věci zaměstnanců limit I
+Věci zaměstnanců spoluúčast I
+Věci zaměstnanců spoluúčast II
+Věci návštěv limit I
+Věci návštěv spoluúčast I
+Věci návštěv limit II
+Věci návštěv spoluúčast II
+Finanční škody limit I
+Finanční škody spoluúčast I
+Finanční škody limit II
+Finanční škody spoluúčast II
+Křížová odpovědnost limit I
+Křížová odpovědnost spoluúčast I
+Křížová odpovědnost spoluúčast II
+Výkon trestu škody spoluúčast I
+Výkon trestu škody limit II
+Výkon trestu škody spoluúčast II
+Spoluúčast
+Územní rozsah
+Limit na věci převzaté
+Limit čistých finančních škod
+Limit nemajetkové újmy
+Regresní náhrady
+Věci zam
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: odpovědnost
+Czech liability insurance policy. Limits are in CZK millions.
+Look for: limit plnění, sublimit, spoluúčast, územní rozsah.
+This is NOT vehicle insurance.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Obecná odpovědnost limit I
+Obecná odpovědnost limit II
+Regres pojišťoven limit I
+Věci zaměstnanců limit II
+Křížová odpovědnost limit II
+Výkon trestu škody limit I
+Limit pojistného plnění
+Roční pojistné
+Osoby ve výkonu trestu
+Použití zvýšených limitů
+
+STRING fields (return text description as found):
+Odpovědnost za věci limit
+Obecná odpovědnost spoluúčast I
+Obecná odpovědnost spoluúčast II
+Regres pojišťoven spoluúčast I
+Regres pojišťoven limit II
+Regres pojišťoven spoluúčast II
+Regres nemocenské limit I
+Regres nemocenské spoluúčast I
+Regres nemocenské limit II
+Regres nemocenské spoluúčast II
+Osobnostní újma limit I
+Osobnostní újma spoluúčast I
+Osobnostní újma limit II
+Osobnostní újma spoluúčast II
+Věci převzaté/užívané limit I
+Věci převzaté/užívané spoluúčast I
+Věci převzaté/užívané limit II
+Věci převzaté/užívané spoluúčast II
+Věci zaměstnanců limit I
+Věci zaměstnanců spoluúčast I
+Věci zaměstnanců spoluúčast II
+Věci návštěv limit I
+Věci návštěv spoluúčast I
+Věci návštěv limit II
+Věci návštěv spoluúčast II
+Finanční škody limit I
+Finanční škody spoluúčast I
+Finanční škody limit II
+Finanční škody spoluúčast II
+Křížová odpovědnost limit I
+Křížová odpovědnost spoluúčast I
+Křížová odpovědnost spoluúčast II
+Výkon trestu škody spoluúčast I
+Výkon trestu škody limit II
+Výkon trestu škody spoluúčast II
+Spoluúčast
+Územní rozsah
+Limit na věci převzaté
+Limit čistých finančních škod
+Limit nemajetkové újmy
+Regresní náhrady
+Věci zamINFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 3185, completion: 1332, total: 12962
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 5701, completion: 1659, total: 15657
+
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: odpovědnost
+Czech liability insurance policy. Limits are in CZK millions.
+Look for: limit plnění, sublimit, spoluúčast, územní rozsah.
+This is NOT vehicle insurance.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Obecná odpovědnost limit I
+Obecná odpovědnost limit II
+Regres pojišťoven limit I
+Věci zaměstnanců limit II
+Křížová odpovědnost limit II
+Výkon trestu škody limit I
+Limit pojistného plnění
+Roční pojistné
+Osoby ve výkonu trestu
+Použití zvýšených limitů
+
+STRING fields (return text description as found):
+Odpovědnost za věci limit
+Obecná odpovědnost spoluúčast I
+Obecná odpovědnost spoluúčast II
+Regres pojišťoven spoluúčast I
+Regres pojišťoven limit II
+Regres pojišťoven spoluúčast II
+Regres nemocenské limit I
+Regres nemocenské spoluúčast I
+Regres nemocenské limit II
+Regres nemocenské spoluúčast II
+Osobnostní újma limit I
+Osobnostní újma spoluúčast I
+Osobnostní újma limit II
+Osobnostní újma spoluúčast II
+Věci převzaté/užívané limit I
+Věci převzaté/užívané spoluúčast I
+Věci převzaté/užívané limit II
+Věci převzaté/užívané spoluúčast II
+Věci zaměstnanců limit I
+Věci zaměstnanců spoluúčast I
+Věci zaměstnanců spoluúčast II
+Věci návštěv limit I
+Věci návštěv spoluúčast I
+Věci návštěv limit II
+Věci návštěv spoluúčast II
+Finanční škody limit I
+Finanční škody spoluúčast I
+Finanční škody limit II
+Finanční škody spoluúčast II
+Křížová odpovědnost limit I
+Křížová odpovědnost spoluúčast I
+Křížová odpovědnost spoluúčast II
+Výkon trestu škody spoluúčast I
+Výkon trestu škody limit II
+Výkon trestu škody spoluúčast II
+Spoluúčast
+Územní rozsah
+Limit na věci převzaté
+Limit čistých finančních škod
+Limit nemajetkové újmy
+Regresní náhrady
+Věci zam
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Obecná odpovědnost limit I": "50 000 000",
+  "Obecná odpovědnost limit II": "N/A",
+  "Regres pojišťoven limit I": "N/A",
+  "Věci zaměstnanců limit II": "N/A",
+  "Křížová odpovědnost limit II": "N/A",
+  "Výkon trestu škody limit I": "N/A",
+  "Limit pojistného plnění": "50 000 000",
+  "Roční pojistné": "388 000",
+  "Osoby ve výkonu trestu": "N/A",
+  "Použití zvýšených limitů": "N/A",
+  "Odpovědnost za věci limit": "N/A",
+  "Obecná odpovědnost spoluúčast I": "N/A",
+  "Obecná odpovědnost spoluúčast II": "N/A",
+  "Regres pojišťoven spoluúčast I": "N/A",
+  "Regres pojišťoven limit II": "N/A",
+  "Regres pojišťoven spoluúčast II": "N/A",
+  "Regres nemocenské limit I": "N/A",
+  "Regres nemocenské spoluúčast I": "N/A",
+  "Regres nemocenské limit II": "N/A",
+  "Regres nemocenské spoluúčast II": "N/A",
+  "Osobnostní újma limit I": "N/A",
+  "Osobnostní újma spoluúčast I": "N/A",
+  "Osobnostní újma limit II": "N/A",
+  "Osobnostní újma spoluúčast II": "N/A",
+  "Věci převzaté/užívané limit I": "N/A",
+  "Věci převzaté/užívané spoluúčast I": "N/A",
+  "Věci převzaté/užívané limit II": "N/A",
+  "Věci převzaté/užívané spoluúčast II": "N/A",
+  "Věci zaměstnanců limit I": "N/A",
+  "Věci zaměstnanců spoluúčast I": "N/A",
+  "Věci zaměstnanců spoluúčast II": "N/A",
+  "Věci návštěv limit I": "N/A",
+  "Věci návštěv spoluúčast I": "N/A",
+  "Věci návštěv limit II": "N/A",
+  "Věci návštěv spoluúčast II": "N/A",
+  "Finanční škody limit I": "N/A",
+  "Finanční škody spoluúčast I": "N/A",
+  "Finanční škody limit II": "N/A",
+  "Finanční škody spoluúčast II": "N/A",
+  "Křížová odpovědnost limit I": "N/A",
+  "Křížová odpovědnost spoluúčast I": "N/A",
+  "Křížová odpovědnost spoluúčast II": "N/A",
+  "Výkon trestu škody spoluúčast I": "N/A",
+  "Výkon trestu škody limit II": "N/A",
+  "Výkon trestu škody spoluúčast II": "N/A",
+  "Spoluúčast": "N/A",
+  "Územní rozsah": "N/A",
+  "Limit na věci převzaté": "N/A",
+  "Limit čistých finančních škod": "N/A",
+  "Limit nemajetkové újmy": "N/A",
+  "Regresní náhrad
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: odpovědnost
+Czech liability insurance policy. Limits are in CZK millions.
+Look for: limit plnění, sublimit, spoluúčast, územní rozsah.
+This is NOT vehicle insurance.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Obecná odpovědnost limit II
+Regres pojišťoven limit I
+Věci zaměstnanců limit II
+Křížová odpovědnost limit II
+Výkon trestu škody limit I
+Osoby ve výkonu trestu
+Použití zvýšených limitů
+
+STRING fields (return text description as found):
+Odpovědnost za věci limit
+Obecná odpovědnost spoluúčast I
+Obecná odpovědnost spoluúčast II
+Regres pojišťoven spoluúčast I
+Regres pojišťoven limit II
+Regres pojišťoven spoluúčast II
+Regres nemocenské limit I
+Regres nemocenské spoluúčast I
+Regres nemocenské limit II
+Regres nemocenské spoluúčast II
+Osobnostní újma limit I
+Osobnostní újma spoluúčast I
+Osobnostní újma limit II
+Osobnostní újma spoluúčast II
+Věci převzaté/užívané limit I
+Věci převzaté/užívané spoluúčast I
+Věci převzaté/užívané limit II
+Věci převzaté/užívané spoluúčast II
+Věci zaměstnanců limit I
+Věci zaměstnanců spoluúčast I
+Věci zaměstnanců spoluúčast II
+Věci návštěv limit I
+Věci návštěv spoluúčast I
+Věci návštěv limit II
+Věci návštěv spoluúčast II
+Finanční škody limit I
+Finanční škody spoluúčast I
+Finanční škody limit II
+Finanční škody spoluúčast II
+Křížová odpovědnost limit I
+Křížová odpovědnost spoluúčast I
+Křížová odpovědnost spoluúčast II
+Výkon trestu škody spoluúčast I
+Výkon trestu škody limit II
+Výkon trestu škody spoluúčast II
+Spoluúčast
+Územní rozsah
+Limit na věci převzaté
+Limit čistých finančních škod
+Limit nemajetkové újmy
+Regresní náhrady
+Věci zaměstnanců
+Krytí vadného výrobku
+Vyloučené činnosti
+Čekací/karenční INFO:google_genai.models:AFC is enabled with max remote calls: 10.

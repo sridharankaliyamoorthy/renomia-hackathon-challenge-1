@@ -1,0 +1,130 @@
+INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:root:Cache hit for offer pojistovna_3
+INFO:root:Cache hit for offer pojistovna_1
+INFO:root:Cache hit for offer pojistovna_2
+INFO:root:Cache hit for offer pojistovna_4
+INFO:__main__:Evaluating segment: auta
+INFO:root:Cache hit for offer allianz
+INFO:root:Cache hit for offer generali
+INFO:root:Cache hit for offer kooperativa
+INFO:root:Cache hit for offer cpp
+INFO:__main__:Evaluating segment: lodě
+INFO:root:Cache hit for offer allianz
+INFO:root:Cache hit for offer pantaenius
+INFO:root:Cache hit for offer yacht_pool
+
+DEBUG — Segment: odpovědnost
+Offer: pojistovna_1
+N/A fields: 31/66
+Sample fields (first 10):
+  Spoluúčast: '50 000'
+  Smluvní pokuty: 'N/A'
+  Územní rozsah: 'území České republiky'
+  Roční pojistné: '281 136'
+  Regresní náhrady: 'Regresní nároky zdravotních pojišťoven (3.osoby i zaměstnanci), Regresní nároky dávek nemocenského pojištění'
+  Věci zaměstnanců: 'Náhrada škody na věcech zaměstnanců'
+  Asistenční služby: 'N/A'
+  Dodatečné sublimity: 'Ano'
+  Vyloučené činnosti: 'N/A'
+  Osoby ve výkonu trestu: 'N/A'
+
+DEBUG — Segment: auta
+Offer: allianz
+N/A fields: 2/17
+Sample fields (first 10):
+  Krytí skel: 'Ano, se spoluúčastí 1 000 Kč'
+  Rozsah servisu: 'Povinné smluvní servisy'
+  Krytí odcizení: 'Ano'
+  Právní ochrana: 'Ano'
+  Krytí vandalismu: 'Ano'
+  Roční pojistné: '34 851 Kč'
+  Spoluúčast skla: '1 000 Kč'
+  Přímá likvidace: 'Ano'
+  Úrazové pojištění: 'Ano'
+  Spoluúčast havarijní: '5 000 Kč'
+
+DEBUG — Segment: lodě
+Offer: allianz
+N/A fields: 7/16
+Sample fields (first 10):
+  Sleva: 'N/A'
+  CELKEM: 'N/A'
+  roční pojistné: 'N/A'
+  Roční pojistné:: 'N/A'
+  pro škodu na věci: 'EUR 1.500.000'
+  pro újmu na životě: 'EUR 1.500.000'
+  pojistné před slevou: 'N/A'
+  Havarijní pojištění: 'N/A'
+  pro jinou újmu na jmění: 'EUR 1.500.000'
+  Limit pro finanční škody: 'EUR 1.500.000'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: odpovědnost
+  Fields scored:     264
+  Extraction score:  0.061  (weight 60%)
+  Ranking score:     0.750  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.374
+
+  Hardest fields (lowest scores):
+    Spoluúčast                                     0.00
+    Smluvní pokuty                                 0.00
+    Regresní náhrady                               0.00
+    Věci zaměstnanců                               0.00
+    Asistenční služby                              0.00
+    Dodatečné sublimity                            0.00
+    Vyloučené činnosti                             0.00
+    Osoby ve výkonu trestu                         0.00
+    Krytí vadného výrobku                          0.00
+    Limit nemajetkové újmy                         0.00
+----------------------------------------------
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.792  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.844
+
+  Hardest fields (lowest scores):
+    Právní ochrana                                 0.00
+    Počet zásahů asistence                         0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+    Úrazové pojištění                              0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+    Havarijní pojištění – limit                    0.00
+    Krytí skel                                     0.00
+----------------------------------------------
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.130  (weight 60%)
+  Ranking score:     0.667  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.245
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+    roční pojistné                                 0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.488
+==============================================
+

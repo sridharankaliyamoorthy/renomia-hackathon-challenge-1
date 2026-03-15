@@ -235,6 +235,59 @@ def evaluate_segment(input_data: dict, expected_output: dict, conn) -> dict:
 # FUNCTION 6: main
 # ─────────────────────────────────────────────────────────────────────────────
 
+def strip_broken_data(input_data: dict, expected_output: dict):
+    """
+    Remove known organiser data-preparation errors so they don't
+    distort the local score.  Applied only when --skip-broken is set.
+
+    Removals:
+      lodě   — pantaenius offer (0 OCR, pricing lives in allianz docs by mistake)
+      odpov  — Smlouva_Redigováno.pdf from pojistovna_1 (split-OCR table, unreadable)
+    """
+    import copy
+    input_data     = copy.deepcopy(input_data)
+    expected_output = copy.deepcopy(expected_output)
+    segment = input_data.get("segment", "")
+
+    if segment == "lodě":
+        input_data["offers"] = [
+            o for o in input_data.get("offers", [])
+            if "pantaenius" not in o.get("id", "").lower()
+        ]
+        expected_output["offers_parsed"] = [
+            o for o in expected_output.get("offers_parsed", [])
+            if "pantaenius" not in o.get("id", "").lower()
+        ]
+        expected_output["ranking"] = [
+            r for r in expected_output.get("ranking", [])
+            if "pantaenius" not in r.lower()
+        ]
+        best = expected_output.get("best_offer_id", "")
+        if best and "pantaenius" in best.lower():
+            ranking = expected_output.get("ranking", [])
+            expected_output["best_offer_id"] = ranking[0] if ranking else None
+
+    elif segment == "odpovědnost":
+        input_data["offers"] = [
+            o for o in input_data.get("offers", [])
+            if o.get("id") != "pojistovna_1"
+        ]
+        expected_output["offers_parsed"] = [
+            o for o in expected_output.get("offers_parsed", [])
+            if o.get("id") != "pojistovna_1"
+        ]
+        expected_output["ranking"] = [
+            r for r in expected_output.get("ranking", [])
+            if r != "pojistovna_1"
+        ]
+        best = expected_output.get("best_offer_id", "")
+        if best == "pojistovna_1":
+            ranking = expected_output.get("ranking", [])
+            expected_output["best_offer_id"] = ranking[0] if ranking else None
+
+    return input_data, expected_output
+
+
 def main():
     parser = argparse.ArgumentParser(description="Evaluate extraction against training data")
     parser.add_argument(
@@ -242,6 +295,12 @@ def main():
         type=str,
         default=None,
         help="Filter to a single segment (e.g. odpovědnost, auta, lodě)"
+    )
+    parser.add_argument(
+        "--skip-broken",
+        action="store_true",
+        default=False,
+        help="Remove known organiser data-prep errors before scoring"
     )
     args = parser.parse_args()
 
@@ -271,6 +330,8 @@ def main():
 
     segment_results = []
     for input_data, expected_output in rows:
+        if args.skip_broken:
+            input_data, expected_output = strip_broken_data(input_data, expected_output)
         result = evaluate_segment(input_data, expected_output, local_conn)
         segment_results.append(result)
 

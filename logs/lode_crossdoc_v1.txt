@@ -1,0 +1,363 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 3964, completion: 298, total: 7264
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyt4yYbUdrCyW3iWlgsKUhK9lm3A87_wPOhBP6VsO6ZgE7YCmzYMQUW26XgQrpD-CUp48IJfC14SsDKs7UAKINN1b3WXjohmGP0kqUC4nw&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1399, completion: 309, total: 4282
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 9970, completion: 359, total: 15888
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11430, completion: 291, total: 14155
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/z4qu771a2oyn "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/z4qu771a2oyn
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: lodě
+Yacht/boat insurance quotation. Values in EUR or CZK.
+Look for: hull premium, TPL/liability limit, deductible, total annual cost.
+Documents may be in English, Czech, or Polish.
+If Option A / Option B shown, extract the HIGHER coverage option.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Havarijní pojištění - spoluúčast
+Havarijní pojištění
+pro újmu na životě
+pro škodu na věci
+pro jinou újmu na jmění
+Roční pojistné:
+pojistné před slevou
+Sleva
+CELKEM
+Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku
+Limit pro finanční škody
+Maximální výše odškodného za újmu na zdraví
+roční pojistné
+Pojištěná částka v případě úmrtí
+Pojistná částka v případě trvalého invalidního stavu
+Pojištění odpovědnosti za škodu
+
+STRING fields (return text description as found):
+(none)
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Application_Q15-00000280_Redigováno.pdf ---
+
+PANTAENIUS Ubezpieczenia Jachtów
+
+Precontractual duty of disclosure
+
+1. When the policyholder submits his proposal for insurance, he is obliged to declare all material facts which are known to him, in answer to the specific questions of the insurer on the proposal form. Material facts are those facts that may influence the insurer in his underwriting decision, and the contract of insurance will be based on these facts. The duty of disclosure also applies to any questions the insurer may ask after receipt of the proposal form and before the contract is concluded.
+
+2. If incomplete or incorrect statements have been made in respect of circumstances relevant to risk, the insurer is entitled to withdraw from the contract of insurance. The effect of withdrawal from the contract is t
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: lodě
+Yacht/boat insurance quotation. Values in EUR or CZK.
+Look for: hull premium, TPL/liability limit, deductible, total annual cost.
+Documents may be in English, Czech, or Polish.
+If Option A / Option B shown, extract the HIGHER coverage option.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Havarijní pojištění - spoluúčast
+Havarijní pojištění
+pro újmu na životě
+pro škodu na věci
+pro jinou újmu na jmění
+Roční pojistné:
+pojistné před slevou
+Sleva
+CELKEM
+Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku
+Limit pro finanční škody
+Maximální výše odškodného za újmu na zdraví
+roční pojistné
+Pojištěná částka v případě úmrtí
+Pojistná částka v případě trvalého invalidního stavu
+Pojištění odpovědnosti za škodu
+
+STRING fields (return text description as found):
+(none)
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Mandatory Information.pdf ---
+
+PANTAENIUS Ubezpieczenia Jachtów
+
+Data Processing Information
+
+Thank you for your interest in our company. We take the protection of your personal data very seriously and want you as a customer or potential customer to feel safe and comfortable with us.
+
+Nowadays, insurance companies and insurance agents can only work with the aid of electronic data processing (EDP). This is the only way in which contractual relationships can be handled correctly, quickly and economically. EDP also offers the insured community better protection from misuse than the former manual system. Since 25th of May 2018 processing personal data which has been provided to us is regulated by the General Data Protection Regulation (GDPR). According to the GDPR the processing and use of data is only permitted if the data 
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: lodě
+Yacht/boat insurance quotation. Values in EUR or CZK.
+Look for: hull premium, TPL/liability limit, deductible, total annual cost.
+Documents may be in English, Czech, or Polish.
+If Option A / Option B shown, extract the HIGHER coverage option.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Havarijní pojištění - spoluúčast
+Havarijní pojištění
+pro újmu na životě
+pro škodu na věci
+pro jinou újmu na jmění
+Roční pojistné:
+pojistné před slevou
+Sleva
+CELKEM
+Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku
+Limit pro finanční škody
+Maximální výše odškodného za újmu na zdraví
+roční pojistné
+Pojištěná částka v případě úmrtí
+Pojistná částka v případě trvalého invalidního stavu
+Pojištění odpovědnosti za škodu
+
+STRING fields (return text description as found):
+(none)
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: YACHT POOL.pdf ---
+
+YACHT-POOL INTERNATIONAL
+
+PROPOSAL AND APPLICATION
+
+Insurance agreement number
+
+Personal information
+
+Name (Jméno): Vaclav
+
+Address (Adresa): Kudrnova 234/4
+
+Company (if applicable) (Údaje o firmě)
+
+Company address (Sídlo společnosti):
+
+Boat reference (Údaje o plavidle)
+
+Name (Jméno plavidla):
+
+Boat Nr. (Číslo plavidla):
+
+Model (Model): CAMPION S565
+
+Country of registration (Krajina registrace plavidla): Czech republic
+
+Build material (Materiál): Fiber glass
+
+Beam (Šířka): 2,34
+
+Sail area Wind (Celková plocha plachet):
+
+Type of engine (Typ motoru): Mercruiser 4,3L Engine S/N (Sériové číslo motoru): OM688012 Fuel (Palivo): Gasoline
+
+Surname (Příjmení): Bumbalek
+
+City (Město): Praha 5
+
+Company name (Název společnosti): VAT Identifier (IČ DPH):
+
+Manufacturer (Výrobce): CAMPION
+
+Type (Typ): Motorsailer
+
+B
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Havarijní pojištění - spoluúčast": "N/A",
+  "Havarijní pojištění": "N/A",
+  "pro újmu na životě": "12mln EUR",
+  "pro škodu na věci": "20mln EUR",
+  "pro jinou újmu na jmění": "20mln EUR",
+  "Roční pojistné:": "N/A",
+  "pojistné před slevou": "N/A",
+  "Sleva": "N/A",
+  "CELKEM": "N/A",
+  "Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku": "N/A",
+  "Limit pro finanční škody": "N/A",
+  "Maximální výše odškodného za újmu na zdraví": "12mln EUR",
+  "roční pojistné": "N/A",
+  "Pojištěná částka v případě úmrtí": "12mln EUR",
+  "Pojistná částka v případě trvalého invalidního stavu": "12mln EUR",
+  "Pojištění odpovědnosti za škodu": "20mln EUR"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Havarijní pojištění - spoluúčast": "500.00 €",
+  "Havarijní pojištění": "370.00 €",
+  "pro újmu na životě": "7,5mil €",
+  "pro škodu na věci": "7,5mil €",
+  "pro jinou újmu na jmění": "7,5mil €",
+  "Roční pojistné:": "578 €",
+  "pojistné před slevou": "N/A",
+  "Sleva": "N/A",
+  "CELKEM": "578 €",
+  "Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku": "7,5mil €",
+  "Limit pro finanční škody": "7,5mil €",
+  "Maximální výše odškodného za újmu na zdraví": "7,5mil €",
+  "roční pojistné": "578 €",
+  "Pojištěná částka v případě úmrtí": "N/A",
+  "Pojistná částka v případě trvalého invalidního stavu": "N/A",
+  "Pojištění odpovědnosti za škodu": "7,5mil €"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Havarijní pojištění - spoluúčast": "EUR 300",
+  "Havarijní pojištění": "EUR 600",
+  "pro újmu na životě": "EUR 3.000.000",
+  "pro škodu na věci": "EUR 3.000.000",
+  "pro jinou újmu na jmění": "EUR 3.000.000",
+  "Roční pojistné:": "EUR 820",
+  "pojistné před slevou": "N/A",
+  "Sleva": "N/A",
+  "CELKEM": "N/A",
+  "Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku": "EUR 3.000.000",
+  "Limit pro finanční škody": "EUR 3.000.000",
+  "Maximální výše odškodného za újmu na zdraví": "EUR 3.000.000",
+  "roční pojistné": "EUR 820",
+  "Pojištěná částka v případě úmrtí": "EUR 50.000",
+  "Pojistná částka v případě trvalého invalidního stavu": "EUR 100.000",
+  "Pojištění odpovědnosti za škodu": "EUR 3.000.000"
+}
+
+DEBUG — Segment: lodě
+Offer: allianz
+N/A fields: 3/16
+Sample fields (first 10):
+  Havarijní pojištění - spoluúčast: 'EUR 300'
+  Havarijní pojištění: 'EUR 600'
+  pro újmu na životě: 'EUR 3.000.000'
+  pro škodu na věci: 'EUR 3.000.000'
+  pro jinou újmu na jmění: 'EUR 3.000.000'
+  Roční pojistné:: 'EUR 820'
+  pojistné před slevou: 'N/A'
+  Sleva: 'N/A'
+  CELKEM: 'N/A'
+  Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku: 'EUR 3.000.000'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.120  (weight 60%)
+  Ranking score:     0.667  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.239
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.239
+==============================================
+
