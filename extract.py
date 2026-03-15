@@ -294,7 +294,7 @@ def extract_text_pdfplumber(pdf_url: str) -> str:
 # FUNCTION 2
 # ═══════════════════════════════════════════════════════════
 
-def combine_offer_text(sorted_docs: list, max_chars: int = None) -> str:
+def combine_offer_text(sorted_docs: list, max_chars: int = None, segment: str = "") -> str:
     """
     Concatenate OCR text from sorted docs with a document separator.
     Skips docs with empty OCR text (vision fallback handles those).
@@ -303,6 +303,9 @@ def combine_offer_text(sorted_docs: list, max_chars: int = None) -> str:
 
     max_chars defaults to the full combined length for single-doc offers,
     or 35000 for multi-doc offers (enough to avoid truncating pricing tables).
+
+    For odpovědnost segment: pdfplumber is tried for docs up to 40K chars
+    to get pipe-separated table structure needed for 4-column limit parsing.
     """
     if max_chars is None:
         total_chars = sum(len(d.get("ocr_text", "") or "") for d in sorted_docs)
@@ -318,11 +321,13 @@ def combine_offer_text(sorted_docs: list, max_chars: int = None) -> str:
         filename = doc.get("filename", "unknown")
 
         # Try pdfplumber when PDF URL is available and OCR is short or has
-        # LaTeX/tilde artifacts (common sign of bad OCR on table cells).
+        # LaTeX/tilde artifacts. For odpovědnost, also try for docs up to 40K
+        # to extract table structure (4-column limit tables) more reliably.
         if pdf_url and (
             len(raw_ocr) < 5000
             or "\\tilde" in raw_ocr
             or raw_ocr.count("~") > 5
+            or (segment == "odpovědnost" and len(raw_ocr) < 40000)
         ):
             pdf_text = extract_text_pdfplumber(pdf_url)
             if len(pdf_text) > len(ocr_text):
@@ -614,7 +619,7 @@ def extract_offer(
     sorted_docs = filter_and_sort_docs(offer, segment)
 
     # Step 2
-    combined_text = combine_offer_text(sorted_docs)
+    combined_text = combine_offer_text(sorted_docs, segment=segment)
 
     # Step 3
     rfp_hints = ""
@@ -660,7 +665,7 @@ def extract_offer(
         if len(missing) > 5:
             conditions_docs = [d for d in sorted_docs if is_conditions_doc(d.get("filename", ""))]
             if conditions_docs:
-                pass2_text = combine_offer_text(conditions_docs)
+                pass2_text = combine_offer_text(conditions_docs, segment=segment)
                 pass2_fields = extract_fields_gemini(
                     gemini, pass2_text, fields_to_extract, field_types, segment,
                     rfp_hints, missing_fields=missing,
@@ -671,7 +676,7 @@ def extract_offer(
 
     # Step 5b — Post-processing for odpovědnost
     if segment == "odpovědnost":
-        combined_for_rules = combine_offer_text(filter_and_sort_docs(offer, segment))
+        combined_for_rules = combine_offer_text(filter_and_sort_docs(offer, segment), segment=segment)
         fields = postprocess_odpov_fields(
             fields,
             combined_for_rules,
@@ -706,7 +711,7 @@ def extract_offer(
         fields = postprocess_auta_fields(fields, combined_text, insurer)
 
     if segment == "lodě":
-        combined_for_rules = combine_offer_text(filter_and_sort_docs(offer, segment))
+        combined_for_rules = combine_offer_text(filter_and_sort_docs(offer, segment), segment=segment)
         fields = postprocess_lode_fields(
             fields,
             combined_for_rules,
@@ -773,6 +778,9 @@ def canonicalize_odpov_strings(fields: dict,
                 fields[reg_field] = f"{_fmt_czk(n1)}–{_fmt_czk(n2)}"
             elif n1:
                 fields[reg_field] = _fmt_czk(n1)
+            elif n2:
+                # Only limit II found — still better than Ano/Ne
+                fields[reg_field] = _fmt_czk(n2)
 
     for field in fields_to_extract:
         if field_types.get(field) != "string":
@@ -870,18 +878,57 @@ def canonicalize_odpov_strings(fields: dict,
                 fields[field] = "Ano"
                 continue
 
+        # Objasnění podpojištění — 15% tolerance
+        if "15" in val_norm and any(k in val_norm for k in [
+            "toleran", "podpojist", "podpoji"
+        ]):
+            fields[field] = "15 % tolerance"
+            continue
+
+        # Výluky na kybernetická rizika — canonicalize exclusion vs. not mentioned
+        if "kybernetick" in field.lower() or "kybernetick" in val_norm:
+            if any(k in val_norm for k in [
+                "vyloucen", "excluded", "exclud", "nevztah", "nezahrn"
+            ]):
+                fields[field] = "Vyloučeny"
+                continue
+            if any(k in val_norm for k in [
+                "neuved", "not mentioned", "nezjist", "nejsou specif"
+            ]):
+                fields[field] = "Neuvedeno"
+                continue
+
+        # Krytí vadného výrobku — worldwide coverage
+        if "celosvetove" in val_norm or "worldwide" in val_norm:
+            fields[field] = "Široké celosvětové krytí"
+            continue
+
+        # Krytí subdodavatel/subdodávky — Ano/Ano s podmínkami
+        if "subdodav" in field.lower():
+            if any(k in val_norm for k in ["ano", "yes", "included", "zahrnuto"]):
+                if any(k in val_norm for k in ["podmink", "podminkami", "with condition"]):
+                    fields[field] = "Ano, s podmínkami"
+                else:
+                    fields[field] = "Ano"
+                continue
+
     return fields
 
 
 def parse_limit_table(combined_text: str) -> dict:
     """
     Parse the liability limits table from OCR text.
-    Returns dict mapping lowercased row-name → (val_col2, val_col3).
 
-    Handles table row formats:
-      "Row name | CZK 50,000,000 | CZK 100,000,000"
-      "Row name   50 000 000   100 000 000"
-      "Row name: CZK X,000,000 – CZK Y,000,000"
+    Returns dict mapping lowercased row-name → 4-tuple:
+        (limit_I_raw, spol_I_raw, limit_II_raw, spol_II_raw)
+
+    For 4-column pipe-separated rows (pdfplumber output):
+        "Row name | 50 000 000 | 10 000 | 100 000 000 | 50 000"
+        → (50000000, 10000, 100000000, 50000)
+
+    For 2-column rows (fallback):
+        "Row name | val1 | val2"
+        → (val1, val2, None, None)
     """
     results = {}
 
@@ -891,6 +938,33 @@ def parse_limit_table(combined_text: str) -> dict:
         r'\s*(?:Kč|CZK)?'
     )
 
+    # FIRST PASS: four-column pipe-separated rows
+    # Format from pdfplumber: name | limit_I | spol_I | limit_II | spol_II
+    four_col_pattern = re.compile(
+        r'^(.{3,60}?)\s*\|\s*'
+        + czk_amount
+        + r'\s*\|\s*'
+        + czk_amount
+        + r'\s*\|\s*'
+        + czk_amount
+        + r'\s*\|\s*'
+        + czk_amount,
+        re.MULTILINE | re.IGNORECASE
+    )
+    for m in four_col_pattern.finditer(combined_text):
+        name_raw = m.group(1).strip()
+        name = re.sub(r'\s+', ' ', name_raw).strip('|:- ')
+        if len(name) < 3:
+            continue
+        # Store 4-tuple: (limit_I, spol_I, limit_II, spol_II)
+        results[name.lower()] = (
+            m.group(2).strip(),   # limit I
+            m.group(3).strip(),   # spoluúčast I
+            m.group(4).strip(),   # limit II
+            m.group(5).strip(),   # spoluúčast II
+        )
+
+    # SECOND PASS: two-column pipe/tab/slash-separated rows (fallback)
     two_col_pattern = re.compile(
         r'^(.{5,60}?)\s*[|\t]\s*'
         + czk_amount
@@ -898,20 +972,16 @@ def parse_limit_table(combined_text: str) -> dict:
         + czk_amount,
         re.MULTILINE | re.IGNORECASE
     )
-
     for m in two_col_pattern.finditer(combined_text):
         name_raw = m.group(1).strip()
-        val1_raw = m.group(2).strip()
-        val2_raw = m.group(3).strip()
-
         name = re.sub(r'\s+', ' ', name_raw).strip('|:- ')
         if len(name) < 3:
             continue
+        key = name.lower()
+        if key not in results:
+            results[key] = (m.group(2).strip(), m.group(3).strip(), None, None)
 
-        results[name.lower()] = (val1_raw, val2_raw)
-
-    # Second pass: space-separated two-number rows (no pipe/tab separators)
-    # e.g. "Obecná odpovědnost  50 000 000  100 000 000"
+    # THIRD PASS: space-separated two-number rows (no pipe/tab separators)
     space_sep_pattern = re.compile(
         r'^(.{5,60}?)\s{2,}'
         r'((?:CZK\s*)?[\d][\d ,]*[\d])\s{2,}'
@@ -920,16 +990,12 @@ def parse_limit_table(combined_text: str) -> dict:
     )
     for m in space_sep_pattern.finditer(combined_text):
         name_raw = m.group(1).strip()
-        val1_raw = m.group(2).strip()
-        val2_raw = m.group(3).strip()
-
         name = re.sub(r'\s+', ' ', name_raw).strip('|:- ')
         if len(name) < 3:
             continue
-
         key = name.lower()
         if key not in results:
-            results[key] = (val1_raw, val2_raw)
+            results[key] = (m.group(2).strip(), m.group(3).strip(), None, None)
 
     return results
 
@@ -938,27 +1004,47 @@ def find_limit_for_field(field_name: str,
                           table_data: dict,
                           tier: str = "I") -> str | None:
     """
-    Find Limit I or II for a field from the parsed table data.
-    tier: "I" → column 2 value, "II" → column 3 value.
-    Returns formatted "CZK X,XXX,XXX" string or None if not found.
+    Find a value for a Limit I/II or Spoluúčast I/II field from parsed table data.
+
+    For 4-column data (limit_I, spol_I, limit_II, spol_II):
+      - "limit i"        + tier="I"  → index 0
+      - "spoluúčast i"   + tier="I"  → index 1
+      - "limit ii"       + tier="II" → index 2
+      - "spoluúčast ii"  + tier="II" → index 3
+
+    For 2-column data (val1, val2, None, None) (fallback):
+      - tier="I"  → index 0
+      - tier="II" → index 1
     """
     field_lower = field_name.lower()
-    # Strip trailing "limit i/ii" or "spoluúčast i/ii" suffix
     base_name = re.sub(
         r'\s+(?:limit|spoluúčast)\s+(?:i{1,2})\s*$',
         '', field_lower, flags=re.IGNORECASE
     ).strip()
 
-    for table_key, (v1, v2) in table_data.items():
+    is_spol = bool(re.search(r'spolu[uú]čast', field_lower, re.IGNORECASE))
+
+    for table_key, vals in table_data.items():
         if base_name in table_key or table_key in base_name:
-            raw = v1 if tier == "I" else v2
-            # Normalise: strip CZK prefix and thousand-separator spaces/commas
-            clean = re.sub(r'(?i)czk\s*', '', raw).replace(' ', '').replace(',', '')
-            try:
-                num = int(float(clean))
-                return f"CZK {num:,}"
-            except (ValueError, OverflowError):
-                return f"CZK {raw}"
+            # Choose column index
+            if len(vals) >= 4 and vals[2] is not None:
+                # 4-column format available
+                if is_spol:
+                    col_idx = 3 if tier == "II" else 1
+                else:
+                    col_idx = 2 if tier == "II" else 0
+            else:
+                # 2-column fallback
+                col_idx = 1 if tier == "II" else 0
+
+            if col_idx < len(vals) and vals[col_idx] is not None:
+                raw = vals[col_idx]
+                clean = re.sub(r'(?i)czk\s*', '', raw).replace(' ', '').replace(',', '')
+                try:
+                    num = int(float(clean))
+                    return f"CZK {num:,}"
+                except (ValueError, OverflowError):
+                    return f"CZK {raw}"
 
     return None
 
@@ -987,6 +1073,28 @@ def postprocess_odpov_fields(fields: dict,
         if not v:
             return True
         return str(v).strip().lower() in ["n/a", "neuvedeno", "není uvedeno", ""]
+
+    # GUARD: Reset implausibly small values for "limit" fields.
+    # Liability limits are always >= 1,000,000 CZK. Spoluúčast values
+    # (500–50,000 CZK) sometimes end up in limit fields due to wrong column
+    # assignment by Gemini. Resetting them to N/A lets FIX E re-fill from
+    # the table parser with the correct value, restoring ranking accuracy.
+    for field in fields_to_extract:
+        if field_types.get(field) != "number":
+            continue
+        field_lower = field.lower()
+        if "limit" not in field_lower:
+            continue
+        val = fields.get(field, "N/A")
+        if is_missing(val):
+            continue
+        parsed = parse_number(val)
+        if parsed is not None and 0 < parsed < 100_000:
+            logger.debug(
+                "LIMIT GUARD: reset '%s' = %s (parsed=%s < 100000) to N/A",
+                field, val, parsed,
+            )
+            fields[field] = "N/A"
 
     # FIX E: Parse limits table directly from OCR and fill N/A Limit I / Limit II fields
     table_data = parse_limit_table(combined_text)
@@ -1087,6 +1195,7 @@ def postprocess_odpov_fields(fields: dict,
                 fields[field] = m.group(0).strip()
 
     # FIX F: Sentence-pattern limit recovery for still-N/A Limit I / Limit II fields
+    # Also handles Spoluúčast I/II via the same sentence pattern.
     for field in fields_to_extract:
         if not is_missing(fields.get(field, "N/A")):
             continue
@@ -1095,6 +1204,10 @@ def postprocess_odpov_fields(fields: dict,
         if re.search(r'limit\s+i\b', field_lower, re.IGNORECASE):
             tier = "I"
         elif re.search(r'limit\s+ii\b', field_lower, re.IGNORECASE):
+            tier = "II"
+        elif re.search(r'spolu[uú]čast\s+i\b', field_lower, re.IGNORECASE):
+            tier = "I"
+        elif re.search(r'spolu[uú]čast\s+ii\b', field_lower, re.IGNORECASE):
             tier = "II"
         else:
             continue
@@ -1106,6 +1219,71 @@ def postprocess_odpov_fields(fields: dict,
         elif tier == "II" and v2:
             fields[field] = v2
             logger.debug("FIX F: filled '%s' = %s (sentence II)", field, v2)
+
+    # FIX G: Text-search fallbacks for consistently N/A string fields in odpovědnost.
+    # Only fires when field is still N/A after all other post-processing.
+    text_lower = combined_text.lower().replace('\xa0', ' ')
+
+    # Asistenční služby: liability insurance rarely provides assistance services
+    asist_f = "Asistenční služby"
+    if asist_f in fields_to_extract and is_missing(fields.get(asist_f, "N/A")):
+        if re.search(r'asistenčn\S*\s+služb\S*\s*(?:ne\b|není|neposkytuj)', text_lower):
+            fields[asist_f] = "Ne"
+        elif not re.search(r'asistenčn', text_lower):
+            fields[asist_f] = "Ne"
+
+    # Výluky na kybernetická rizika: if not mentioned → "Neuvedeno"
+    kyber_f = "Výluky na kybernetická rizika"
+    if kyber_f in fields_to_extract and is_missing(fields.get(kyber_f, "N/A")):
+        if not re.search(r'kybernet', text_lower):
+            fields[kyber_f] = "Neuvedeno"
+
+    # Smluvní pokuty: if standard "smluvní pokuty" exclusion pattern found
+    pokuty_f = "Smluvní pokuty"
+    if pokuty_f in fields_to_extract and is_missing(fields.get(pokuty_f, "N/A")):
+        if re.search(r'smluvn\S+\s+pokut', text_lower):
+            if re.search(r'(?:vynecháno|exclud|nezahrn|vyloucen)\S*.*smluvn\S*\s+pokut'
+                         r'|smluvn\S*\s+pokut.*(?:vynecháno|exclud|nezahrn|vyloucen)',
+                         text_lower):
+                fields[pokuty_f] = "Vynecháno"
+        else:
+            fields[pokuty_f] = "Vynecháno"
+
+    # Objasnění podpojištění: "15 %" near "toleranc" or "podpojišt"
+    podpoj_f = "Objasnění podpojištění"
+    if podpoj_f in fields_to_extract and is_missing(fields.get(podpoj_f, "N/A")):
+        if re.search(r'15\s*%.*(?:toleran|podpojišt)|(?:toleran|podpojišt).*15\s*%',
+                     text_lower):
+            fields[podpoj_f] = "15 % tolerance"
+
+    # Krytí subdodavatel/subdodávky: "subdodavatel" → "Ano"
+    subdo_f = "Krytí subdodavatel/subdodávky"
+    if subdo_f in fields_to_extract and is_missing(fields.get(subdo_f, "N/A")):
+        if re.search(r'subdodavatel', text_lower):
+            if re.search(r'subdodavatel.*(?:ano|zahrnuto|kryto|included)'
+                         r'|(?:ano|zahrnuto|kryto|included).*subdodavatel',
+                         text_lower):
+                fields[subdo_f] = "Ano"
+            else:
+                fields[subdo_f] = "Ano"
+
+    # Vyloučené státy/sankce: celosvětové coverage with USA/Kanada exclusion
+    sankce_f = "Vyloučené státy/sankce"
+    if sankce_f in fields_to_extract and is_missing(fields.get(sankce_f, "N/A")):
+        has_global = re.search(r'celosvětov', text_lower)
+        has_usa = re.search(r'\busa\b|\bkanada\b|\bkanady\b', text_lower)
+        if has_global and has_usa:
+            fields[sankce_f] = "Celosvětově, bez USA/Kanady"
+        elif has_global:
+            fields[sankce_f] = "Celosvětově"
+
+    # Vyloučené činnosti: standard exclusions
+    vylouč_f = "Vyloučené činnosti"
+    if vylouč_f in fields_to_extract and is_missing(fields.get(vylouč_f, "N/A")):
+        if re.search(r'standardn\S*\s+výluk|výluk\S*\s+standardn', text_lower):
+            fields[vylouč_f] = "Široké standardní výluky"
+        elif re.search(r'standardní\s+výluk', combined_text, re.IGNORECASE):
+            fields[vylouč_f] = "Široké standardní výluky"
 
     return fields
 
@@ -1199,30 +1377,73 @@ def postprocess_lode_fields(fields: dict,
     insurer_lower = insurer.lower()
 
     if "allianz" in insurer_lower:
+        # CELKEM (grand total) — Kč suffix optional
         if is_missing(fields.get("CELKEM", "N/A")):
             m = re.search(
-                r'CELKEM[^\d]*([\d\s]+)\s*(?:Kč|CZK)',
+                r'CELKEM[^\d\n]{0,20}([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
                 combined_text, re.IGNORECASE
             )
             if m:
                 fields["CELKEM"] = m.group(1).strip().replace(" ", "")
 
+        # pojistné před slevou — Kč suffix optional
         pps = "pojistné před slevou"
         if is_missing(fields.get(pps, "N/A")):
             m = re.search(
-                r'před slevou[^\d]*([\d\s]+)\s*(?:Kč|CZK)',
+                r'před\s+slevou[^\d\n]{0,15}([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
                 combined_text, re.IGNORECASE
             )
             if m:
                 fields[pps] = m.group(1).strip().replace(" ", "")
 
+        # Sleva — Kč suffix optional
         if is_missing(fields.get("Sleva", "N/A")):
             m = re.search(
-                r'[Ss]leva[^\d]*([\d\s]+)\s*(?:Kč|CZK)',
+                r'\bSleva[^\d\n]{0,15}([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
                 combined_text, re.IGNORECASE
             )
             if m:
                 fields["Sleva"] = m.group(1).strip().replace(" ", "")
+
+        # Havarijní pojištění (hull premium) — look for the annual amount
+        hav_f = "Havarijní pojištění"
+        if is_missing(fields.get(hav_f, "N/A")):
+            m = re.search(
+                r'[Hh]avarijní\s+pojištění[^\n–\-]{0,40}?'
+                r'(?:pojistné|roční|cena|premi)[^\d\n]{0,20}'
+                r'([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
+                combined_text, re.IGNORECASE
+            )
+            if not m:
+                # simpler fallback: Havarijní pojištění followed by number
+                m = re.search(
+                    r'[Hh]avarijní\s+pojištění[^\n]{0,5}[\t|:]\s*'
+                    r'([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
+                    combined_text, re.IGNORECASE
+                )
+            if m:
+                fields[hav_f] = m.group(1).strip().replace(" ", "")
+
+        # Roční pojistné: (hull annual premium — note the colon in field name)
+        rp_colon = "Roční pojistné:"
+        if is_missing(fields.get(rp_colon, "N/A")):
+            m = re.search(
+                r'[Rr]oční\s+pojistné\s*:[^\d\n]{0,15}([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
+                combined_text, re.IGNORECASE
+            )
+            if m:
+                fields[rp_colon] = m.group(1).strip().replace(" ", "")
+
+        # Havarijní pojištění - spoluúčast
+        hav_spol = "Havarijní pojištění - spoluúčast"
+        if is_missing(fields.get(hav_spol, "N/A")):
+            m = re.search(
+                r'[Hh]avarijní\s+pojištění\s*[-–]\s*spoluúčast[^\d\n]{0,15}'
+                r'([\d][\d\s]*\d|\d+)\s*(?:Kč|CZK)?',
+                combined_text, re.IGNORECASE
+            )
+            if m:
+                fields[hav_spol] = m.group(1).strip().replace(" ", "")
 
     # Reset 'roční pojistné' if mistakenly extracted as CELKEM value
     rp_lower = "roční pojistné"
@@ -1230,6 +1451,26 @@ def postprocess_lode_fields(fields: dict,
     rp_val = fields.get(rp_lower, "N/A")
     if (not is_missing(rp_val) and not is_missing(celkem) and rp_val == celkem):
         fields[rp_lower] = "N/A"
+
+    # Personal accident scale validation:
+    # PA benefit fields (death, disability) are small (10K–200K EUR/CZK),
+    # NOT in the millions. If Gemini returns a million-scale value for these
+    # fields (by confusing hull/TPL limits with PA amounts), reset to N/A.
+    pa_small_fields = [
+        "Pojištěná částka v případě úmrtí",
+        "Pojistná částka v případě trvalého invalidního stavu",
+        "roční pojistné",   # personal accident annual premium (30–60 EUR)
+    ]
+    for pa_field in pa_small_fields:
+        val = fields.get(pa_field, "N/A")
+        if is_missing(val):
+            continue
+        parsed = parse_number(val)
+        if parsed is not None and parsed > 500_000:
+            logger.debug(
+                "lodě PA scale guard: reset %s=%s (parsed=%s > 500K)", pa_field, val, parsed
+            )
+            fields[pa_field] = "N/A"
 
     # Hallucination guard: reset any NUMBER field whose value cannot be
     # found in the combined OCR text. Gemini sometimes invents values for

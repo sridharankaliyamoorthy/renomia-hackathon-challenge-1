@@ -191,6 +191,29 @@ def evaluate_segment(input_data: dict, expected_output: dict, conn) -> dict:
                     score_marker = ''
                 print(f'  {repr(f)}: {repr(v)} | expected: {repr(exp_val)} {score_marker}')
 
+    # ── Debug print for lodě all offers ──────────────────────────────────────
+    if segment == 'lodě':
+        pred_ranking = result.get('ranking', [])
+        exp_ranking = expected_output.get('ranking', [])
+        print(f'\nDEBUG lodě | pred ranking: {pred_ranking} | exp ranking: {exp_ranking}')
+        print(f'  pred best_offer_id: {result.get("best_offer_id")} | exp: {expected_output.get("best_offer_id")}')
+        from rank import rank_offers_dynamic, infer_field_direction
+        from normalize import parse_number as pn
+        fields_to_extract = input_data.get("fields_to_extract", [])
+        ft = input_data.get("field_types", {})
+        exp_lookup = {o['id']: o.get('fields', {}) for o in expected_output.get('offers_parsed', [])}
+        for offer in result.get('offers_parsed', []):
+            oid = offer['id']
+            na_c = sum(1 for v in offer['fields'].values() if v == 'N/A')
+            nna_c = len(offer['fields']) - na_c
+            print(f'\n  Offer: {oid}  (N/A: {na_c}/{len(offer["fields"])}, non-N/A: {nna_c})')
+            for f in fields_to_extract:
+                pred_v = offer['fields'].get(f, 'N/A')
+                exp_v = exp_lookup.get(oid, {}).get(f, '?')
+                if pred_v != 'N/A':
+                    direction = infer_field_direction(f, ft.get(f, 'string'))
+                    print(f'    [{direction}] {f}: pred={pred_v!r} exp={exp_v!r}')
+
     # Build lookup: offer_id -> fields dict (from predicted result)
     predicted_by_id = {
         o["id"]: o.get("fields", {})
