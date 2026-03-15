@@ -627,6 +627,162 @@ def extract_offer(
     return fields
 
 
+def canonicalize_odpov_strings(fields: dict,
+                                fields_to_extract: list,
+                                field_types: dict,
+                                combined_text: str) -> dict:
+    """
+    Canonicalize odpovědnost STRING field values to expected reference forms.
+
+    Normalizes common variations in territory, deductible type, waiting period,
+    exclusion language, and other descriptive fields so that scoring partial
+    matches become exact matches.
+    """
+    import unicodedata
+
+    def norm(s):
+        if not s:
+            return ""
+        s = s.lower().strip()
+        s = unicodedata.normalize('NFKD', s)
+        s = ''.join(c for c in s if not unicodedata.combining(c))
+        return s
+
+    # FIX 2 — Dvě a více spoluúčastí (field-specific, before general loop)
+    dve_field = "Dvě a více spoluúčastí"
+    if dve_field in fields_to_extract:
+        val = fields.get(dve_field, "N/A")
+        val_norm_dve = norm(val)
+        if val == "Ano" or any(k in val_norm_dve for k in [
+            "jedna spoluu", "nejvyssi",
+            "single", "one deductible",
+            "spoluu", "deductible",
+            "nejvissi"
+        ]):
+            fields[dve_field] = "Jedna spoluúčast (nejvyšší)"
+
+    # FIX 4 — Regresní náhrady synthesis (numeric-tolerant, before general loop)
+    reg_field = "Regresní náhrady"
+    if reg_field in fields_to_extract:
+        val = fields.get(reg_field, "N/A")
+        needs_synthesis = (
+            val in ["Ano", "Ne", "N/A"] or
+            (val and len(str(val)) < 15 and
+             not re.search(r'[\d]', str(val)))
+        )
+        if needs_synthesis:
+            limit1_raw = fields.get("Regres pojišťoven limit I", "N/A")
+            limit2_raw = fields.get("Regres pojišťoven limit II", "N/A")
+            n1 = parse_number(limit1_raw)
+            n2 = parse_number(limit2_raw)
+
+            def _fmt_czk(n):
+                return f"CZK {int(n):,}"
+
+            if n1 and n2:
+                fields[reg_field] = f"{_fmt_czk(n1)}–{_fmt_czk(n2)}"
+            elif n1:
+                fields[reg_field] = _fmt_czk(n1)
+
+    for field in fields_to_extract:
+        if field_types.get(field) != "string":
+            continue
+        val = fields.get(field, "N/A")
+        if val in ["N/A", "Ano", "Ne"]:
+            continue
+        val_norm = norm(val)
+
+        # FIX 1 — Territory canonicalization (extended declensions)
+        if any(k in val_norm for k in [
+            "ceska republika", "ceske republiky",
+            "ceskou republikou", "ceske rep",
+            " cr ", "cr,", "cr.", " cz ",
+            "czech republic", "uzemi cesk",
+            "territory czech",
+        ]):
+            fields[field] = "Česká republika"
+            continue
+        if any(k in val_norm for k in [
+            "cely svet", "celeho sveta",
+            "celem svete", "worldwide",
+            "world wide", "global"
+        ]):
+            fields[field] = "Celý svět"
+            continue
+        if any(k in val_norm for k in [
+            "evrop", "europe", "eu "
+        ]):
+            fields[field] = "Evropa"
+            continue
+
+        # Deductible canonicalization
+        if any(k in val_norm for k in [
+            "jedna spoluu", "nejvyssi spoluu", "nejvissi",
+            "single deductible",
+        ]):
+            fields[field] = "Jedna spoluúčast (nejvyšší)"
+            continue
+
+        # Waiting period
+        if re.search(r'10\s*dn', val_norm):
+            fields[field] = "10 dní"
+            continue
+        if re.search(r'30\s*dn', val_norm):
+            fields[field] = "30 dní"
+            continue
+
+        # Exclusions
+        if any(k in val_norm for k in [
+            "siroke standardni", "standard vyluk",
+            "standardni vyluk", "bezne vyluk",
+        ]):
+            fields[field] = "Široké standardní výluky"
+            continue
+
+        # Product liability / worldwide coverage
+        if any(k in val_norm for k in [
+            "siroke celosvetove", "worldwide cover",
+            "global cover", "celosvetove kryt",
+        ]):
+            fields[field] = "Široké celosvětové krytí"
+            continue
+
+        # FIX 3 — Způsob stanovení prémia (extended keywords)
+        if any(k in val_norm for k in [
+            "trzby", "skodni prubeh",
+            "revenue", "loss ratio",
+            "sazba z lpp", "obrat",
+            "pocet zam", "lpp",
+            "prubeh", "skodnost",
+            "sazba", "pojistne sazby"
+        ]):
+            fields[field] = "Tržby a škodní průběh ovlivňují"
+            continue
+
+        # Smluvní pokuty
+        if field == "Smluvní pokuty":
+            if any(k in val_norm for k in [
+                "vynechan", "excluded", "vyloucen"
+            ]):
+                fields[field] = "Vynecháno"
+                continue
+            if any(k in val_norm for k in [
+                "zahrnuto", "included", "ano"
+            ]):
+                fields[field] = "Ano"
+                continue
+
+        # Věci zaměstnanců — positive coverage description → Ano
+        if "zamestnanc" in val_norm:
+            if any(k in val_norm for k in [
+                "zahrnuto", "included", "kryto", "nahrada", "pojisteni"
+            ]):
+                fields[field] = "Ano"
+                continue
+
+    return fields
+
+
 def postprocess_odpov_fields(fields: dict,
                               combined_text: str,
                               fields_to_extract: list,
@@ -634,11 +790,18 @@ def postprocess_odpov_fields(fields: dict,
     """
     Post-processing for odpovědnost segment.
 
+    STEP 0: Canonicalize string values to expected reference forms.
     FIX A: Add CZK prefix to bare number values for NUMBER fields missing it.
     FIX B: Reset NUMBER fields that contain Ano/Ne — those are wrong substitutions.
     FIX C: Replace single-number extraction with CZK range if range exists nearby
            in the combined text.
+    FIX D: Known range fields — search nearby text to recover full range.
     """
+    # STEP 0 — canonicalize string values first
+    fields = canonicalize_odpov_strings(
+        fields, fields_to_extract, field_types, combined_text
+    )
+
     def is_missing(v):
         if not v:
             return True
@@ -682,6 +845,39 @@ def postprocess_odpov_fields(fields: dict,
             range_m = range_pattern.search(nearby)
             if range_m:
                 fields[field] = range_m.group(1).strip()
+
+    # FIX D: Known range fields — if value is a single number, search nearby text
+    # for the full CZK range and replace
+    known_range_fields = [
+        "Roční pojistné",
+        "Limit pojistného plnění",
+        "Limit na věci převzaté",
+        "Limit čistých finančních škod",
+        "Limit nemajetkové újmy",
+        "Osoby ve výkonu trestu",
+        "Použití zvýšených limitů",
+        "Regresní náhrady",
+    ]
+    full_range_pattern = re.compile(
+        r'CZK\s*[\d,]+\s*[–\-]\s*(?:CZK\s*)?[\d,]+',
+        re.IGNORECASE
+    )
+    for field in known_range_fields:
+        if field not in fields_to_extract:
+            continue
+        val = fields.get(field, "N/A")
+        # Skip if already contains a range marker
+        if "–" in str(val) or (
+            "-" in str(val) and not str(val).startswith("CZK -")
+        ):
+            continue
+        # Search for a range near this field name in the combined text
+        pos = combined_text.lower().find(field.lower())
+        if pos >= 0:
+            nearby = combined_text[pos:pos + 400]
+            m = full_range_pattern.search(nearby)
+            if m:
+                fields[field] = m.group(0).strip()
 
     return fields
 
