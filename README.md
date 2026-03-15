@@ -1,6 +1,10 @@
 # Team MrRooT.Ai — Challenge 1: Insurance Offer Comparison
 
-![MrRooT.Ai - Automated Insurance Comparison Pipeline](MrRooT.Ai%20-%20Automated%20Insurance%20Comparison%20Pipeline.png)
+![MrRooT.Ai - Onepager](presentation/MrRooT.Ai%20-%20Onepager.png)
+
+![MrRooT.Ai - Pipeline Overview](presentation/MrRooT.Ai%20-%20Pipeline%20Overview.png)
+
+> Full slideshow: [MrRooT.Ai - Slideshow.pdf](presentation/MrRooT.Ai%20-%20Slideshow.pdf)
 
 **Team:** MrRooT.Ai (Team 15)  
 **GitHub:** sridharankaliyamoorthy  
