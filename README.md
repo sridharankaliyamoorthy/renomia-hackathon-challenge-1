@@ -14,9 +14,55 @@
 
 ## Solution Architecture
 
-A dynamic AI extraction + deterministic ranking pipeline for any insurance segment.
+```
+┌─────────────────────────────────────────────────┐
+│                   INPUT                          │
+│  Insurance PDFs + fields_to_extract + RFP        │
+└──────────────────┬──────────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────────┐
+│              DOCUMENT PIPELINE                   │
+│  1. Filter & sort docs (quotation first)         │
+│  2. Clean OCR (LaTeX artifacts removed)          │
+│  3. Reconstruct split OCR tables                 │
+└──────────────────┬──────────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────────┐
+│           GEMINI EXTRACTION                      │
+│  • Split by field type (number vs string)        │
+│  • Two-pass for missing fields                   │
+│  • PDF vision fallback for 0-OCR documents       │
+│  • Segment-specific prompts                      │
+└──────────────────┬──────────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────────┐
+│         POST-PROCESSING                          │
+│  • Czech string canonicalization                 │
+│  • Range value reconstruction                    │
+│  • Insurer-specific overrides                    │
+│  • Hallucination guard                           │
+└──────────────────┬──────────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────────┐
+│           RANKING ENGINE                         │
+│  • Win-count algorithm per field                 │
+│  • Direction inference (higher/lower/qualitative)│
+│  • 3x weight for number fields                   │
+│  • Deterministic tiebreakers                     │
+└──────────────────┬──────────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────────┐
+│              OUTPUT                              │
+│  offers_parsed + ranking + best_offer_id         │
+└─────────────────────────────────────────────────┘
 
-- **Extraction:** Gemini 2.5 Flash with segment-aware Czech prompts
+TOOLS: Python, Gemini 2.5 Flash, PostgreSQL,
+       FastAPI, Google Cloud Run, pdfplumber
+```
+
+### Key design decisions
+
+- **Extraction:** Gemini 2.5 Flash with segment-aware Czech prompts + RFP injection
 - **Document sorting:** Quotation/pricing docs first, VPP/conditions last
 - **Two-pass extraction (odpovědnost only):** Pass 1 on quotation docs (66 fields). If >20 fields still missing → Pass 2 on VPP/conditions docs for remaining fields only
 - **PDF vision fallback:** Triggered only for docs with <50 OCR chars — uses Gemini Files API, file deleted after extraction
