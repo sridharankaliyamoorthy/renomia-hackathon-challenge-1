@@ -595,7 +595,10 @@ def extract_offer(
         )
 
     # Step 6 — PDF vision fallback
+    # Track which fields were filled by vision so the hallucination guard
+    # (which only checks OCR text) does not incorrectly reset them.
     vision_ocr_threshold = 50
+    vision_filled_fields: set = set()
     for doc in offer.get("documents", []):
         ocr_text = (doc.get("ocr_text", "") or "").strip()
         if len(ocr_text) < vision_ocr_threshold and doc.get("pdf_url"):
@@ -605,6 +608,7 @@ def extract_offer(
             for f, v in vision_fields.items():
                 if fields.get(f, "N/A") == "N/A" and v != "N/A":
                     fields[f] = v
+                    vision_filled_fields.add(f)
 
     # Step 7 — Ensure completeness
     for f in fields_to_extract:
@@ -622,6 +626,7 @@ def extract_offer(
             fields,
             combined_for_rules,
             insurer=offer.get("insurer", ""),
+            trusted_fields=vision_filled_fields,
         )
 
     return fields
@@ -910,7 +915,8 @@ def _number_in_text(parsed_val: float, text_numbers: set,
 
 def postprocess_lode_fields(fields: dict,
                              combined_text: str,
-                             insurer: str = "") -> dict:
+                             insurer: str = "",
+                             trusted_fields: set = None) -> dict:
     """
     Post-processing for lodě segment to fix known extraction issues.
 
@@ -966,8 +972,13 @@ def postprocess_lode_fields(fields: dict,
     # Hallucination guard: reset any NUMBER field whose value cannot be
     # found in the combined OCR text. Gemini sometimes invents values for
     # documents that have no pricing data (e.g. redacted allianz quotes).
+    # Fields filled via PDF vision fallback are exempt — their values come
+    # from the PDF image, not OCR text, so OCR absence is expected.
+    _trusted = trusted_fields if trusted_fields is not None else set()
     text_numbers = _collect_text_numbers(combined_text)
     for field, val in list(fields.items()):
+        if field in _trusted:
+            continue
         if is_missing(val):
             continue
         parsed = parse_number(val)
