@@ -1,0 +1,85 @@
+=== LODĚ FIELD COMPARISON ===
+Predicted ranking: ['allianz', 'yacht_pool', 'pantaenius']
+Expected ranking:  ['allianz', 'pantaenius', 'yacht_pool']
+
+--- Offer: allianz ---
+    [number] Sleva
+      pred: N/A
+      exp:  819
+    [number] CELKEM
+      pred: N/A
+      exp:  15562
+    [number] Roční pojistné:
+      pred: N/A
+      exp:  3925
+    [number] pro škodu na věci
+      pred: 7500000
+      exp:  2000000
+    [number] pro újmu na životě
+      pred: 7500000
+      exp:  10000000
+    [number] pojistné před slevou
+      pred: N/A
+      exp:  16381
+    [number] Havarijní pojištění
+      pred: N/A
+      exp:  12456
+    [number] pro jinou újmu na jmění
+      pred: 7500000
+      exp:  80000
+    [number] Havarijní pojištění - spoluúčast
+      pred: N/A
+      exp:  10000
+
+--- Offer: pantaenius ---
+    [number] CELKEM
+      pred: N/A
+      exp:  459.35
+    [number] roční pojistné
+      pred: N/A
+      exp:  30.94
+    [number] Havarijní pojištění
+      pred: N/A
+      exp:  342.11
+    [number] Limit pro finanční škody
+      pred: EUR 20,000
+      exp:  6000000
+    [number] Havarijní pojištění - spoluúčast
+      pred: N/A
+      exp:  700
+    [number] Pojištěná částka v případě úmrtí
+      pred: 12mln EUR
+      exp:  37500
+    [number] Maximální výše odškodného za újmu na zdraví
+      pred: 20mln EUR
+      exp:  8000000
+    [number] Pojistná částka v případě trvalého invalidního stavu
+      pred: 12mln EUR
+      exp:  75000
+    [number] Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku
+      pred: N/A
+      exp:  10000000
+
+--- Offer: yacht_pool ---
+    [number] CELKEM
+      pred: 578 €
+      exp:  578
+    [number] roční pojistné
+      pred: 46.00 €
+      exp:  46
+    [number] Havarijní pojištění
+      pred: 370.00 €
+      exp:  370
+    [number] Pojištění odpovědnosti za škodu
+      pred: 162.00 €
+      exp:  3500000
+    [number] Havarijní pojištění - spoluúčast
+      pred: 500.00 €
+      exp:  500
+    [number] Pojištěná částka v případě úmrtí
+      pred: N/A
+      exp:  25000
+    [number] Pojistná částka v případě trvalého invalidního stavu
+      pred: N/A
+      exp:  50000
+

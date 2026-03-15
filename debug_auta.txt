@@ -1,0 +1,59 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'auta'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10028, completion: 286, total: 12597
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 9923, completion: 292, total: 13066
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1724, completion: 286, total: 6090
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10693, completion: 1641, total: 15176
+
+DEBUG — Segment: auta
+Offer: allianz
+N/A fields: 6/17
+Sample fields (first 10):
+  Roční pojistné: 'N/A'
+  Povinné ručení – limit: 'N/A'
+  Havarijní pojištění – limit: 'N/A'
+  Spoluúčast havarijní: 'N/A'
+  Spoluúčast skla: '1 000 Kč'
+  Typ havarijního pojištění: 'N/A'
+  Krytí odcizení: 'Ano'
+  Krytí živelních rizik: 'Ano'
+  Krytí vandalismu: 'Ano'
+  Krytí střetu se zvěří: 'Ano'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.224  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.503
+
+  Hardest fields (lowest scores):
+    Krytí skel                                     0.00
+    Rozsah servisu                                 0.00
+    Roční pojistné                                 0.00
+    Spoluúčast havarijní                           0.00
+    Počet zásahů asistence                         0.00
+    Povinné ručení – limit                         0.00
+    Typ havarijního pojištění                      0.00
+    Havarijní pojištění – limit                    0.00
+    Krytí skel                                     0.00
+    Rozsah servisu                                 0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.503
+==============================================
+

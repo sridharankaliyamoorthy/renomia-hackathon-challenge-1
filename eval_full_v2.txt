@@ -1,0 +1,127 @@
+INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1566, completion: 1005, total: 4055
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 5701, completion: 1639, total: 13383
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2793, completion: 1281, total: 14014
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 16994, completion: 1324, total: 27535
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 9824, completion: 704, total: 14630
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 227528, completion: 1421, total: 243599
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 36557, completion: 1235, total: 47469
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 227239, completion: 632, total: 237188
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10621, completion: 283, total: 13029
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10742, completion: 280, total: 14068
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2438, completion: 302, total: 7406
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11402, completion: 333, total: 16472
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1399, completion: 297, total: 4424
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 9970, completion: 370, total: 14109
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 3964, completion: 294, total: 8455
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWwsTNORcaF7itw40eZ59-aZTNN8yiLfRtYy_cwCmSfiWoWERtYhi3y0-uFDFZdztfIMm0NPNdOgZKU1gQtfYrFRd6_RmaaHPVeQ0mYVdQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11430, completion: 290, total: 18510
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/rd7p5xirgko6 "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/rd7p5xirgko6
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: odpovědnost
+  Fields scored:     264
+  Extraction score:  0.056  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.402
+
+  Hardest fields (lowest scores):
+    Spoluúčast                                     0.00
+    Smluvní pokuty                                 0.00
+    Územní rozsah                                  0.00
+    Regresní náhrady                               0.00
+    Asistenční služby                              0.00
+    Dodatečné sublimity                            0.00
+    Vyloučené činnosti                             0.00
+    Osoby ve výkonu trestu                         0.00
+    Krytí vadného výrobku                          0.00
+    Limit nemajetkové újmy                         0.00
+----------------------------------------------
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.760  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.825
+
+  Hardest fields (lowest scores):
+    Úrazové pojištění                              0.00
+    Typ havarijního pojištění                      0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Právní ochrana                                 0.00
+    Spoluúčast skla                                0.00
+    Úrazové pojištění                              0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+----------------------------------------------
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.130  (weight 60%)
+  Ranking score:     0.667  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.245
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+    roční pojistné                                 0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.491
+==============================================
+

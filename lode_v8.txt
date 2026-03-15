@@ -1,0 +1,69 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1898, completion: 304, total: 4052
+WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10469, completion: 338, total: 13704
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 4463, completion: 284, total: 9737
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWzU8EMEbJhGYUXs8vlWNMi-AUeYNg5I91fDTlLYoZhAsgYL5YAD_q--NfXEUQ5UB3cyhRgdln-6y78i2kb0-j-fMzRV0Mt22S3Mp4V_bg&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11929, completion: 289, total: 15655
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/amy9jy6m9250 "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/amy9jy6m9250
+INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
+
+DEBUG lodě | pred ranking: ['yacht_pool', 'pantaenius', 'allianz'] | exp ranking: ['pantaenius', 'yacht_pool', 'allianz']
+  pred best_offer_id: yacht_pool | exp: pantaenius
+
+  Offer: allianz  (N/A: 16/16, non-N/A: 0)
+
+  Offer: pantaenius  (N/A: 15/16, non-N/A: 1)
+    [higher] Limit pro finanční škody: pred='EUR 20,000' exp='6000000'
+
+  Offer: yacht_pool  (N/A: 10/16, non-N/A: 6)
+    [lower] Havarijní pojištění - spoluúčast: pred='500.00 €' exp='500'
+    [higher] Havarijní pojištění: pred='370.00 €' exp='370'
+    [lower] Roční pojistné:: pred='370.00 €' exp='?'
+    [lower] CELKEM: pred='578 €' exp='578'
+    [lower] roční pojistné: pred='46.00 €' exp='46'
+    [higher] Pojištění odpovědnosti za škodu: pred='162.00 €' exp='3500000'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.833  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.304
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.304
+==============================================
+

@@ -1,0 +1,35 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:root:Cache hit for offer allianz
+INFO:root:Cache hit for offer pantaenius
+INFO:root:Cache hit for offer yacht_pool
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.130  (weight 60%)
+  Ranking score:     0.667  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.245
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+    roční pojistné                                 0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.245
+==============================================
+

@@ -1,0 +1,57 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1898, completion: 304, total: 3631
+INFO:extract:PDF vision fallback for: YACHT POOL.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWyWpto5K0eN5m5SGnp6xnSywXmfpE_igBNP3A_MdjQ5IdqSnsQcjCUPbPYwlaFYwk9QlEAN9siVnscvJTPhSKrP7YEnHcIovUE96dPcEA&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10469, completion: 338, total: 13721
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 1351, completion: 304, total: 2988
+INFO:extract:Gemini usage — prompt: 4463, completion: 309, total: 8354
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/c9ram7lpcou7 "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/c9ram7lpcou7
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWwQQmMLQHkDufPnRAynSBwuyJJpvJc-AhWU7OyTGdYpbBNhsqeQOv_KsCgxap13aMK0R04wMIMfZpWsYmNvj3SZ2-18EU0XJ0o-XL5hLQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11929, completion: 288, total: 16420
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/wky8cek39i02 "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/wky8cek39i02
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.833  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.304
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.304
+==============================================
+

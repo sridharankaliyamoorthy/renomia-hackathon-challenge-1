@@ -1,0 +1,105 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'odpovědnost'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:root:Cache hit for offer pojistovna_3
+INFO:root:Cache hit for offer pojistovna_1
+INFO:root:Cache hit for offer pojistovna_4
+INFO:root:Cache hit for offer pojistovna_2
+
+DEBUG odpov first offer: pojistovna_1
+N/A count: 36/66
+  'Spoluúčast': '50 000' | expected: 'CZK 10,000–50,000' ← has value
+  'Smluvní pokuty': 'N/A' | expected: 'Vynecháno' ← N/A
+  'Územní rozsah': 'území České republiky' | expected: 'Česká republika' ← has value
+  'Roční pojistné': '281 136' | expected: 'CZK 248,923–281,136' ← has value
+  'Regresní náhrady': 'Ano' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Věci zaměstnanců': 'Náhrada škody na věcech zaměstnanců' | expected: 'Ano' ← has value
+  'Asistenční služby': 'N/A' | expected: 'Ne' ← N/A
+  'Dodatečné sublimity': 'N/A' | expected: 'CZK 30,000–CZK 100,000,000' ← N/A
+  'Vyloučené činnosti': 'N/A' | expected: 'Široké standardní výluky' ← N/A
+  'Osoby ve výkonu trestu': 'N/A' | expected: 'CZK 5,000,000–10,000,000' ← N/A
+  'Krytí vadného výrobku': 'Ano' | expected: 'Široké celosvětové krytí' ← has value
+  'Limit nemajetkové újmy': '15 000 000' | expected: 'CZK 15,000,000–30,000,000' ← has value
+  'Věci návštěv limit I': 'N/A' | expected: 'CZK 2,000,000' ← N/A
+  'Čekací/karenční doba': '10 dnů' | expected: '10 dní' ← has value
+  'Finanční škody limit I': '20 000 000' | expected: 'CZK 20,000,000' ← has value
+  'Limit na věci převzaté': '50 000 000' | expected: 'CZK 2,000,000–5,000,000' ← has value
+  'Osobnostní újma limit I': '15 000 000' | expected: 'CZK 15,000,000' ← has value
+  'Vyloučené státy/sankce': 'N/A' | expected: 'Celosvětově, bez USA/Kanady' ← N/A
+  'Věci návštěv limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Finanční škody limit II': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Limit pojistného plnění': '100 000 000' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Osobnostní újma limit II': 'N/A' | expected: 'CZK 30,000,000' ← N/A
+  'Regres nemocenské limit I': 'N/A' | expected: 'CZK 15,000,000' ← N/A
+  'Způsob stanovení prémia': 'údaje rozhodné pro stanovení' | expected: 'Tržby a škodní průběh ovlivňují' ← has value
+  'Dvě a více spoluúčastí': 'Ano' | expected: 'Jedna spoluúčast (nejvyšší)' ← has value
+  'Objasnění podpojištění': 'N/A' | expected: '15 % tolerance' ← N/A
+  'Odpovědnost za věci limit': '50 000 000' | expected: 'CZK 2,000,000–50,000,000' ← has value
+  'Regres nemocenské limit II': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Regres pojišťoven limit I': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Věci zaměstnanců limit I': 'N/A' | expected: '50\xa0000\xa0000\xa0CZK' ← N/A
+  'Obecná odpovědnost limit I': '100 000 000' | expected: 'CZK 50,000,000' ← has value
+  'Regres pojišťoven limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Výkon trestu škody limit I': '5 000 000' | expected: 'CZK 5,000,000' ← has value
+  'Věci zaměstnanců limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Obecná odpovědnost limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Výkon trestu škody limit II': 'N/A' | expected: 'CZK 10,000,000-100,000,000' ← N/A
+  'Použití zvýšených limitů': 'N/A' | expected: 'CZK 50,000,000–100,000,000/rok' ← N/A
+  'Krytí subdodavatel/subdodávky': 'N/A' | expected: 'Ano' ← N/A
+  'Výluky na kybernetická rizika': 'N/A' | expected: 'Neuvedeno' ← N/A
+  'Věci návštěv spoluúčast I': '500,- Kč' | expected: 'CZK 500' ← has value
+  'Finanční škody spoluúčast I': '50 000' | expected: 'CZK 5,000' ← has value
+  'Křížová odpovědnost limit I': 'N/A' | expected: 'CZK 50\xa0000\xa0000' ← N/A
+  'Osobnostní újma spoluúčast I': '50 000' | expected: 'CZK 10,000' ← has value
+  'Věci návštěv spoluúčast II': 'N/A' | expected: 'CZK 500' ← N/A
+  'Finanční škody spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Křížová odpovědnost limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Osobnostní újma spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Regres nemocenské spoluúčast I': '1 000,- Kč' | expected: 'CZK 10 000' ← has value
+  'Limit čistých finančních škod': '20 000 000' | expected: 'CZK 20,000,000–50,000,000' ← has value
+  'Regres nemocenské spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Regres pojišťoven spoluúčast I': '1 000,- Kč' | expected: 'CZK 10,000' ← has value
+  'Věci zaměstnanců spoluúčast I': '500,- Kč' | expected: 'CZK 500' ← has value
+  'Obecná odpovědnost spoluúčast I': '50 000' | expected: 'CZK 10,000' ← has value
+  'Regres pojišťoven spoluúčast II': 'N/A' | expected: 'CZK 50 000' ← N/A
+  'Výkon trestu škody spoluúčast I': '10 000,- Kč' | expected: 'CZK 10,000' ← has value
+  'Věci převzaté/užívané limit I': '50 000 000' | expected: '2 000 000 Kč' ← has value
+  'Věci zaměstnanců spoluúčast II': 'N/A' | expected: 'CZK 500' ← N/A
+  'Obecná odpovědnost spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Výkon trestu škody spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Věci převzaté/užívané limit II': 'N/A' | expected: 'CZK 5,000,000' ← N/A
+  'Křížová odpovědnost spoluúčast I': '50 000' | expected: 'CZK 10,000' ← has value
+  'Křížová odpovědnost spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Odpovědnost za škodu vadnou činností': 'Ano' | expected: 'Ano' ← has value
+  'Věci převzaté/užívané spoluúčast I': '50 000' | expected: 'CZK 10,000' ← has value
+  'Věci převzaté/užívané spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Limit na práce v rámci holdingové skupiny': 'N/A' | expected: 'Hlavní limit smlouvy' ← N/A
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: odpovědnost
+  Fields scored:     264
+  Extraction score:  0.058  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.403
+
+  Hardest fields (lowest scores):
+    Spoluúčast                                     0.00
+    Smluvní pokuty                                 0.00
+    Regresní náhrady                               0.00
+    Věci zaměstnanců                               0.00
+    Asistenční služby                              0.00
+    Dodatečné sublimity                            0.00
+    Vyloučené činnosti                             0.00
+    Osoby ve výkonu trestu                         0.00
+    Krytí vadného výrobku                          0.00
+    Limit nemajetkové újmy                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.403
+==============================================
+

@@ -1,0 +1,176 @@
+INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:root:Cache hit for offer pojistovna_4
+INFO:root:Cache hit for offer pojistovna_1
+INFO:root:Cache hit for offer pojistovna_3
+INFO:root:Cache hit for offer pojistovna_2
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10621, completion: 289, total: 13692
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10742, completion: 286, total: 14199
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2438, completion: 300, total: 6923
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11402, completion: 337, total: 16222
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1898, completion: 306, total: 4080
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10469, completion: 351, total: 13352
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 4463, completion: 294, total: 7576
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWzmgrpO_K9KeZcnZ99bCl-9p4e3UYo6p2mHY3udKVoz4gwiIKmfHZKpu0rTih7XwFvk-6yeHvSUjwV0PN_tkLIKCTRsPGNgTzPo_Lo-Mw&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11929, completion: 301, total: 17031
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/3lm5soxvbkvy "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/3lm5soxvbkvy
+
+DEBUG odpov first offer: pojistovna_1
+N/A count: 12/66
+  'Spoluúčast': 'CZK 10,000' | expected: 'CZK 10,000–50,000' ← has value
+  'Smluvní pokuty': 'N/A' | expected: 'Vynecháno' ← N/A
+  'Územní rozsah': 'Evr.' | expected: 'Česká republika' ← has value
+  'Roční pojistné': 'CZK 323,603' | expected: 'CZK 248,923–281,136' ← has value
+  'Regresní náhrady': 'Regresní nároky zdravotních pojišťoven (3.osoby i zaměstnanci), Regresní nároky dávek nemocenského pojištění' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Věci zaměstnanců': 'Náhrada škody na věcech zaměstnanců' | expected: 'Ano' ← has value
+  'Asistenční služby': 'N/A' | expected: 'Ne' ← N/A
+  'Dodatečné sublimity': 'N/A' | expected: 'CZK 30,000–CZK 100,000,000' ← N/A
+  'Vyloučené činnosti': 'Pojištění se nevztahuje na škodné události vzniklé v důsledku válečných událostí, vzpour, povstání nebo jiných násilných nepokojů majících charakter povstání či revoluce, v důsledku teroristických aktů, stávek nebo zásahem veřejné moci a v příčinné souvislosti s nimi, jadernou energií, zářením všeho druhu a radioaktivní kontaminací, v důsledku vady, kterou měla pojištěná věc již v době sjednání pojištění, a která měla či mohla být známa pojistníkovi nebo pojištěnému bez ohledu na to, zda byla známa pojistiteli. Pojištění se nevztahuje na škodné události, v souvislosti s kterými uvede oprávněná osoba při uplatňování práva na pojistné plnění vědomě nepravdivé nebo hrubě zkreslené podstatné údaje týkající se rozsahu pojistné události nebo podstatné údaje týkající se této pojistné události zamlčí. Další výluky z pojištění mohou být uvedeny v dalších částech těchto pojistných podmínek, navazujících pojistných podmínkách a v pojistné smlouvě.' | expected: 'Široké standardní výluky' ← has value
+  'Osoby ve výkonu trestu': 'CZK 5,000,000–10,000,000' | expected: 'CZK 5,000,000–10,000,000' ← has value
+  'Krytí vadného výrobku': 'ODP včetně výrobku' | expected: 'Široké celosvětové krytí' ← has value
+  'Limit nemajetkové újmy': 'CZK 15,000,000' | expected: 'CZK 15,000,000–30,000,000' ← has value
+  'Věci návštěv limit I': 'CZK 50,000,000' | expected: 'CZK 2,000,000' ← has value
+  'Čekací/karenční doba': 'Pojištění pro případ působení pojistného nebezpečí povodeň nebo záplava se sjednává s čekací dobou v délce 10 dnů ode dne uzavření pojistné smlouvy.' | expected: '10 dní' ← has value
+  'Finanční škody limit I': 'CZK 20,000,000' | expected: 'CZK 20,000,000' ← has value
+  'Limit na věci převzaté': 'CZK 2,000,000' | expected: 'CZK 2,000,000–5,000,000' ← has value
+  'Osobnostní újma limit I': 'CZK 15,000,000' | expected: 'CZK 15,000,000' ← has value
+  'Vyloučené státy/sankce': 'N/A' | expected: 'Celosvětově, bez USA/Kanady' ← N/A
+  'Věci návštěv limit II': 'CZK 100,000,000' | expected: 'CZK 100,000,000' ← has value
+  'Finanční škody limit II': 'CZK 100,000,000' | expected: 'CZK 50,000,000' ← has value
+  'Limit pojistného plnění': 'CZK 100,000,000' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Osobnostní újma limit II': 'CZK 100,000,000' | expected: 'CZK 30,000,000' ← has value
+  'Regres nemocenské limit I': 'CZK 50,000,000' | expected: 'CZK 15,000,000' ← has value
+  'Způsob stanovení prémia': 'Sazba z LPP (%%) dle Obrat a Počet zam.' | expected: 'Tržby a škodní průběh ovlivňují' ← has value
+  'Dvě a více spoluúčastí': 'Ano' | expected: 'Jedna spoluúčast (nejvyšší)' ← has value
+  'Objasnění podpojištění': 'N/A' | expected: '15 % tolerance' ← N/A
+  'Odpovědnost za věci limit': 'Újma na věci' | expected: 'CZK 2,000,000–50,000,000' ← has value
+  'Regres nemocenské limit II': 'CZK 100,000,000' | expected: 'CZK 50,000,000' ← has value
+  'Regres pojišťoven limit I': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Věci zaměstnanců limit I': 'CZK 50,000,000' | expected: '50\xa0000\xa0000\xa0CZK' ← has value
+  'Obecná odpovědnost limit I': 'CZK 50,000,000' | expected: 'CZK 50,000,000' ← has value
+  'Regres pojišťoven limit II': 'CZK 100,000,000' | expected: 'CZK 100,000,000' ← has value
+  'Výkon trestu škody limit I': 'CZK 5,000,000' | expected: 'CZK 5,000,000' ← has value
+  'Věci zaměstnanců limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Obecná odpovědnost limit II': 'CZK 100,000,000' | expected: 'CZK 100,000,000' ← has value
+  'Výkon trestu škody limit II': 'CZK 10,000,000' | expected: 'CZK 10,000,000-100,000,000' ← has value
+  'Použití zvýšených limitů': 'N/A' | expected: 'CZK 50,000,000–100,000,000/rok' ← N/A
+  'Krytí subdodavatel/subdodávky': 'N/A' | expected: 'Ano' ← N/A
+  'Výluky na kybernetická rizika': 'N/A' | expected: 'Neuvedeno' ← N/A
+  'Věci návštěv spoluúčast I': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Finanční škody spoluúčast I': 'CZK 5,000' | expected: 'CZK 5,000' ← has value
+  'Křížová odpovědnost limit I': 'CZK 50,000,000' | expected: 'CZK 50\xa0000\xa0000' ← has value
+  'Osobnostní újma spoluúčast I': 'CZK 5,000' | expected: 'CZK 10,000' ← has value
+  'Věci návštěv spoluúčast II': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Finanční škody spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
+  'Křížová odpovědnost limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Osobnostní újma spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
+  'Regres nemocenské spoluúčast I': 'CZK 1,000' | expected: 'CZK 10 000' ← has value
+  'Limit čistých finančních škod': 'CZK 20,000,000' | expected: 'CZK 20,000,000–50,000,000' ← has value
+  'Regres nemocenské spoluúčast II': 'CZK 1,000' | expected: 'CZK 50,000' ← has value
+  'Regres pojišťoven spoluúčast I': 'CZK 1,000' | expected: 'CZK 10,000' ← has value
+  'Věci zaměstnanců spoluúčast I': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Obecná odpovědnost spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Regres pojišťoven spoluúčast II': 'CZK 1,000' | expected: 'CZK 50 000' ← has value
+  'Výkon trestu škody spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Věci převzaté/užívané limit I': 'CZK 2,000,000' | expected: '2 000 000 Kč' ← has value
+  'Věci zaměstnanců spoluúčast II': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Obecná odpovědnost spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
+  'Výkon trestu škody spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Věci převzaté/užívané limit II': 'CZK 100,000,000' | expected: 'CZK 5,000,000' ← has value
+  'Křížová odpovědnost spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Křížová odpovědnost spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
+  'Odpovědnost za škodu vadnou činností': 'N/A' | expected: 'Ano' ← N/A
+  'Věci převzaté/užívané spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Věci převzaté/užívané spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
+  'Limit na práce v rámci holdingové skupiny': 'CZK 50,000,000' | expected: 'Hlavní limit smlouvy' ← has value
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: odpovědnost
+  Fields scored:     264
+  Extraction score:  0.159  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.464
+
+  Hardest fields (lowest scores):
+    Smluvní pokuty                                 0.00
+    Územní rozsah                                  0.00
+    Regresní náhrady                               0.00
+    Věci zaměstnanců                               0.00
+    Asistenční služby                              0.00
+    Dodatečné sublimity                            0.00
+    Vyloučené činnosti                             0.00
+    Krytí vadného výrobku                          0.00
+    Čekací/karenční doba                           0.00
+    Vyloučené státy/sankce                         0.00
+----------------------------------------------
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.772  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.832
+
+  Hardest fields (lowest scores):
+    Úrazové pojištění                              0.00
+    Počet zásahů asistence                         0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+    Úrazové pojištění                              0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+    Havarijní pojištění – limit                    0.00
+----------------------------------------------
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.833  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.304
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.533
+==============================================
+

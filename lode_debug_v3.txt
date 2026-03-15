@@ -1,0 +1,54 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:root:Cache hit for offer allianz
+INFO:root:Cache hit for offer pantaenius
+INFO:root:Cache hit for offer yacht_pool
+
+DEBUG lodě | pred ranking: ['yacht_pool', 'pantaenius', 'allianz'] | exp ranking: ['pantaenius', 'yacht_pool', 'allianz']
+  pred best_offer_id: yacht_pool | exp: pantaenius
+
+  Offer: allianz  (N/A: 16/16, non-N/A: 0)
+
+  Offer: pantaenius  (N/A: 13/16, non-N/A: 3)
+    [higher] Maximální výše odškodného za újmu na zdraví: pred='20mln EUR' exp='8000000'
+    [higher] Pojištěná částka v případě úmrtí: pred='12mln EUR' exp='37500'
+    [higher] Pojistná částka v případě trvalého invalidního stavu: pred='12mln EUR' exp='75000'
+
+  Offer: yacht_pool  (N/A: 9/16, non-N/A: 7)
+    [lower] Havarijní pojištění - spoluúčast: pred='500.00 €' exp='500'
+    [higher] Havarijní pojištění: pred='370.00 €' exp='370'
+    [lower] Roční pojistné:: pred='370.00 €' exp='?'
+    [lower] CELKEM: pred='578 €' exp='578'
+    [higher] Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku: pred='7,5mil €' exp='?'
+    [lower] roční pojistné: pred='46.00 €' exp='46'
+    [higher] Pojištění odpovědnosti za škodu: pred='162.00 €' exp='3500000'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.833  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.304
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.304
+==============================================
+

@@ -1,0 +1,196 @@
+INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: odpovědnost
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2266, completion: 1180, total: 6434
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 6401, completion: 1850, total: 14860
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 3493, completion: 1461, total: 13248
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10500, completion: 700, total: 15202
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 228228, completion: 2265, total: 247103
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 17692, completion: 2470, total: 32903
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 37268, completion: 2225, total: 52173
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 228098, completion: 1014, total: 236850
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10621, completion: 281, total: 12749
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10742, completion: 286, total: 12941
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2438, completion: 297, total: 7130
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11402, completion: 320, total: 16653
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1898, completion: 304, total: 5425
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10469, completion: 318, total: 14678
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 4463, completion: 294, total: 8922
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWxUcJBEQxTFEl2qyXs7TP8S3FopapiEuNrAY0GZRWJac6Lo0DbrLpeSy4k3RvSOvmq9svV1DAo4rKUjpnvRomChl6plPQouM2_yiUvoZA&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 11929, completion: 295, total: 16465
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/8a3tpb6iubzg "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/8a3tpb6iubzg
+
+DEBUG odpov first offer: pojistovna_1
+N/A count: 31/66
+  'Odpovědnost za věci limit': 'N/A' | expected: 'CZK 2,000,000–50,000,000' ← N/A
+  'Obecná odpovědnost limit I': 'CZK 50,000,000' | expected: 'CZK 50,000,000' ← has value
+  'Obecná odpovědnost spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Obecná odpovědnost limit II': 'CZK 100,000,000' | expected: 'CZK 100,000,000' ← has value
+  'Obecná odpovědnost spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Regres pojišťoven limit I': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Regres pojišťoven spoluúčast I': 'CZK 1,000' | expected: 'CZK 10,000' ← has value
+  'Regres pojišťoven limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Regres pojišťoven spoluúčast II': 'CZK 1,000' | expected: 'CZK 50 000' ← has value
+  'Regres nemocenské limit I': 'N/A' | expected: 'CZK 15,000,000' ← N/A
+  'Regres nemocenské spoluúčast I': 'CZK 1,000' | expected: 'CZK 10 000' ← has value
+  'Regres nemocenské limit II': 'N/A' | expected: 'CZK 50,000,000' ← N/A
+  'Regres nemocenské spoluúčast II': 'CZK 1,000' | expected: 'CZK 50,000' ← has value
+  'Osobnostní újma limit I': 'N/A' | expected: 'CZK 15,000,000' ← N/A
+  'Osobnostní újma spoluúčast I': 'N/A' | expected: 'CZK 10,000' ← N/A
+  'Osobnostní újma limit II': 'CZK 15,000,000' | expected: 'CZK 30,000,000' ← has value
+  'Osobnostní újma spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Věci převzaté/užívané limit I': 'CZK 2,000,000' | expected: '2 000 000 Kč' ← has value
+  'Věci převzaté/užívané spoluúčast I': 'N/A' | expected: 'CZK 10,000' ← N/A
+  'Věci převzaté/užívané limit II': 'N/A' | expected: 'CZK 5,000,000' ← N/A
+  'Věci převzaté/užívané spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Věci zaměstnanců limit I': 'N/A' | expected: '50\xa0000\xa0000\xa0CZK' ← N/A
+  'Věci zaměstnanců spoluúčast I': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Věci zaměstnanců limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Věci zaměstnanců spoluúčast II': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Věci návštěv limit I': 'N/A' | expected: 'CZK 2,000,000' ← N/A
+  'Věci návštěv spoluúčast I': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Věci návštěv limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Věci návštěv spoluúčast II': 'CZK 500' | expected: 'CZK 500' ← has value
+  'Finanční škody limit I': 'N/A' | expected: 'CZK 20,000,000' ← N/A
+  'Finanční škody spoluúčast I': 'N/A' | expected: 'CZK 5,000' ← N/A
+  'Finanční škody limit II': 'CZK 20,000,000' | expected: 'CZK 50,000,000' ← has value
+  'Finanční škody spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Křížová odpovědnost limit I': 'N/A' | expected: 'CZK 50\xa0000\xa0000' ← N/A
+  'Křížová odpovědnost spoluúčast I': 'N/A' | expected: 'CZK 10,000' ← N/A
+  'Křížová odpovědnost limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
+  'Křížová odpovědnost spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
+  'Výkon trestu škody limit I': 'CZK 5,000,000' | expected: 'CZK 5,000,000' ← has value
+  'Výkon trestu škody spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
+  'Výkon trestu škody limit II': 'CZK 10,000,000' | expected: 'CZK 10,000,000-100,000,000' ← has value
+  'Výkon trestu škody spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Limit pojistného plnění': 'CZK 100,000,000' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Spoluúčast': 'CZK 10,000–50,000' | expected: 'CZK 10,000–50,000' ← has value
+  'Roční pojistné': 'CZK 281,136' | expected: 'CZK 248,923–281,136' ← has value
+  'Územní rozsah': 'Není-li v pojistné smlouvě ujednáno jinak, je místem pojištění území České republiky.' | expected: 'Česká republika' ← has value
+  'Limit na věci převzaté': 'CZK 2,000,000' | expected: 'CZK 2,000,000–5,000,000' ← has value
+  'Limit čistých finančních škod': 'CZK 20,000,000' | expected: 'CZK 20,000,000–50,000,000' ← has value
+  'Limit nemajetkové újmy': 'CZK 15,000,000' | expected: 'CZK 15,000,000–30,000,000' ← has value
+  'Regresní náhrady': 'Regresní nároky zdravotních pojišťoven (3.osoby i zaměstnanci) + Regresní nároky dávek nemocenského pojištění' | expected: 'CZK 50,000,000–100,000,000' ← has value
+  'Věci zaměstnanců': 'Náhrada škody na věcech zaměstnanců' | expected: 'Ano' ← has value
+  'Osoby ve výkonu trestu': 'N/A' | expected: 'CZK 5,000,000–10,000,000' ← N/A
+  'Krytí vadného výrobku': 'ODP včetně výrobku' | expected: 'Široké celosvětové krytí' ← has value
+  'Vyloučené činnosti': 'N/A' | expected: 'Široké standardní výluky' ← N/A
+  'Čekací/karenční doba': 'Čekací doba je doba, po kterou nevzniká pojistiteli povinnost poskytnout pojistné plnění z událostí, které by jinak byly pojistnými událostmi. Pojištění pro případ působení pojistného nebezpečí povodeň nebo záplava se sjednává s čekací dobou v délce 10 dnů ode dne uzavření pojistné smlouvy.' | expected: '10 dní' ← has value
+  'Výluky na kybernetická rizika': 'N/A' | expected: 'Neuvedeno' ← N/A
+  'Dodatečné sublimity': 'Nemajetková újma, Čistá finanční újma' | expected: 'CZK 30,000–CZK 100,000,000' ← has value
+  'Vyloučené státy/sankce': 'N/A' | expected: 'Celosvětově, bez USA/Kanady' ← N/A
+  'Krytí subdodavatel/subdodávky': 'N/A' | expected: 'Ano' ← N/A
+  'Smluvní pokuty': 'N/A' | expected: 'Vynecháno' ← N/A
+  'Odpovědnost za škodu vadnou činností': 'Základní odpovědnost z činnosti a ze vztahu' | expected: 'Ano' ← has value
+  'Objasnění podpojištění': 'N/A' | expected: '15 % tolerance' ← N/A
+  'Způsob stanovení prémia': 'Sazba z LPP (%%)' | expected: 'Tržby a škodní průběh ovlivňují' ← has value
+  'Použití zvýšených limitů': 'N/A' | expected: 'CZK 50,000,000–100,000,000/rok' ← N/A
+  'Limit na práce v rámci holdingové skupiny': 'Pojištění se vztahuje i na odpovědnost za újmu, za níž pojištěný odpovídá osobě, která je v relevantním vztahu k pojištěnému.' | expected: 'Hlavní limit smlouvy' ← has value
+  'Asistenční služby': 'N/A' | expected: 'Ne' ← N/A
+  'Dvě a více spoluúčastí': 'Více spoluúčastí' | expected: 'Jedna spoluúčast (nejvyšší)' ← has value
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: odpovědnost
+  Fields scored:     264
+  Extraction score:  0.097  (weight 60%)
+  Ranking score:     0.750  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.396
+
+  Hardest fields (lowest scores):
+    Smluvní pokuty                                 0.00
+    Územní rozsah                                  0.00
+    Regresní náhrady                               0.00
+    Věci zaměstnanců                               0.00
+    Asistenční služby                              0.00
+    Dodatečné sublimity                            0.00
+    Vyloučené činnosti                             0.00
+    Osoby ve výkonu trestu                         0.00
+    Krytí vadného výrobku                          0.00
+    Věci návštěv limit I                           0.00
+----------------------------------------------
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.728  (weight 60%)
+  Ranking score:     0.750  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.624
+
+  Hardest fields (lowest scores):
+    Úrazové pojištění                              0.00
+    Počet zásahů asistence                         0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
+    Úrazové pojištění                              0.00
+    Havarijní pojištění – limit                    0.00
+    Krytí skel                                     0.00
+    Právní ochrana                                 0.00
+    Spoluúčast skla                                0.00
+----------------------------------------------
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.833  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.304
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.441
+==============================================
+

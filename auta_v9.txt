@@ -1,0 +1,555 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'auta'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10424, completion: 288, total: 14042
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2120, completion: 392, total: 6353
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11084, completion: 344, total: 15057
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10303, completion: 290, total: 14452
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options,
+annual premium totals.
+
+LABEL MAPPINGS:
+- Roční pojistné may appear as Roční platba or
+  Cena celkem or Celková cena
+- Povinné ručení – limit appears as Limit povinného
+  ručení or XXX/XXX mil. Kč
+- Spoluúčast havarijní appears as X % / X XXX Kč
+
+If multiple variants shown (Komfort/Plus/Extra/Max):
+Extract from the MOST COMPREHENSIVE variant (Max).
+
+VALUE RULES:
+- Return ALL values VERBATIM as they appear
+- NUMBER fields: return full string with currency
+  e.g. CZK 150,000,000 or CZK 5 000 Kč or 34851
+- STRING fields: return full descriptive phrase
+  e.g. Ano, se spoluúčastí CZK 1,000
+  e.g. Ne (lze připojistit za CZK 1 485)
+  e.g. Volba servisu, sleva CZK 3,000
+  e.g. Neomezeno or Omezeno for count fields
+- Do NOT translate to English
+- Do NOT use template placeholders like CZK X XXX
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Generali_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Přehled
+
+Požadované parametry
+
+Limit povinného ručení: 150/150 mil
+
+Typ havarijního pojištění: Allrisk
+
+Spoluúčast: 1 000 Kč
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+Pojistná částka: 720 000 Kč včetně DPH
+
+Způsob
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options,
+annual premium totals.
+
+LABEL MAPPINGS:
+- Roční pojistné may appear as Roční platba or
+  Cena celkem or Celková cena
+- Povinné ručení – limit appears as Limit povinného
+  ručení or XXX/XXX mil. Kč
+- Spoluúčast havarijní appears as X % / X XXX Kč
+
+If multiple variants shown (Komfort/Plus/Extra/Max):
+Extract from the MOST COMPREHENSIVE variant (Max).
+
+VALUE RULES:
+- Return ALL values VERBATIM as they appear
+- NUMBER fields: return full string with currency
+  e.g. CZK 150,000,000 or CZK 5 000 Kč or 34851
+- STRING fields: return full descriptive phrase
+  e.g. Ano, se spoluúčastí CZK 1,000
+  e.g. Ne (lze připojistit za CZK 1 485)
+  e.g. Volba servisu, sleva CZK 3,000
+  e.g. Neomezeno or Omezeno for count fields
+- Do NOT translate to English
+- Do NOT use template placeholders like CZK X XXX
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Allianz_Redigováno.pdf ---
+
+MOJEAUTO
+
+KALKULACE POJIŠTĚNÍ
+
+pojišťovna 1
+
+Pojistitel:
+
+Klient: T Rodné číslo:
+
+Bydliště:
+
+E mail:
+
+Mobilní telefon: +
+
+Roční nájezd
+
+Platnost do 2. 2. 2026
+
+Využívání opraven pojistitele
+
+PZ1 20114511
+
+Pojišťovací zprostředkovatel: RENOMIA, a.s. brno@renomia.cz +420 511 12
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options,
+annual premium totals.
+
+LABEL MAPPINGS:
+- Roční pojistné may appear as Roční platba or
+  Cena celkem or Celková cena
+- Povinné ručení – limit appears as Limit povinného
+  ručení or XXX/XXX mil. Kč
+- Spoluúčast havarijní appears as X % / X XXX Kč
+
+If multiple variants shown (Komfort/Plus/Extra/Max):
+Extract from the MOST COMPREHENSIVE variant (Max).
+
+VALUE RULES:
+- Return ALL values VERBATIM as they appear
+- NUMBER fields: return full string with currency
+  e.g. CZK 150,000,000 or CZK 5 000 Kč or 34851
+- STRING fields: return full descriptive phrase
+  e.g. Ano, se spoluúčastí CZK 1,000
+  e.g. Ne (lze připojistit za CZK 1 485)
+  e.g. Volba servisu, sleva CZK 3,000
+  e.g. Neomezeno or Omezeno for count fields
+- Do NOT translate to English
+- Do NOT use template placeholders like CZK X XXX
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: ČPP_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Přehled
+
+Cena celkem
+
+Povinné ručení
+
+Havarijní pojištění
+
+Požadované parametry
+
+Limit povinného ručení: 200/200 mil
+
+Typ havarijního pojištění: Allrisk
+
+Spoluúčast: 3%/3 000 Kc
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options,
+annual premium totals.
+
+LABEL MAPPINGS:
+- Roční pojistné may appear as Roční platba or
+  Cena celkem or Celková cena
+- Povinné ručení – limit appears as Limit povinného
+  ručení or XXX/XXX mil. Kč
+- Spoluúčast havarijní appears as X % / X XXX Kč
+
+If multiple variants shown (Komfort/Plus/Extra/Max):
+Extract from the MOST COMPREHENSIVE variant (Max).
+
+VALUE RULES:
+- Return ALL values VERBATIM as they appear
+- NUMBER fields: return full string with currency
+  e.g. CZK 150,000,000 or CZK 5 000 Kč or 34851
+- STRING fields: return full descriptive phrase
+  e.g. Ano, se spoluúčastí CZK 1,000
+  e.g. Ne (lze připojistit za CZK 1 485)
+  e.g. Volba servisu, sleva CZK 3,000
+  e.g. Neomezeno or Omezeno for count fields
+- Do NOT translate to English
+- Do NOT use template placeholders like CZK X XXX
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+6. STRING fields that represent yes/no coverage:
+   Return the SHORT Czech label as it appears in the document —
+   typically 'Ano' or 'Ne' or a brief phrase (1-5 words).
+   Do NOT translate to English.
+   Do NOT write verbose descriptions.
+   If the document shows a checkmark or 'included', return 'Ano'.
+   If the document shows 'not included' or a cross, return 'Ne'.
+   For coverage fields like 'Krytí skel', 'Krytí odcizení',
+   'Přímá likvidace' — return exactly what the document shows,
+   typically a short phrase of 1-5 words.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Kooperativa_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Požadované parametry
+
+Limit povinného ručení: 200/200 mil
+
+Spoluúčast: 5 000 Kč
+
+Typ havarijního pojištění: Allrisk
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+Pojistná částka: 720 000 Kč včetně DPH
+
+Způsob úhrad
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "41 523 Kč / rok",
+  "Povinné ručení – limit": "200/200 mil",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "N/A",
+  "Krytí živelních rizik": "N/A",
+  "Krytí vandalismu": "N/A",
+  "Krytí střetu se zvěří": "N/A",
+  "Krytí skel": "N/A",
+  "Úrazové pojištění": "N/A",
+  "Asistenční služby – rozsah": "N/A",
+  "Přímá likvidace": "N/A",
+  "Právní ochrana": "N/A",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "N/A"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "34 851 Kč",
+  "Povinné ručení – limit": "150/150 mil. Kč",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "1 000 Kč",
+  "Havarijní pojištění – limit": "Není uvedeno",
+  "Typ havarijního pojištění": "Zahrnuje Havárii, Přírodní události, Požár a výbuch, Poškození zvířetem, Krádež, Vandalismus, Skla",
+  "Krytí odcizení": "Krádež",
+  "Krytí živelních rizik": "Přírodní události, Požár a výbuch",
+  "Krytí vandalismu": "Vandalismus",
+  "Krytí střetu se zvěří": "Poškození zvířetem",
+  "Krytí skel": "Skla(spoluúčast 1 000 Kč)",
+  "Úrazové pojištění": "Úraz",
+  "Asistenční služby – rozsah": "Asistence rozšířená",
+  "Přímá likvidace": "Při nezaviněné nehodě mi Allianz škodu zaplatí a vše vyřídí sama s pojišťovnou viníka",
+  "Právní ochrana": "Právní poradenství",
+  "Počet zásahů asistence": "Není uvedeno",
+  "Rozsah servisu": "Vyžaduje se využívání smluvních opraven pojistitele"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "56 326 Kč/rok",
+  "Povinné ručení – limit": "150/150 mil",
+  "Spoluúčast havarijní": "1 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Ne (od 388 Kč / rok)",
+  "Krytí živelních rizik": "Ne (od 492 Kč / rok)",
+  "Krytí vandalismu": "Není uvedeno",
+  "Krytí střetu se zvěří": "Ne (od 669 Kč / rok)",
+  "Krytí skel": "Ne (od 794 Kč / rok)",
+  "Úrazové pojištění": "Ne (od 413 Kč / rok)",
+  "Asistenční služby – rozsah": "Možnost rozšíření (od 665 Kč / rok)",
+  "Přímá likvidace": "Není uvedeno",
+  "Právní ochrana": "Ne (1485 Kč / rok)",
+  "Počet zásahů asistence": "Není uvedeno",
+  "Rozsah servisu": "Není uvedeno"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "39 998 Kč / rok",
+  "Povinné ručení – limit": "200/200 mil",
+  "Spoluúčast havarijní": "3%/3 000 Kc",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "N/A",
+  "Krytí živelních rizik": "N/A",
+  "Krytí vandalismu": "N/A",
+  "Krytí střetu se zvěří": "N/A",
+  "Krytí skel": "N/A",
+  "Úrazové pojištění": "N/A",
+  "Asistenční služby – rozsah": "N/A",
+  "Přímá likvidace": "N/A",
+  "Právní ochrana": "N/A",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "N/A"
+}
+
+DEBUG — Segment: auta
+Offer: allianz
+N/A fields: 0/17
+Sample fields (first 10):
+  Roční pojistné: '34 851 Kč'
+  Povinné ručení – limit: 'CZK 150,000,000'
+  Havarijní pojištění – limit: 'Není uvedeno'
+  Spoluúčast havarijní: '5 000 Kč'
+  Spoluúčast skla: '1 000 Kč'
+  Typ havarijního pojištění: 'Zahrnuje Havárii, Přírodní události, Požár a výbuch, Poškození zvířetem, Krádež, Vandalismus, Skla'
+  Krytí odcizení: 'Krádež'
+  Krytí živelních rizik: 'Přírodní události, Požár a výbuch'
+  Krytí vandalismu: 'Vandalismus'
+  Krytí střetu se zvěří: 'Poškození zvířetem'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.494  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.665
+
+  Hardest fields (lowest scores):
+    Rozsah servisu                                 0.00
+    Krytí odcizení                                 0.00
+    Krytí vandalismu                               0.00
+    Přímá likvidace                                0.00
+    Úrazové pojištění                              0.00
+    Krytí živelních rizik                          0.00
+    Krytí střetu se zvěří                          0.00
+    Typ havarijního pojištění                      0.00
+    Asistenční služby – rozsah                     0.00
+    Krytí skel                                     0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.665
+==============================================
+

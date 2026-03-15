@@ -1,0 +1,93 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'lodě'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: lodě
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:extract:pdfplumber doubled text deduped (ratio 0.42→0.02) for ge-1/training/lod%C4%9B/YACHT%20POOL.pdf
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2108, completion: 302, total: 3643
+INFO:extract:pdfplumber doubled text deduped (ratio 0.42→0.02) for ge-1/training/lod%C4%9B/YACHT%20POOL.pdf
+INFO:extract:pdfplumber doubled text deduped (ratio 0.42→0.02) for ge-1/training/lod%C4%9B/YACHT%20POOL.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10679, completion: 342, total: 13899
+INFO:extract:lodě extra vision: pdfplumber empty for Application_Q15-00000280_Redigováno.pdf (12901 OCR chars)
+INFO:extract:PDF vision fallback for: Application_Q15-00000280_Redigováno.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWzw9jvFNCPtM9UPoZ_gA-mm_16yxM6_ZgjqvtXHifhQnwviF2S0puxx1rKINElFNGXIZTuhV9yofjoN5B2G25e8lopvgGyWaHG4B7Daeg&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 4673, completion: 290, total: 8383
+INFO:extract:PDF vision fallback for: Conditions.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWykBFZRoq0bjCyCY9T_nu2RH84I5lI2WI9HH76ktPp747cR7LrIBeJv6jWrq40IxWtBACRW4QPXHpyFY39ChN_ygrxz-H6Fc8ZqjutkUbg&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 2593, completion: 346, total: 5221
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/4rehpes3gh2i "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/4rehpes3gh2i
+INFO:extract:lodě extra vision: pdfplumber empty for Quotation_Q15-00000280_Redigováno.pdf (16055 OCR chars)
+INFO:extract:PDF vision fallback for: Quotation_Q15-00000280_Redigováno.pdf
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWxu0u3G5ughdno426TMa7vBltyZPzLSccoJ7HeVXHdo_eL6TorfN4hrEy8PAc1_xkCC-Ysj1PGX3G7MksCz34FmFUNDe2ZwCZ6zvMJxsQ&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 12139, completion: 289, total: 15902
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/pkl21ddbp81i "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/pkl21ddbp81i
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:PDF vision usage — prompt: 3625, completion: 371, total: 6327
+INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/5w3bdgpr05hh "HTTP/1.1 200 OK"
+INFO:extract:Deleted uploaded PDF file: files/5w3bdgpr05hh
+INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
+
+DEBUG lodě | pred ranking: ['yacht_pool', 'allianz', 'pantaenius'] | exp ranking: ['pantaenius', 'yacht_pool', 'allianz']
+  pred best_offer_id: yacht_pool | exp: pantaenius
+
+  Offer: allianz  (N/A: 12/16, non-N/A: 4)
+    [lower] Havarijní pojištění - spoluúčast: pred='700' exp='10000'
+    [higher] Havarijní pojištění: pred='342,11' exp='12456'
+    [lower] Roční pojistné:: pred='342,11' exp='3925'
+    [lower] CELKEM: pred='502,50' exp='15562'
+
+  Offer: pantaenius  (N/A: 14/16, non-N/A: 2)
+    [higher] Limit pro finanční škody: pred='EUR 20,000' exp='6000000'
+    [higher] Pojištění odpovědnosti za škodu: pred='20mln EUR' exp='?'
+
+  Offer: yacht_pool  (N/A: 10/16, non-N/A: 6)
+    [lower] Havarijní pojištění - spoluúčast: pred='500.00 €' exp='500'
+    [higher] Havarijní pojištění: pred='370.00 €' exp='370'
+    [lower] Roční pojistné:: pred='370.00 €' exp='?'
+    [lower] CELKEM: pred='578 €' exp='578'
+    [lower] roční pojistné: pred='46.00 €' exp='46'
+    [higher] Pojištění odpovědnosti za škodu: pred='7,5mil €' exp='3500000'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: lodě
+  Fields scored:     25
+  Extraction score:  0.160  (weight 60%)
+  Ranking score:     0.667  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.263
+
+  Hardest fields (lowest scores):
+    Sleva                                          0.00
+    CELKEM                                         0.00
+    Roční pojistné:                                0.00
+    pro škodu na věci                              0.00
+    pro újmu na životě                             0.00
+    pojistné před slevou                           0.00
+    Havarijní pojištění                            0.00
+    pro jinou újmu na jmění                        0.00
+    Havarijní pojištění - spoluúčast               0.00
+    CELKEM                                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.263
+==============================================
+

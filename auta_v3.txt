@@ -1,0 +1,657 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'auta'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10061, completion: 291, total: 13291
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10182, completion: 288, total: 14487
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 1878, completion: 351, total: 8020
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10842, completion: 620, total: 18182
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options marked Ano/Ne, annual premium totals.
+
+IMPORTANT label mappings for this segment:
+- 'Roční pojistné' may appear as 'Roční platba' or 'Cena celkem' or 'Celková cena' in the document
+- 'Povinné ručení – limit' appears as 'Limit povinného ručení' or 'XXX/XXX mil. Kč'
+- 'Spoluúčast havarijní' appears as 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+If multiple coverage variants are shown (Komfort / Plus / Extra / Max / Allrisk):
+Extract values from the MOST COMPREHENSIVE variant (Max or Allrisk). Never average — pick one variant only.
+
+Values appear as 'X XXX Kč/rok' or 'X XXX Kč / rok'.
+Return values VERBATIM as they appear in the document.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Allianz_Redigováno.pdf ---
+
+MOJEAUTO
+
+KALKULACE POJIŠTĚNÍ
+
+pojišťovna 1
+
+Pojistitel:
+
+Klient: T Rodné číslo:
+
+Bydliště:
+
+E mail:
+
+Mobilní telefon: +
+
+Roční nájezd
+
+Platnost do 2. 2. 2026
+
+Využívání opraven pojistitele
+
+PZ1 20114511
+
+Pojišťovací zprostředkovatel: RENOMIA, a.s. brno@renomia.cz +420 511 126 050 Osoba jednající s klientem:
+
+AUTO
+
+WVWZZZ7NZLV000456
+
+účel použití: běžný provoz, zdvihový objem: 1968 ccm, výkon: 110 kW, palivo: Nafta (i hybrid, vyjma plug in hybrid), datum první registrace: 18.10.2019
+
+☑
+
+✔ Při nezaviněné nehodě mi Allianz škodu zaplatí a vše vyřídí sama s
+
+✔ bezeškodní průběh *)
+
+☑ ☑
+
+Další služby
+
+Vaše slevy
+
+12501 km - 15000 km
+
+Vyžaduje se využívání smluvních opraven pojistitele při odstraňování následků pojistné události na vozidle.
+
+pojišťovnou viníka
+
+Seznam servisů v jednotlivých sítích naleznete na www.allianz.cz
+
+Požaduji navýšení limitu pro odtah z asistence až na 750 km
+
+Nebojte, při překročení odhadovaného nájezdu Vám pouze doúčtujeme část pojistné
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options marked Ano/Ne, annual premium totals.
+
+IMPORTANT label mappings for this segment:
+- 'Roční pojistné' may appear as 'Roční platba' or 'Cena celkem' or 'Celková cena' in the document
+- 'Povinné ručení – limit' appears as 'Limit povinného ručení' or 'XXX/XXX mil. Kč'
+- 'Spoluúčast havarijní' appears as 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+If multiple coverage variants are shown (Komfort / Plus / Extra / Max / Allrisk):
+Extract values from the MOST COMPREHENSIVE variant (Max or Allrisk). Never average — pick one variant only.
+
+Values appear as 'X XXX Kč/rok' or 'X XXX Kč / rok'.
+Return values VERBATIM as they appear in the document.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Generali_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Přehled
+
+Požadované parametry
+
+Limit povinného ručení: 150/150 mil
+
+Typ havarijního pojištění: Allrisk
+
+Spoluúčast: 1 000 Kč
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+Pojistná částka: 720 000 Kč včetně DPH
+
+Způsob úhrady: roční platba, kartou / převodem
+
+GENERALI
+
+ČESKÁ POJIŠŤOVNA
+
+Volkswagen Sharan
+
+První registrace: 18. 10. 2019
+
+Stav tachometru: 92 000 km
+
+Užití vozidla: běžné
+
+Pečlivě jsme vybrali nejvýhodnější podmínky z nabídky těchto pojišťoven:
+
+Allianz (1
+
+A Kooperativa
+
+VIENNA INSURANCE GROUP
+
+CPP
+
+GENERALI ČESKÁ POJIŠŤOVNA
+
+VIENNA INSURANCE GROUP
+
+ČSOB
+
+PVZP
+
+SLAVIA POJIŠŤOVNA
+
++
+
+Pillow
+
+Další kalkulace vám rádi předložíme na vyžádání.
+
+direct pojišťovna
+
+UNIQA
+
+HASIČSKÁ VZÁJEMNÁ POJIŠŤOVNA, R.S.
+
+Vaše kontaktní osoba: Miroslava Babková +420602791060 | Miroslava.Babkova@renomiabenefit.cz ID: 129cfbf5 / Vytvořeno 02. 02. 2026 13:47:01 1/3
+
+R
+
+RENOMIΑ BENEFIT
+
+Povinné ručení
+
+GENERALI
+
+Č
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options marked Ano/Ne, annual premium totals.
+
+IMPORTANT label mappings for this segment:
+- 'Roční pojistné' may appear as 'Roční platba' or 'Cena celkem' or 'Celková cena' in the document
+- 'Povinné ručení – limit' appears as 'Limit povinného ručení' or 'XXX/XXX mil. Kč'
+- 'Spoluúčast havarijní' appears as 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+If multiple coverage variants are shown (Komfort / Plus / Extra / Max / Allrisk):
+Extract values from the MOST COMPREHENSIVE variant (Max or Allrisk). Never average — pick one variant only.
+
+Values appear as 'X XXX Kč/rok' or 'X XXX Kč / rok'.
+Return values VERBATIM as they appear in the document.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: Kooperativa_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Požadované parametry
+
+Limit povinného ručení: 200/200 mil
+
+Spoluúčast: 5 000 Kč
+
+Typ havarijního pojištění: Allrisk
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+Pojistná částka: 720 000 Kč včetně DPH
+
+Způsob úhrady: roční platba, kartou / převodem
+
+Volkswagen Sharan
+
+První registrace: 18. 10. 2019
+
+Stav tachometru: 92 000 km
+
+Užití vozidla: běžné
+
+Pečlivě jsme vybrali nejvýhodnější podmínky z nabídky těchto pojišťoven:
+
+Allianz (1
+
+A Kooperativa
+
+VIENNA INSURANCE GROUP
+
+CPP
+
+GENERALI ČESKÁ POJIŠŤOVNA
+
+VIENNA INSURANCE GROUP
+
+ČSOB
+
+PVZP
+
+SLAVIA POJIŠŤOVNA
+
++
+
+Pillow
+
+Další kalkulace vám rádi předložíme na vyžádání.
+
+direct pojišťovna
+
+UNIQA
+
+HASIČSKÁ VZÁJEMNÁ POJIŠŤOVNA, R.S.
+
+Vaše kontaktní osoba: Miroslava Babková +420602791060 | Miroslava.Babkova@renomiabenefit.cz ID: 129cfbf5 / Vytvořeno 02. 02. 2026 13:48:00 1/4
+
+RENOMIΑ
+
+R
+
+BENEFIT
+
+Kooperativa VIENNA INSURANCE GROUP
+
+Tip
+
+Vaše kontaktní osob
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options marked Ano/Ne, annual premium totals.
+
+IMPORTANT label mappings for this segment:
+- 'Roční pojistné' may appear as 'Roční platba' or 'Cena celkem' or 'Celková cena' in the document
+- 'Povinné ručení – limit' appears as 'Limit povinného ručení' or 'XXX/XXX mil. Kč'
+- 'Spoluúčast havarijní' appears as 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+If multiple coverage variants are shown (Komfort / Plus / Extra / Max / Allrisk):
+Extract values from the MOST COMPREHENSIVE variant (Max or Allrisk). Never average — pick one variant only.
+
+Values appear as 'X XXX Kč/rok' or 'X XXX Kč / rok'.
+Return values VERBATIM as they appear in the document.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high confidence.
+   Wrong numbers score 0.0. Be conservative.
+3. STRING fields: return your best guess even if uncertain.
+   Partial matches score 0.5+. A guess beats "N/A".
+4. Every key in your response must be EXACTLY one of the field
+   names listed below — no variations, no translations.
+5. If a field appears in multiple sections, prefer the value
+   from the pricing/quotation section.
+
+NUMBER fields (return verbatim numeric string as found):
+Roční pojistné
+Povinné ručení – limit
+Spoluúčast havarijní
+Spoluúčast skla
+
+STRING fields (return text description as found):
+Havarijní pojištění – limit
+Typ havarijního pojištění
+Krytí odcizení
+Krytí živelních rizik
+Krytí vandalismu
+Krytí střetu se zvěří
+Krytí skel
+Úrazové pojištění
+Asistenční služby – rozsah
+Přímá likvidace
+Právní ochrana
+Počet zásahů asistence
+Rozsah servisu
+
+DOCUMENT TEXT:
+
+
+--- DOCUMENT: ČPP_Redigováno.pdf ---
+
+R
+
+RENOMIΑ BENEFIT
+
+Kalkulace pojištění Volkswagen Sharan
+
+Přehled
+
+Cena celkem
+
+Povinné ručení
+
+Havarijní pojištění
+
+Požadované parametry
+
+Limit povinného ručení: 200/200 mil
+
+Typ havarijního pojištění: Allrisk
+
+Spoluúčast: 3%/3 000 Kc
+
+Požadovaný počátek pojištění: 03. 02. 2026
+
+Pojistná částka: 720 000 Kč včetně DPH
+
+Způsob úhrady: roční platba, kartou / převodem
+
+pojišťovna 2
+
+Tip
+
+39 998 kč/rok
+
+12 527 Kč/rok
+
+27 471 Kč/rok
+
+Adresa pojistníka: Žitná 202, 40502 Děčín XVII-
+
+Pečlivě jsme vybrali nejvýhodnější podmínky z nabídky těchto pojišťoven:
+
+Volkswagen Sharan
+
+První registrace: 18. 10. 2019
+
+Stav tachometru: 92 000 km Užití vozidla: běžné
+
+Další kalkulace vám rádi předložíme na vyžádání.
+
+Vaše kontaktní osoba
+
+/ Vytvořeno 02. 02. 2026 13:47:34 1 / 3
+
+RENOMIΑ
+
+R
+
+BENEFIT
+
+Povinné ručení
+
+Tip
+
+12 527 Kč / rok
+
+Celkem
+
+39 998 Kč / rok
+
+Vaše kontaktní osoba: Miroslava Babková +420602791060 | Miroslava.Babkova@renomiabenefit.cz
+
+ID: 129cfbf5 / Vytvořeno 02. 0
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "39 998 kč/rok",
+  "Povinné ručení – limit": "200/200 mil",
+  "Spoluúčast havarijní": "3%/3 000 Kc",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "N/A",
+  "Krytí živelních rizik": "N/A",
+  "Krytí vandalismu": "N/A",
+  "Krytí střetu se zvěří": "N/A",
+  "Krytí skel": "N/A",
+  "Úrazové pojištění": "N/A",
+  "Asistenční služby – rozsah": "N/A",
+  "Přímá likvidace": "N/A",
+  "Právní ochrana": "N/A",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "N/A"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "41 523 Kč / rok",
+  "Povinné ručení – limit": "200/200 mil",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "N/A",
+  "Krytí živelních rizik": "N/A",
+  "Krytí vandalismu": "N/A",
+  "Krytí střetu se zvěří": "N/A",
+  "Krytí skel": "N/A",
+  "Úrazové pojištění": "N/A",
+  "Asistenční služby – rozsah": "N/A",
+  "Přímá likvidace": "N/A",
+  "Právní ochrana": "N/A",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "N/A"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "34 851 Kč",
+  "Povinné ručení – limit": "150/150 mil. Kč",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "1 000 Kč",
+  "Havarijní pojištění – limit": "",
+  "Typ havarijního pojištění": "Max",
+  "Krytí odcizení": "Krádež",
+  "Krytí živelních rizik": "Přírodní události, Požár a výbuch",
+  "Krytí vandalismu": "Vandalismus",
+  "Krytí střetu se zvěří": "Poškození zvířetem",
+  "Krytí skel": "Skla",
+  "Úrazové pojištění": "Úraz",
+  "Asistenční služby – rozsah": "Asistence rozšířená",
+  "Přímá likvidace": "Při nezaviněné nehodě mi Allianz škodu zaplatí a vše vyřídí sama s pojišťovnou viníka",
+  "Právní ochrana": "Právní poradenství",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "Vyžaduje se využívání smluvních opraven pojistitele při odstraňování následků pojistné události na vozidle."
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "56 326 Kč/rok",
+  "Povinné ručení – limit": "150/150 mil",
+  "Spoluúčast havarijní": "1 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "720 000 Kč včetně DPH",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Toto připojištění vám pomůže, pokud vám odcizí celé vozidlo. Pojišťovna vám hodnotu nahradí co výše sjednaného limitu.",
+  "Krytí živelních rizik": "Kroupy, vichřice, pád stromu a nejen to vás může na cestách potkat i když běžně parkujete vozidlo v garáži. Chraňte se připojištěním proti živelním pohromám.",
+  "Krytí vandalismu": "Zahrnuto v rámci pojistky Allrisk",
+  "Krytí střetu se zvěří": "Pokud srazíte srnku, nebo i jiné zvíře a nemáte kompletní havarijní pojištění, toto připojištění je určeno právě pro vás.",
+  "Krytí skel": "Nejen odražený kamínek od okolo jedoucího vozidla může způsobit velké škody na vašich sklech. Chraňte se pomocí toho připojištění.",
+  "Úrazové pojištění": "Toto připojištění vás kryje při smrti následkem úrazu při nehodě a také při trvalých následcích po nehodě.",
+  "Asistenční služby – rozsah": "Toto připojištění vám zajistí vyšší limit na odtah a opravu na místě, či rozšíří další služby v rámci pojištění asistence.",
+  "Přímá likvidace": "Není uvedeno",
+  "Právní ochrana": "Unikátní non-stop služba právního poradenství pro soukromé osoby a rodiny za exkluzivní cenu. Mějte svého právníka kdykoliv po ruce a úspěšně vyřešte dopravní nehodu, poškození vozidla, neuznanou reklamaci v obchodě, spory se sousedem, spory se zaměstnavatelem, rozvodové / dědické řízení, spory o výši pojistného plnění, řadu dalších situací...",
+  "Počet zásahů asistence": "Není uvedeno",
+  "Rozsah servisu": "vyšší limit na odtah a opravu na místě"
+}
+
+DEBUG — Segment: auta
+Offer: allianz
+N/A fields: 2/17
+Sample fields (first 10):
+  Roční pojistné: '34 851 Kč'
+  Povinné ručení – limit: '150/150 mil. Kč'
+  Havarijní pojištění – limit: 'N/A'
+  Spoluúčast havarijní: '5 000 Kč'
+  Spoluúčast skla: '1 000 Kč'
+  Typ havarijního pojištění: 'Max'
+  Krytí odcizení: 'Krádež'
+  Krytí živelních rizik: 'Přírodní události, Požár a výbuch'
+  Krytí vandalismu: 'Vandalismus'
+  Krytí střetu se zvěří: 'Poškození zvířetem'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.193  (weight 60%)
+  Ranking score:     0.750  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.453
+
+  Hardest fields (lowest scores):
+    Krytí skel                                     0.00
+    Rozsah servisu                                 0.00
+    Krytí odcizení                                 0.00
+    Krytí vandalismu                               0.00
+    Přímá likvidace                                0.00
+    Úrazové pojištění                              0.00
+    Krytí živelních rizik                          0.00
+    Počet zásahů asistence                         0.00
+    Krytí střetu se zvěří                          0.00
+    Povinné ručení – limit                         0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.453
+==============================================
+

@@ -1,0 +1,371 @@
+INFO:__main__:Fetched 1 training row(s) for segment 'auta'
+INFO:__main__:Connected to local cache DB
+INFO:__main__:Evaluating segment: auta
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11066, completion: 288, total: 14216
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 2762, completion: 300, total: 6060
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 11726, completion: 314, total: 16314
+INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+INFO:extract:Gemini usage — prompt: 10945, completion: 317, total: 16801
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options, annual premium totals.
+
+LABEL MAPPINGS:
+- 'Roční pojistné' → 'Roční platba', 'Cena celkem', 'Celková cena'
+- 'Povinné ručení – limit' → 'Limit povinného ručení' or 'X/X mil. Kč'
+  CONVERT 'X/X mil. Kč' to 'CZK X,000,000' format:
+  e.g. '150/150 mil. Kč' → return 'CZK 150,000,000'
+  e.g. '200/200 mil' → return 'CZK 200,000,000'
+- 'Spoluúčast havarijní' → 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+CRITICAL COVERAGE FIELD RULES:
+RULE A — Allrisk type implies full coverage:
+  If 'Typ havarijního pojištění' is 'Allrisk' or 'Allrisk + GAP',
+  ALL of these are 'Ano' (unless the document explicitly excludes them):
+  Krytí odcizení, Krytí vandalismu, Krytí živelních rizik, Krytí střetu se zvěří
+RULE B — Allianz MOJEAUTO format uses named checkmarks (☑, ✔):
+  Each named item with a checkmark means that risk is covered → return 'Ano'.
+  '☑ Krádež' → Krytí odcizení = 'Ano'
+  '☑ Vandalismus' → Krytí vandalismu = 'Ano'
+  '☑ Přírodní události' or '☑ Živel' → Krytí živelních rizik = 'Ano'
+  '☑ Poškození zvířetem' → Krytí střetu se zvěří = 'Ano'
+  '☑ Úraz' → Úrazové pojištění = 'Ano'
+  '✔ Přímá likvidace' or description of direct settlement → Přímá likvidace = 'Ano'
+  Skla with a deductible → Krytí skel = 'Ano, se spoluúčastí CZK X,000'
+
+FIELD-SPECIFIC RULES:
+- 'Typ havarijního pojištění': return 'Allrisk' for comprehensive coverage;
+  'Allrisk + GAP' if GAP mentioned. Allrisk includes theft/vandalism/natural events.
+- 'Počet zásahů asistence': return 'Neomezeno' if no cap on number of calls;
+  'Omezeno' if limited (e.g. by distance or time constraints).
+- 'Havarijní pojištění – limit': return the limit in 'CZK X 000' format.
+  If not stated in the document, return 'Neuvedeno'.
+- 'Krytí skel': 'Ano, se spoluúčastí CZK X,000' if covered with deductible;
+  'Ne, pouze připojištění' if only available as add-on;
+  'Ano, v základu' if fully included.
+- 'Přímá likvidace': 'Ano' or 'Ne (lze připojistit)'
+- 'Asistenční služby – rozsah': return label e.g. 'Rozšířená asistence',
+  'Standardní asistence', or 'CZK 2 500 / CZK 5 000' if shown as limit range.
+- 'Rozsah servisu': 'Povinné smluvní servisy' if required contracted workshops;
+  'Volba servisu' if free choice; 'Volba servisu, sleva CZK 3,000' if discount shown.
+- 'Úrazové pojištění': 'Ano' or 'Ano (jen řidič)' or 'Volitelné připojištění'.
+- 'Právní ochrana': 'Ano (právní poradenství)' if included;
+  'Ne (lze připojistit za CZK X XXX)' if available as paid add-on.
+- Do NOT translate Czech to English. Do NOT expand abbreviations.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high 
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options, annual premium totals.
+
+LABEL MAPPINGS:
+- 'Roční pojistné' → 'Roční platba', 'Cena celkem', 'Celková cena'
+- 'Povinné ručení – limit' → 'Limit povinného ručení' or 'X/X mil. Kč'
+  CONVERT 'X/X mil. Kč' to 'CZK X,000,000' format:
+  e.g. '150/150 mil. Kč' → return 'CZK 150,000,000'
+  e.g. '200/200 mil' → return 'CZK 200,000,000'
+- 'Spoluúčast havarijní' → 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+CRITICAL COVERAGE FIELD RULES:
+RULE A — Allrisk type implies full coverage:
+  If 'Typ havarijního pojištění' is 'Allrisk' or 'Allrisk + GAP',
+  ALL of these are 'Ano' (unless the document explicitly excludes them):
+  Krytí odcizení, Krytí vandalismu, Krytí živelních rizik, Krytí střetu se zvěří
+RULE B — Allianz MOJEAUTO format uses named checkmarks (☑, ✔):
+  Each named item with a checkmark means that risk is covered → return 'Ano'.
+  '☑ Krádež' → Krytí odcizení = 'Ano'
+  '☑ Vandalismus' → Krytí vandalismu = 'Ano'
+  '☑ Přírodní události' or '☑ Živel' → Krytí živelních rizik = 'Ano'
+  '☑ Poškození zvířetem' → Krytí střetu se zvěří = 'Ano'
+  '☑ Úraz' → Úrazové pojištění = 'Ano'
+  '✔ Přímá likvidace' or description of direct settlement → Přímá likvidace = 'Ano'
+  Skla with a deductible → Krytí skel = 'Ano, se spoluúčastí CZK X,000'
+
+FIELD-SPECIFIC RULES:
+- 'Typ havarijního pojištění': return 'Allrisk' for comprehensive coverage;
+  'Allrisk + GAP' if GAP mentioned. Allrisk includes theft/vandalism/natural events.
+- 'Počet zásahů asistence': return 'Neomezeno' if no cap on number of calls;
+  'Omezeno' if limited (e.g. by distance or time constraints).
+- 'Havarijní pojištění – limit': return the limit in 'CZK X 000' format.
+  If not stated in the document, return 'Neuvedeno'.
+- 'Krytí skel': 'Ano, se spoluúčastí CZK X,000' if covered with deductible;
+  'Ne, pouze připojištění' if only available as add-on;
+  'Ano, v základu' if fully included.
+- 'Přímá likvidace': 'Ano' or 'Ne (lze připojistit)'
+- 'Asistenční služby – rozsah': return label e.g. 'Rozšířená asistence',
+  'Standardní asistence', or 'CZK 2 500 / CZK 5 000' if shown as limit range.
+- 'Rozsah servisu': 'Povinné smluvní servisy' if required contracted workshops;
+  'Volba servisu' if free choice; 'Volba servisu, sleva CZK 3,000' if discount shown.
+- 'Úrazové pojištění': 'Ano' or 'Ano (jen řidič)' or 'Volitelné připojištění'.
+- 'Právní ochrana': 'Ano (právní poradenství)' if included;
+  'Ne (lze připojistit za CZK X XXX)' if available as paid add-on.
+- Do NOT translate Czech to English. Do NOT expand abbreviations.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high 
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options, annual premium totals.
+
+LABEL MAPPINGS:
+- 'Roční pojistné' → 'Roční platba', 'Cena celkem', 'Celková cena'
+- 'Povinné ručení – limit' → 'Limit povinného ručení' or 'X/X mil. Kč'
+  CONVERT 'X/X mil. Kč' to 'CZK X,000,000' format:
+  e.g. '150/150 mil. Kč' → return 'CZK 150,000,000'
+  e.g. '200/200 mil' → return 'CZK 200,000,000'
+- 'Spoluúčast havarijní' → 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+CRITICAL COVERAGE FIELD RULES:
+RULE A — Allrisk type implies full coverage:
+  If 'Typ havarijního pojištění' is 'Allrisk' or 'Allrisk + GAP',
+  ALL of these are 'Ano' (unless the document explicitly excludes them):
+  Krytí odcizení, Krytí vandalismu, Krytí živelních rizik, Krytí střetu se zvěří
+RULE B — Allianz MOJEAUTO format uses named checkmarks (☑, ✔):
+  Each named item with a checkmark means that risk is covered → return 'Ano'.
+  '☑ Krádež' → Krytí odcizení = 'Ano'
+  '☑ Vandalismus' → Krytí vandalismu = 'Ano'
+  '☑ Přírodní události' or '☑ Živel' → Krytí živelních rizik = 'Ano'
+  '☑ Poškození zvířetem' → Krytí střetu se zvěří = 'Ano'
+  '☑ Úraz' → Úrazové pojištění = 'Ano'
+  '✔ Přímá likvidace' or description of direct settlement → Přímá likvidace = 'Ano'
+  Skla with a deductible → Krytí skel = 'Ano, se spoluúčastí CZK X,000'
+
+FIELD-SPECIFIC RULES:
+- 'Typ havarijního pojištění': return 'Allrisk' for comprehensive coverage;
+  'Allrisk + GAP' if GAP mentioned. Allrisk includes theft/vandalism/natural events.
+- 'Počet zásahů asistence': return 'Neomezeno' if no cap on number of calls;
+  'Omezeno' if limited (e.g. by distance or time constraints).
+- 'Havarijní pojištění – limit': return the limit in 'CZK X 000' format.
+  If not stated in the document, return 'Neuvedeno'.
+- 'Krytí skel': 'Ano, se spoluúčastí CZK X,000' if covered with deductible;
+  'Ne, pouze připojištění' if only available as add-on;
+  'Ano, v základu' if fully included.
+- 'Přímá likvidace': 'Ano' or 'Ne (lze připojistit)'
+- 'Asistenční služby – rozsah': return label e.g. 'Rozšířená asistence',
+  'Standardní asistence', or 'CZK 2 500 / CZK 5 000' if shown as limit range.
+- 'Rozsah servisu': 'Povinné smluvní servisy' if required contracted workshops;
+  'Volba servisu' if free choice; 'Volba servisu, sleva CZK 3,000' if discount shown.
+- 'Úrazové pojištění': 'Ano' or 'Ano (jen řidič)' or 'Volitelné připojištění'.
+- 'Právní ochrana': 'Ano (právní poradenství)' if included;
+  'Ne (lze připojistit za CZK X XXX)' if available as paid add-on.
+- Do NOT translate Czech to English. Do NOT expand abbreviations.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high 
+
+=== PROMPT (first 3000 chars) ===
+You are extracting structured data from insurance documents.
+Segment: auta
+Czech vehicle fleet insurance quote.
+Look for fleet pricing tables, coverage options, annual premium totals.
+
+LABEL MAPPINGS:
+- 'Roční pojistné' → 'Roční platba', 'Cena celkem', 'Celková cena'
+- 'Povinné ručení – limit' → 'Limit povinného ručení' or 'X/X mil. Kč'
+  CONVERT 'X/X mil. Kč' to 'CZK X,000,000' format:
+  e.g. '150/150 mil. Kč' → return 'CZK 150,000,000'
+  e.g. '200/200 mil' → return 'CZK 200,000,000'
+- 'Spoluúčast havarijní' → 'X % / X XXX Kč' or 'min. X XXX Kč'
+
+CRITICAL COVERAGE FIELD RULES:
+RULE A — Allrisk type implies full coverage:
+  If 'Typ havarijního pojištění' is 'Allrisk' or 'Allrisk + GAP',
+  ALL of these are 'Ano' (unless the document explicitly excludes them):
+  Krytí odcizení, Krytí vandalismu, Krytí živelních rizik, Krytí střetu se zvěří
+RULE B — Allianz MOJEAUTO format uses named checkmarks (☑, ✔):
+  Each named item with a checkmark means that risk is covered → return 'Ano'.
+  '☑ Krádež' → Krytí odcizení = 'Ano'
+  '☑ Vandalismus' → Krytí vandalismu = 'Ano'
+  '☑ Přírodní události' or '☑ Živel' → Krytí živelních rizik = 'Ano'
+  '☑ Poškození zvířetem' → Krytí střetu se zvěří = 'Ano'
+  '☑ Úraz' → Úrazové pojištění = 'Ano'
+  '✔ Přímá likvidace' or description of direct settlement → Přímá likvidace = 'Ano'
+  Skla with a deductible → Krytí skel = 'Ano, se spoluúčastí CZK X,000'
+
+FIELD-SPECIFIC RULES:
+- 'Typ havarijního pojištění': return 'Allrisk' for comprehensive coverage;
+  'Allrisk + GAP' if GAP mentioned. Allrisk includes theft/vandalism/natural events.
+- 'Počet zásahů asistence': return 'Neomezeno' if no cap on number of calls;
+  'Omezeno' if limited (e.g. by distance or time constraints).
+- 'Havarijní pojištění – limit': return the limit in 'CZK X 000' format.
+  If not stated in the document, return 'Neuvedeno'.
+- 'Krytí skel': 'Ano, se spoluúčastí CZK X,000' if covered with deductible;
+  'Ne, pouze připojištění' if only available as add-on;
+  'Ano, v základu' if fully included.
+- 'Přímá likvidace': 'Ano' or 'Ne (lze připojistit)'
+- 'Asistenční služby – rozsah': return label e.g. 'Rozšířená asistence',
+  'Standardní asistence', or 'CZK 2 500 / CZK 5 000' if shown as limit range.
+- 'Rozsah servisu': 'Povinné smluvní servisy' if required contracted workshops;
+  'Volba servisu' if free choice; 'Volba servisu, sleva CZK 3,000' if discount shown.
+- 'Úrazové pojištění': 'Ano' or 'Ano (jen řidič)' or 'Volitelné připojištění'.
+- 'Právní ochrana': 'Ano (právní poradenství)' if included;
+  'Ne (lze připojistit za CZK X XXX)' if available as paid add-on.
+- Do NOT translate Czech to English. Do NOT expand abbreviations.
+
+The text below comes from MULTIPLE combined documents for one insurer.
+A field value may appear in any section — search the entire text.
+Documents may be in Czech, English, or Polish — handle all three.
+
+CRITICAL RULES:
+1. Return values VERBATIM as they appear — do not convert or clean.
+2. NUMBER fields: return "N/A" if not found with high 
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "41 523 Kč / rok",
+  "Povinné ručení – limit": "CZK 200,000,000",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "Neuvedeno",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Ano",
+  "Krytí živelních rizik": "Ano",
+  "Krytí vandalismu": "Ano",
+  "Krytí střetu se zvěří": "Ano",
+  "Krytí skel": "Ne",
+  "Úrazové pojištění": "Volitelné připojištění",
+  "Asistenční služby – rozsah": "Standardní asistence",
+  "Přímá likvidace": "Ne (lze připojistit)",
+  "Právní ochrana": "Ne (lze připojistit)",
+  "Počet zásahů asistence": "Omezeno",
+  "Rozsah servisu": "Volba servisu"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "34 851 Kč",
+  "Povinné ručení – limit": "CZK 150,000,000",
+  "Spoluúčast havarijní": "5 000 Kč",
+  "Spoluúčast skla": "1 000 Kč",
+  "Havarijní pojištění – limit": "Neuvedeno",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Ano",
+  "Krytí živelních rizik": "Ano",
+  "Krytí vandalismu": "Ano",
+  "Krytí střetu se zvěří": "Ano",
+  "Krytí skel": "Ano, se spoluúčastí CZK 1,000",
+  "Úrazové pojištění": "Ano",
+  "Asistenční služby – rozsah": "Asistence rozšířená",
+  "Přímá likvidace": "Ano",
+  "Právní ochrana": "Ano (Právní poradenství)",
+  "Počet zásahů asistence": "Omezeno",
+  "Rozsah servisu": "Povinné smluvní servisy"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "56 326 Kč",
+  "Povinné ručení – limit": "CZK 150,000,000",
+  "Spoluúčast havarijní": "1 000 Kč",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "CZK 720 000",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Ne (lze připojistit)",
+  "Krytí živelních rizik": "Ne (lze připojistit)",
+  "Krytí vandalismu": "Ano",
+  "Krytí střetu se zvěří": "Ne (lze připojistit)",
+  "Krytí skel": "Ne, pouze připojištění",
+  "Úrazové pojištění": "Volitelné připojištění",
+  "Asistenční služby – rozsah": "N/A",
+  "Přímá likvidace": "N/A",
+  "Právní ochrana": "Ne (lze připojistit za 1485 Kč)",
+  "Počet zásahů asistence": "N/A",
+  "Rozsah servisu": "N/A"
+}
+
+=== RAW GEMINI RESPONSE ===
+{
+  "Roční pojistné": "39 998 kč/rok",
+  "Povinné ručení – limit": "CZK 200,000,000",
+  "Spoluúčast havarijní": "3%/3 000 Kc",
+  "Spoluúčast skla": "N/A",
+  "Havarijní pojištění – limit": "CZK 720 000",
+  "Typ havarijního pojištění": "Allrisk",
+  "Krytí odcizení": "Ano",
+  "Krytí živelních rizik": "Ano",
+  "Krytí vandalismu": "Ano",
+  "Krytí střetu se zvěří": "Ano",
+  "Krytí skel": "Ano, se spoluúčastí CZK 3,000",
+  "Úrazové pojištění": "Volitelné připojištění",
+  "Asistenční služby – rozsah": "Standardní asistence",
+  "Přímá likvidace": "Ne (lze připojistit)",
+  "Právní ochrana": "Ne (lze připojistit za CZK X XXX)",
+  "Počet zásahů asistence": "Omezeno",
+  "Rozsah servisu": "Volba servisu"
+}
+
+DEBUG — Segment: auta
+Offer: allianz
+N/A fields: 0/17
+Sample fields (first 10):
+  Roční pojistné: '34 851 Kč'
+  Povinné ručení – limit: 'CZK 150,000,000'
+  Havarijní pojištění – limit: 'Neuvedeno'
+  Spoluúčast havarijní: '5 000 Kč'
+  Spoluúčast skla: '1 000 Kč'
+  Typ havarijního pojištění: 'Allrisk'
+  Krytí odcizení: 'Ano'
+  Krytí živelních rizik: 'Ano'
+  Krytí vandalismu: 'Ano'
+  Krytí střetu se zvěří: 'Ano'
+
+==============================================
+EVALUATION RESULTS
+==============================================
+
+Segment: auta
+  Fields scored:     68
+  Extraction score:  0.685  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
+  Best offer score:  1.000  (weight 15%)
+  TOTAL SCORE:       0.780
+
+  Hardest fields (lowest scores):
+    Asistenční služby – rozsah                     0.00
+    Rozsah servisu                                 0.00
+    Krytí odcizení                                 0.00
+    Spoluúčast skla                                0.00
+    Přímá likvidace                                0.00
+    Krytí živelních rizik                          0.00
+    Počet zásahů asistence                         0.00
+    Krytí střetu se zvěří                          0.00
+    Asistenční služby – rozsah                     0.00
+    Krytí skel                                     0.00
+----------------------------------------------
+
+==============================================
+OVERALL WEIGHTED AVERAGE: 0.780
+==============================================
+
