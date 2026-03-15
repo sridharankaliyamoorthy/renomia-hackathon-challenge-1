@@ -122,19 +122,6 @@ def parse_number(s) -> Optional[float]:
     s = re.sub(r'(?i)\b(czk|eur)\b', ' ', s)
     s = re.sub(r'[Kč€]', ' ', s)
 
-    # Step 3b: Handle "mil" / "mln" multipliers BEFORE other parsing
-    # e.g. "7,5mil €" → 7500000.0, "20mln EUR" → 20000000.0
-    mil_pattern = re.search(
-        r'([\d]+[.,]?[\d]*)\s*(?:mil|mln)\b',
-        s, re.IGNORECASE
-    )
-    if mil_pattern:
-        num_str = mil_pattern.group(1).replace(',', '.')
-        try:
-            return float(num_str) * 1_000_000
-        except ValueError:
-            pass
-
     # Step 4: Handle ranges — take content before en-dash or em-dash only
     # e.g. "248,923–281,136" -> "248,923"
     range_match = re.search(r'([\d][\d\s.,]*)[–—]', s)
