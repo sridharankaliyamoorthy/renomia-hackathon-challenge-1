@@ -82,8 +82,16 @@ def fetch_training_data(segment=None):
 
 def score_number_field(predicted, expected) -> float:
     """Score a number field: 0.0 to 1.0."""
-    p = parse_number(predicted)
-    e = parse_number(expected)
+    if not predicted or not expected:
+        return 0.0
+
+    # Range fields (e.g. 'CZK 248,923–281,136') — treat as string comparison
+    exp_str = str(expected)
+    if "–" in exp_str or ("-" in exp_str and not exp_str.strip().startswith("-")):
+        return score_string_field(predicted, expected)
+
+    p = parse_number(str(predicted))
+    e = parse_number(str(expected))
 
     if p is None or e is None:
         return 0.0
@@ -99,6 +107,8 @@ def score_number_field(predicted, expected) -> float:
     if ratio >= 0.80:
         return 0.75
     if ratio >= 0.75:
+        return 0.5
+    if ratio >= 0.70:
         return 0.25
     return 0.0
 
@@ -158,6 +168,28 @@ def evaluate_segment(input_data: dict, expected_output: dict, conn) -> dict:
 
     logger.info(f"Evaluating segment: {segment}")
     result = _solve_core(input_data, gemini, conn)
+
+    # ── Debug print for odpovědnost first offer ───────────────────────────────
+    if segment == 'odpovědnost':
+        first = result['offers_parsed'][0] if result.get('offers_parsed') else None
+        if first:
+            na_count = sum(1 for v in first['fields'].values() if v == 'N/A')
+            print(f'\nDEBUG odpov first offer: {first["id"]}')
+            print(f'N/A count: {na_count}/66')
+            # Build expected lookup for this offer
+            exp_lookup = {}
+            for o in expected_output.get('offers_parsed', []):
+                if o['id'] == first['id']:
+                    exp_lookup = o.get('fields', {})
+            for f, v in first['fields'].items():
+                exp_val = exp_lookup.get(f, 'NOT_IN_EXPECTED')
+                if v == 'N/A':
+                    score_marker = '← N/A'
+                elif exp_val not in ('NOT_IN_EXPECTED', None):
+                    score_marker = '← has value'
+                else:
+                    score_marker = ''
+                print(f'  {repr(f)}: {repr(v)} | expected: {repr(exp_val)} {score_marker}')
 
     # Build lookup: offer_id -> fields dict (from predicted result)
     predicted_by_id = {

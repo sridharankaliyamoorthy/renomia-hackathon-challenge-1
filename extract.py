@@ -29,9 +29,56 @@ _WRONG_SEGMENT_LODE_TERMS = [
 
 _SEGMENT_CONTEXT = {
     "odpovědnost": (
-        "Czech liability insurance policy. Limits are in CZK millions.\n"
-        "Look for: limit plnění, sublimit, spoluúčast, územní rozsah.\n"
-        "This is NOT vehicle insurance."
+        "Czech liability insurance policy (pojištění odpovědnosti).\n"
+        "This is NOT vehicle insurance.\n\n"
+        "CRITICAL — LIMIT I vs LIMIT II:\n"
+        "Many fields come in pairs: 'Limit I' and 'Limit II'\n"
+        "representing two separate coverage tiers.\n"
+        "- 'Limit I' = the FIRST/LOWER coverage tier\n"
+        "- 'Limit II' = the SECOND/HIGHER coverage tier\n"
+        "These are DIFFERENT fields with DIFFERENT values.\n"
+        "Do NOT put Limit II value into Limit I field.\n"
+        "Read the document carefully to match each value to\n"
+        "its correct tier.\n\n"
+        "VALUE FORMAT — return VERBATIM with currency prefix:\n"
+        "- Always include CZK prefix: 'CZK 50,000,000'\n"
+        "  NOT '50000000' NOT '50 000 000'\n"
+        "- For ranges: 'CZK 10,000–50,000' (keep both values)\n"
+        "  NOT just '10000' or '50000'\n"
+        "- For descriptive fields: return the FULL policy text\n"
+        "  e.g. 'Jedna spoluúčast (nejvyšší)' not 'Ano'\n"
+        "  e.g. 'CZK 50,000,000–100,000,000' not 'Ano'\n"
+        "  e.g. 'Tržby a škodní průběh ovlivňují' not summary\n"
+        "- For yes/no fields: return 'Ano' or 'Ne' only when\n"
+        "  the document literally shows Ano/Ne — NOT when\n"
+        "  the field has a monetary limit value\n"
+        "- Do NOT substitute 'Ano' for a monetary amount\n"
+        "- Do NOT substitute 'Ano' for a descriptive phrase\n\n"
+        "FIELD TYPES in this segment:\n"
+        "- NUMBER fields: return value WITH CZK prefix verbatim\n"
+        "  e.g. 'CZK 50,000,000' for a 50M CZK limit\n"
+        "- STRING fields: return full descriptive text verbatim\n\n"
+        "RANGE VALUES — critically important:\n"
+        "Many NUMBER fields in this segment have TWO bounds.\n"
+        "Return BOTH bounds with en dash between them.\n"
+        "Format: 'CZK lower–upper' e.g.:\n"
+        "  'CZK 50,000,000–100,000,000'\n"
+        "  'CZK 248,923–281,136'\n"
+        "  'CZK 2,000,000–50,000,000'\n"
+        "If you see two amounts for the same field, always\n"
+        "return both — NEVER just one.\n"
+        "The scorer gives 0 points if you return only one\n"
+        "bound of a range.\n\n"
+        "SUBLIMIT FIELDS — look for sublimit tables:\n"
+        "Fields like 'Věci zaměstnanců', 'Věci převzaté',\n"
+        "'Finanční škody', 'Škody na životním prostředí' etc.\n"
+        "have their OWN specific sublimit values — do NOT\n"
+        "copy the general limit into these fields.\n\n"
+        "DESCRIPTIVE/CLAUSE FIELDS — return full text:\n"
+        "Fields like 'Smluvní pokuty', 'Regresní náhrady',\n"
+        "'Vyloučené činnosti', 'Asistenční služby',\n"
+        "'Způsob stanovení prémia' require the actual\n"
+        "policy clause text, not Ano/Ne."
     ),
     "auta": (
         "Czech vehicle fleet insurance quote.\n"
@@ -494,7 +541,7 @@ def extract_offer(
     # Step 5 — Two-pass for odpovědnost only
     if segment == "odpovědnost":
         missing = [f for f in fields_to_extract if fields.get(f) == "N/A"]
-        if len(missing) > 20:
+        if len(missing) > 5:
             conditions_docs = [d for d in sorted_docs if is_conditions_doc(d.get("filename", ""))]
             if conditions_docs:
                 pass2_text = combine_offer_text(conditions_docs)
@@ -505,6 +552,16 @@ def extract_offer(
                 for f in missing:
                     if pass2_fields.get(f, "N/A") != "N/A":
                         fields[f] = pass2_fields[f]
+
+    # Step 5b — Post-processing for odpovědnost
+    if segment == "odpovědnost":
+        combined_for_rules = combine_offer_text(filter_and_sort_docs(offer, segment))
+        fields = postprocess_odpov_fields(
+            fields,
+            combined_for_rules,
+            fields_to_extract,
+            field_types,
+        )
 
     # Step 6 — PDF vision fallback
     vision_ocr_threshold = 50
@@ -535,6 +592,65 @@ def extract_offer(
             combined_for_rules,
             insurer=offer.get("insurer", ""),
         )
+
+    return fields
+
+
+def postprocess_odpov_fields(fields: dict,
+                              combined_text: str,
+                              fields_to_extract: list,
+                              field_types: dict) -> dict:
+    """
+    Post-processing for odpovědnost segment.
+
+    FIX A: Add CZK prefix to bare number values for NUMBER fields missing it.
+    FIX B: Reset NUMBER fields that contain Ano/Ne — those are wrong substitutions.
+    FIX C: Replace single-number extraction with CZK range if range exists nearby
+           in the combined text.
+    """
+    def is_missing(v):
+        if not v:
+            return True
+        return str(v).strip().lower() in ["n/a", "neuvedeno", "není uvedeno", ""]
+
+    # FIX A: Add CZK prefix to bare digit-only values for NUMBER fields
+    for field in fields_to_extract:
+        if field_types.get(field) != "number":
+            continue
+        val = fields.get(field, "N/A")
+        if is_missing(val):
+            continue
+        val_stripped = val.strip()
+        if re.match(r'^[\d\s]+$', val_stripped):
+            try:
+                num = int(val_stripped.replace(" ", ""))
+                fields[field] = f"CZK {num:,}"
+            except ValueError:
+                pass
+
+    # FIX B: Reset NUMBER fields containing Ano/Ne (wrong substitution)
+    for field in fields_to_extract:
+        if field_types.get(field) != "number":
+            continue
+        val = fields.get(field, "N/A")
+        if val in ["Ano", "Ne", "ano", "ne"]:
+            fields[field] = "N/A"
+
+    # FIX C: Prefer CZK range over single number when range exists nearby in text
+    range_pattern = re.compile(
+        r'(CZK\s*[\d,]+\s*[–\-]\s*[\d,]+)', re.IGNORECASE
+    )
+    for field in fields_to_extract:
+        val = fields.get(field, "N/A")
+        if is_missing(val):
+            continue
+        field_short = field.split(" limit")[0].strip()
+        field_pos = combined_text.find(field_short)
+        if field_pos > 0:
+            nearby = combined_text[field_pos:field_pos + 200]
+            range_m = range_pattern.search(nearby)
+            if range_m:
+                fields[field] = range_m.group(1).strip()
 
     return fields
 
