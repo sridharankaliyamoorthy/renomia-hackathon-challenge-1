@@ -224,6 +224,73 @@ def filter_and_sort_docs(offer: dict, segment: str) -> list:
 
 
 # ═══════════════════════════════════════════════════════════
+# FUNCTION 1b
+# ═══════════════════════════════════════════════════════════
+
+def extract_text_pdfplumber(pdf_url: str) -> str:
+    """
+    Download PDF and extract clean text using pdfplumber which preserves
+    table structure. Much better than OCR for insurance tables.
+    Tables are emitted with | separators; then page text follows.
+    """
+    import io
+    import pdfplumber
+
+    try:
+        response = requests.get(pdf_url, timeout=30)
+        if response.status_code != 200:
+            return ""
+
+        pdf_bytes = io.BytesIO(response.content)
+        text_parts = []
+
+        with pdfplumber.open(pdf_bytes) as pdf:
+            for page in pdf.pages:
+                tables = page.extract_tables()
+                for table in tables:
+                    for row in table:
+                        if row:
+                            clean_row = " | ".join(
+                                str(c).strip() if c else ""
+                                for c in row
+                            )
+                            if clean_row.strip():
+                                text_parts.append(clean_row)
+
+                page_text = page.extract_text()
+                if page_text:
+                    text_parts.append(page_text)
+
+        full_text = "\n".join(text_parts)
+
+        # Detect doubled characters (scanned PDF artifact)
+        # e.g. "PPRROOPPOOSSAALL" instead of "PROPOSAL"
+        # Check if >30% of character pairs are doubled
+        if full_text:
+            total_pairs = len(full_text) - 1
+            if total_pairs > 20:
+                doubled = sum(
+                    1 for i in range(total_pairs)
+                    if full_text[i] == full_text[i+1]
+                    and full_text[i].isalnum()
+                )
+                ratio = doubled / total_pairs
+                if ratio > 0.30:
+                    logger.warning(
+                        f"pdfplumber doubled text detected "
+                        f"(ratio={ratio:.2f}) — "
+                        f"falling back to OCR"
+                    )
+                    return ""
+
+        return full_text
+
+    except Exception as e:
+        logger.warning(f"pdfplumber failed for {pdf_url}: {e}")
+        return ""
+
+
+# ═══════════════════════════════════════════════════════════
 # FUNCTION 2
 # ═══════════════════════════════════════════════════════════
 
@@ -245,10 +312,28 @@ def combine_offer_text(sorted_docs: list, max_chars: int = None) -> str:
     total = 0
 
     for doc in sorted_docs:
-        ocr_text = clean_ocr_text((doc.get("ocr_text", "") or "").strip())
+        raw_ocr = (doc.get("ocr_text", "") or "").strip()
+        ocr_text = clean_ocr_text(raw_ocr)
+        pdf_url = doc.get("pdf_url", "") or ""
+        filename = doc.get("filename", "unknown")
+
+        # Try pdfplumber when PDF URL is available and OCR is short or has
+        # LaTeX/tilde artifacts (common sign of bad OCR on table cells).
+        if pdf_url and (
+            len(raw_ocr) < 5000
+            or "\\tilde" in raw_ocr
+            or raw_ocr.count("~") > 5
+        ):
+            pdf_text = extract_text_pdfplumber(pdf_url)
+            if len(pdf_text) > len(ocr_text):
+                ocr_text = pdf_text
+                logger.info(
+                    f"pdfplumber used for {filename} "
+                    f"({len(pdf_text)} chars vs OCR {len(raw_ocr)} chars)"
+                )
+
         if not ocr_text:
             continue
-        filename = doc.get("filename", "unknown")
         separator = f"\n\n--- DOCUMENT: {filename} ---\n\n"
         chunk = separator + ocr_text
         if total + len(chunk) > max_chars and parts:
