@@ -30,6 +30,9 @@ Thumbs.db
 # Docker
 pgdata/
 
+# Local cache databases
+*.db
+
 # Local Cursor config
 .cursor/
 .cursorrules
