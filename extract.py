@@ -788,6 +788,96 @@ def canonicalize_odpov_strings(fields: dict,
     return fields
 
 
+def parse_limit_table(combined_text: str) -> dict:
+    """
+    Parse the liability limits table from OCR text.
+    Returns dict mapping lowercased row-name → (val_col2, val_col3).
+
+    Handles table row formats:
+      "Row name | CZK 50,000,000 | CZK 100,000,000"
+      "Row name   50 000 000   100 000 000"
+      "Row name: CZK X,000,000 – CZK Y,000,000"
+    """
+    results = {}
+
+    czk_amount = (
+        r'(?:CZK\s*)?'
+        r'([\d][\d\s,.]*[\d])'
+        r'\s*(?:Kč|CZK)?'
+    )
+
+    two_col_pattern = re.compile(
+        r'^(.{5,60}?)\s*[|\t]\s*'
+        + czk_amount
+        + r'\s*[|\t/]\s*'
+        + czk_amount,
+        re.MULTILINE | re.IGNORECASE
+    )
+
+    for m in two_col_pattern.finditer(combined_text):
+        name_raw = m.group(1).strip()
+        val1_raw = m.group(2).strip()
+        val2_raw = m.group(3).strip()
+
+        name = re.sub(r'\s+', ' ', name_raw).strip('|:- ')
+        if len(name) < 3:
+            continue
+
+        results[name.lower()] = (val1_raw, val2_raw)
+
+    # Second pass: space-separated two-number rows (no pipe/tab separators)
+    # e.g. "Obecná odpovědnost  50 000 000  100 000 000"
+    space_sep_pattern = re.compile(
+        r'^(.{5,60}?)\s{2,}'
+        r'((?:CZK\s*)?[\d][\d ,]*[\d])\s{2,}'
+        r'((?:CZK\s*)?[\d][\d ,]*[\d])\s*$',
+        re.MULTILINE | re.IGNORECASE
+    )
+    for m in space_sep_pattern.finditer(combined_text):
+        name_raw = m.group(1).strip()
+        val1_raw = m.group(2).strip()
+        val2_raw = m.group(3).strip()
+
+        name = re.sub(r'\s+', ' ', name_raw).strip('|:- ')
+        if len(name) < 3:
+            continue
+
+        key = name.lower()
+        if key not in results:
+            results[key] = (val1_raw, val2_raw)
+
+    return results
+
+
+def find_limit_for_field(field_name: str,
+                          table_data: dict,
+                          tier: str = "I") -> str | None:
+    """
+    Find Limit I or II for a field from the parsed table data.
+    tier: "I" → column 2 value, "II" → column 3 value.
+    Returns formatted "CZK X,XXX,XXX" string or None if not found.
+    """
+    field_lower = field_name.lower()
+    # Strip trailing "limit i/ii" or "spoluúčast i/ii" suffix
+    base_name = re.sub(
+        r'\s+(?:limit|spoluúčast)\s+(?:i{1,2})\s*$',
+        '', field_lower, flags=re.IGNORECASE
+    ).strip()
+
+    for table_key, (v1, v2) in table_data.items():
+        if base_name in table_key or table_key in base_name:
+            raw = v1 if tier == "I" else v2
+            # Normalise: strip CZK prefix and thousand-separator spaces/commas
+            clean = re.sub(r'(?i)czk\s*', '', raw).replace(' ', '').replace(',', '')
+            try:
+                num = int(float(clean))
+                return f"CZK {num:,}"
+            except (ValueError, OverflowError):
+                return f"CZK {raw}"
+
+    return None
+
+
 def postprocess_odpov_fields(fields: dict,
                               combined_text: str,
                               fields_to_extract: list,
@@ -801,6 +891,7 @@ def postprocess_odpov_fields(fields: dict,
     FIX C: Replace single-number extraction with CZK range if range exists nearby
            in the combined text.
     FIX D: Known range fields — search nearby text to recover full range.
+    FIX E: Fill N/A Limit I / Limit II fields via deterministic table parse.
     """
     # STEP 0 — canonicalize string values first
     fields = canonicalize_odpov_strings(
@@ -811,6 +902,32 @@ def postprocess_odpov_fields(fields: dict,
         if not v:
             return True
         return str(v).strip().lower() in ["n/a", "neuvedeno", "není uvedeno", ""]
+
+    # FIX E: Parse limits table directly from OCR and fill N/A Limit I / Limit II fields
+    table_data = parse_limit_table(combined_text)
+    if table_data:
+        logger.debug("parse_limit_table found %d rows", len(table_data))
+    for field in fields_to_extract:
+        if not is_missing(fields.get(field, "N/A")):
+            continue  # already has a value
+
+        field_lower = field.lower()
+
+        if re.search(r'\blimit\s+ii\b', field_lower, re.IGNORECASE):
+            tier = "II"
+        elif re.search(r'\blimit\s+i\b', field_lower, re.IGNORECASE):
+            tier = "I"
+        elif re.search(r'spolu[uú]čast\s+ii\b', field_lower, re.IGNORECASE):
+            tier = "II"
+        elif re.search(r'spolu[uú]čast\s+i\b', field_lower, re.IGNORECASE):
+            tier = "I"
+        else:
+            continue
+
+        found = find_limit_for_field(field, table_data, tier)
+        if found:
+            fields[field] = found
+            logger.debug("FIX E: filled '%s' = %s from table", field, found)
 
     # FIX A: Add CZK prefix to bare digit-only values for NUMBER fields
     for field in fields_to_extract:
@@ -884,6 +1001,27 @@ def postprocess_odpov_fields(fields: dict,
             if m:
                 fields[field] = m.group(0).strip()
 
+    # FIX F: Sentence-pattern limit recovery for still-N/A Limit I / Limit II fields
+    for field in fields_to_extract:
+        if not is_missing(fields.get(field, "N/A")):
+            continue
+        field_lower = field.lower()
+
+        if re.search(r'limit\s+i\b', field_lower, re.IGNORECASE):
+            tier = "I"
+        elif re.search(r'limit\s+ii\b', field_lower, re.IGNORECASE):
+            tier = "II"
+        else:
+            continue
+
+        v1, v2 = extract_sentence_limits(combined_text, field)
+        if tier == "I" and v1:
+            fields[field] = v1
+            logger.debug("FIX F: filled '%s' = %s (sentence I)", field, v1)
+        elif tier == "II" and v2:
+            fields[field] = v2
+            logger.debug("FIX F: filled '%s' = %s (sentence II)", field, v2)
+
     return fields
 
 
@@ -911,6 +1049,45 @@ def _number_in_text(parsed_val: float, text_numbers: set,
         if n > 0 and min(parsed_val, n) / max(parsed_val, n) >= (1 - tolerance):
             return True
     return False
+
+
+def extract_sentence_limits(combined_text: str, field_name: str) -> tuple:
+    """
+    Find two-amount patterns near a field name in OCR text.
+    Returns (limit_I_value, limit_II_value) as formatted CZK strings, or (None, None).
+
+    Handles patterns like:
+      "limit 50 000 000 Kč / limit 100 000 000 Kč"
+      "LPP 5 000 000,- Kč ... / LPP 10 000 000,-Kč"
+      "50\\xa0000\\xa0000 Kč, spoluúčast 10\\xa0000 Kč"
+    """
+    text = combined_text.replace('\xa0', ' ')
+
+    amt = r'(\d[\d\s,.]*\d)\s*(?:,-\s*)?(?:Kč|CZK)?'
+    two_amt = re.compile(amt + r'\s*/\s*' + amt, re.IGNORECASE)
+
+    base = re.sub(
+        r'\s+(?:limit|spoluúčast)\s+[iI]+\s*$',
+        '', field_name, flags=re.IGNORECASE
+    ).strip().lower()
+
+    pos = text.lower().find(base)
+    if pos < 0:
+        return None, None
+
+    nearby = text[pos:pos + 300]
+    m = two_amt.search(nearby)
+    if m:
+        def clean(s):
+            s = re.sub(r'[\s,.-]+$', '', s.strip())
+            s = re.sub(r'\s+', '', s)
+            try:
+                return f"CZK {int(s):,}"
+            except ValueError:
+                return None
+        return clean(m.group(1)), clean(m.group(2))
+
+    return None, None
 
 
 def postprocess_lode_fields(fields: dict,
