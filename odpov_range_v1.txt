@@ -1,48 +1,13 @@
-INFO:__main__:Fetched 3 training row(s)
+INFO:__main__:Fetched 1 training row(s) for segment 'odpovědnost'
 INFO:__main__:Connected to local cache DB
 INFO:__main__:Evaluating segment: odpovědnost
-INFO:root:Cache hit for offer pojistovna_3
-INFO:root:Cache hit for offer pojistovna_1
-INFO:root:Cache hit for offer pojistovna_4
 INFO:root:Cache hit for offer pojistovna_2
+INFO:root:Cache hit for offer pojistovna_1
+INFO:root:Cache hit for offer pojistovna_3
+INFO:root:Cache hit for offer pojistovna_4
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%204/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%202/PS_redigovano.docx: No /Root object! - Is this really a PDF?
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%203/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
-INFO:__main__:Evaluating segment: auta
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10621, completion: 289, total: 12478
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10742, completion: 280, total: 13404
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 2438, completion: 303, total: 5516
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 11402, completion: 322, total: 15415
-INFO:__main__:Evaluating segment: lodě
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 1898, completion: 304, total: 4552
-WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10469, completion: 367, total: 13949
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 4463, completion: 294, total: 8110
-INFO:extract:PDF vision fallback for: Conditions.pdf
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWx6v5DnZmwEczjOXyU33pn-TOyYwAN1xHrQNPYBX8lxPAajlnAcwGKlTbCtTbpBxN4rLycI7-vj9bXVv33DbJT81Kkj0pqi_I-pJsHopQ&upload_protocol=resumable "HTTP/1.1 200 OK"
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:PDF vision usage — prompt: 11929, completion: 295, total: 17807
-INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/d4iquivn1lgi "HTTP/1.1 200 OK"
-INFO:extract:Deleted uploaded PDF file: files/d4iquivn1lgi
-INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
 
 DEBUG odpov first offer: pojistovna_1
 N/A count: 28/66
@@ -113,25 +78,6 @@ N/A count: 28/66
   'Věci převzaté/užívané spoluúčast II': 'N/A' | expected: 'CZK 50,000' ← N/A
   'Limit na práce v rámci holdingové skupiny': 'N/A' | expected: 'Hlavní limit smlouvy' ← N/A
 
-DEBUG lodě | pred ranking: ['yacht_pool', 'pantaenius', 'allianz'] | exp ranking: ['pantaenius', 'yacht_pool', 'allianz']
-  pred best_offer_id: yacht_pool | exp: pantaenius
-
-  Offer: allianz  (N/A: 16/16, non-N/A: 0)
-
-  Offer: pantaenius  (N/A: 12/16, non-N/A: 4)
-    [higher] pro újmu na životě: pred='20mln EUR' exp='?'
-    [higher] pro škodu na věci: pred='20mln EUR' exp='?'
-    [higher] Limit pro finanční škody: pred='EUR 20,000' exp='6000000'
-    [higher] Maximální výše odškodného za újmu na zdraví: pred='20mln EUR' exp='8000000'
-
-  Offer: yacht_pool  (N/A: 10/16, non-N/A: 6)
-    [lower] Havarijní pojištění - spoluúčast: pred='500.00 €' exp='500'
-    [higher] Havarijní pojištění: pred='370.00 €' exp='370'
-    [lower] Roční pojistné:: pred='370.00 €' exp='?'
-    [lower] CELKEM: pred='578 €' exp='578'
-    [lower] roční pojistné: pred='46.00 €' exp='46'
-    [higher] Pojištění odpovědnosti za škodu: pred='162.00 €' exp='3500000'
-
 ==============================================
 EVALUATION RESULTS
 ==============================================
@@ -156,47 +102,7 @@ Segment: odpovědnost
     Regres pojišťoven limit I                      0.00
 ----------------------------------------------
 
-Segment: auta
-  Fields scored:     68
-  Extraction score:  0.801  (weight 60%)
-  Ranking score:     0.875  (weight 25%)
-  Best offer score:  1.000  (weight 15%)
-  TOTAL SCORE:       0.849
-
-  Hardest fields (lowest scores):
-    Počet zásahů asistence                         0.00
-    Asistenční služby – rozsah                     0.00
-    Havarijní pojištění – limit                    0.00
-    Spoluúčast skla                                0.00
-    Úrazové pojištění                              0.00
-    Havarijní pojištění – limit                    0.00
-    Spoluúčast skla                                0.00
-    Havarijní pojištění – limit                    0.00
-    Krytí skel                                     0.00
-    Právní ochrana                                 0.00
-----------------------------------------------
-
-Segment: lodě
-  Fields scored:     25
-  Extraction score:  0.160  (weight 60%)
-  Ranking score:     0.833  (weight 25%)
-  Best offer score:  0.000  (weight 15%)
-  TOTAL SCORE:       0.304
-
-  Hardest fields (lowest scores):
-    Sleva                                          0.00
-    CELKEM                                         0.00
-    Roční pojistné:                                0.00
-    pro škodu na věci                              0.00
-    pro újmu na životě                             0.00
-    pojistné před slevou                           0.00
-    Havarijní pojištění                            0.00
-    pro jinou újmu na jmění                        0.00
-    Havarijní pojištění - spoluúčast               0.00
-    CELKEM                                         0.00
-----------------------------------------------
-
 ==============================================
-OVERALL WEIGHTED AVERAGE: 0.537
+OVERALL WEIGHTED AVERAGE: 0.457
 ==============================================
 

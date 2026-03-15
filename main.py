@@ -82,7 +82,7 @@ class GeminiTracker:
 
 gemini = GeminiTracker(GEMINI_API_KEY)
 
-GEMINI_MODEL_VERSION = "gemini-2.5-flash-lode-fix"
+GEMINI_MODEL_VERSION = "gemini-2.5-flash-lode-v2"
 
 
 def get_db():

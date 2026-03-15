@@ -1,9 +1,5 @@
 INFO:__main__:Fetched 3 training row(s)
-WARNING:__main__:Could not connect to local cache DB: connection to server at "localhost" (::1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-. Running without cache.
+INFO:__main__:Connected to local cache DB
 INFO:__main__:Evaluating segment: odpovědnost
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%204/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
@@ -13,39 +9,39 @@ INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%203/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 5985, completion: 169, total: 8624
+INFO:extract:Gemini usage — prompt: 1850, completion: 196, total: 3797
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 1850, completion: 196, total: 4899
+INFO:extract:Gemini usage — prompt: 227812, completion: 169, total: 230768
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 227812, completion: 169, total: 231270
+INFO:extract:Gemini usage — prompt: 5985, completion: 169, total: 9567
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 3077, completion: 217, total: 7796
+INFO:extract:Gemini usage — prompt: 3077, completion: 245, total: 7292
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 2310, completion: 997, total: 7425
+INFO:extract:Gemini usage — prompt: 2310, completion: 997, total: 8412
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 6445, completion: 2518, total: 21420
+INFO:extract:Gemini usage — prompt: 6445, completion: 2012, total: 18357
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 3537, completion: 1795, total: 16813
+INFO:extract:Gemini usage — prompt: 3537, completion: 1419, total: 16440
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10427, completion: 246, total: 15527
+INFO:extract:Gemini usage — prompt: 10428, completion: 308, total: 13248
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 228272, completion: 2006, total: 248932
+INFO:extract:Gemini usage — prompt: 228272, completion: 1542, total: 247016
+INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 17811, completion: 4221, total: 34120
+INFO:extract:Gemini usage — prompt: 17811, completion: 1908, total: 34625
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%204/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 37338, completion: 2351, total: 51509
+INFO:extract:Gemini usage — prompt: 37370, completion: 1606, total: 51532
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%202/PS_redigovano.docx: No /Root object! - Is this really a PDF?
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 228209, completion: 882, total: 239429
+INFO:extract:Gemini usage — prompt: 228206, completion: 940, total: 237796
 WARNING:extract:pdfplumber failed for https://storage.googleapis.com/renomia-ai-hackathon-hackathon-training-docs/challenge-1/training/Odpov%C4%9Bdnost/Poji%C5%A1%C5%A5ovna%203/RfP_nabidka_redigovano.docx: No /Root object! - Is this really a PDF?
 INFO:__main__:Evaluating segment: auta
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
@@ -53,35 +49,17 @@ INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:google_genai.models:AFC is enabled with max remote calls: 10.
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10742, completion: 280, total: 12498
+INFO:extract:Gemini usage — prompt: 10621, completion: 288, total: 12670
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10621, completion: 288, total: 13121
+INFO:extract:Gemini usage — prompt: 10742, completion: 286, total: 13747
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 11402, completion: 274, total: 14645
+INFO:extract:Gemini usage — prompt: 2438, completion: 297, total: 8267
 INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 2438, completion: 297, total: 6255
+INFO:extract:Gemini usage — prompt: 11402, completion: 334, total: 17263
 INFO:__main__:Evaluating segment: lodě
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 2282, completion: 287, total: 5133
-WARNING:extract:pdfplumber doubled text detected (ratio=0.42) — falling back to OCR
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 10853, completion: 318, total: 14442
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:Gemini usage — prompt: 4847, completion: 314, total: 7449
-INFO:extract:PDF vision fallback for: Conditions.pdf
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AGQBYWw8h6oJsAo0Q3f2lidZQS1XwdXYm-balOrGXJGSrgAlcQVNizAGIwFDDtnhE8yNFPp07v6K-LvaRPRQ_ewa6fXUZwhMK_5hbR-rqxWcWtQ&upload_protocol=resumable "HTTP/1.1 200 OK"
-INFO:google_genai.models:AFC is enabled with max remote calls: 10.
-INFO:httpx:HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-INFO:extract:PDF vision usage — prompt: 12313, completion: 289, total: 15936
-INFO:httpx:HTTP Request: DELETE https://generativelanguage.googleapis.com/v1beta/files/8e4spdjw9j6q "HTTP/1.1 200 OK"
-INFO:extract:Deleted uploaded PDF file: files/8e4spdjw9j6q
-INFO:extract:pdfplumber used for Conditions.pdf (128495 chars vs OCR 0 chars)
+INFO:root:Cache hit for offer pantaenius
+INFO:root:Cache hit for offer allianz
+INFO:root:Cache hit for offer yacht_pool
 
 DEBUG odpov first offer: pojistovna_1
 N/A count: 9/66
@@ -92,12 +70,12 @@ N/A count: 9/66
   'Křížová odpovědnost limit II': 'N/A' | expected: 'CZK 100,000,000' ← N/A
   'Výkon trestu škody limit I': 'CZK 5,000,000' | expected: 'CZK 5,000,000' ← has value
   'Limit pojistného plnění': 'CZK 100,000,000' | expected: 'CZK 50,000,000–100,000,000' ← has value
-  'Roční pojistné': 'CZK 323,603' | expected: 'CZK 248,923–281,136' ← has value
-  'Osoby ve výkonu trestu': 'N/A' | expected: 'CZK 5,000,000–10,000,000' ← N/A
+  'Roční pojistné': 'CZK 248,923–281,136' | expected: 'CZK 248,923–281,136' ← has value
+  'Osoby ve výkonu trestu': 'CZK 5,000,000–10,000,000' | expected: 'CZK 5,000,000–10,000,000' ← has value
   'Použití zvýšených limitů': 'N/A' | expected: 'CZK 50,000,000–100,000,000/rok' ← N/A
-  'Odpovědnost za věci limit': 'CZK 50,000,000–100,000,000' | expected: 'CZK 2,000,000–50,000,000' ← has value
+  'Odpovědnost za věci limit': 'N/A' | expected: 'CZK 2,000,000–50,000,000' ← N/A
   'Obecná odpovědnost spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
-  'Obecná odpovědnost spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Obecná odpovědnost spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
   'Regres pojišťoven spoluúčast I': 'CZK 1,000' | expected: 'CZK 10,000' ← has value
   'Regres pojišťoven limit II': 'CZK 100,000,000' | expected: 'CZK 100,000,000' ← has value
   'Regres pojišťoven spoluúčast II': 'CZK 1,000' | expected: 'CZK 50 000' ← has value
@@ -108,11 +86,11 @@ N/A count: 9/66
   'Osobnostní újma limit I': 'CZK 15,000,000' | expected: 'CZK 15,000,000' ← has value
   'Osobnostní újma spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
   'Osobnostní újma limit II': 'CZK 100,000,000' | expected: 'CZK 30,000,000' ← has value
-  'Osobnostní újma spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Osobnostní újma spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
   'Věci převzaté/užívané limit I': 'CZK 2,000,000' | expected: '2 000 000 Kč' ← has value
   'Věci převzaté/užívané spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
   'Věci převzaté/užívané limit II': 'CZK 100,000,000' | expected: 'CZK 5,000,000' ← has value
-  'Věci převzaté/užívané spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Věci převzaté/užívané spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
   'Věci zaměstnanců limit I': 'CZK 50,000,000' | expected: '50\xa0000\xa0000\xa0CZK' ← has value
   'Věci zaměstnanců spoluúčast I': 'CZK 500' | expected: 'CZK 500' ← has value
   'Věci zaměstnanců spoluúčast II': 'CZK 500' | expected: 'CZK 500' ← has value
@@ -123,14 +101,14 @@ N/A count: 9/66
   'Finanční škody limit I': 'CZK 20,000,000' | expected: 'CZK 20,000,000' ← has value
   'Finanční škody spoluúčast I': 'CZK 10,000' | expected: 'CZK 5,000' ← has value
   'Finanční škody limit II': 'CZK 100,000,000' | expected: 'CZK 50,000,000' ← has value
-  'Finanční škody spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Finanční škody spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
   'Křížová odpovědnost limit I': 'CZK 50,000,000' | expected: 'CZK 50\xa0000\xa0000' ← has value
   'Křížová odpovědnost spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
-  'Křížová odpovědnost spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
+  'Křížová odpovědnost spoluúčast II': 'CZK 10,000' | expected: 'CZK 50,000' ← has value
   'Výkon trestu škody spoluúčast I': 'CZK 10,000' | expected: 'CZK 10,000' ← has value
   'Výkon trestu škody limit II': 'CZK 10,000,000' | expected: 'CZK 10,000,000-100,000,000' ← has value
   'Výkon trestu škody spoluúčast II': 'CZK 50,000' | expected: 'CZK 50,000' ← has value
-  'Spoluúčast': 'CZK 10,000–50,000' | expected: 'CZK 10,000–50,000' ← has value
+  'Spoluúčast': 'CZK 10,000' | expected: 'CZK 10,000–50,000' ← has value
   'Územní rozsah': 'Česká republika' | expected: 'Česká republika' ← has value
   'Limit na věci převzaté': 'CZK 2,000,000' | expected: 'CZK 2,000,000–5,000,000' ← has value
   'Limit čistých finančních škod': 'CZK 20,000,000' | expected: 'CZK 20,000,000–50,000,000' ← has value
@@ -141,28 +119,34 @@ N/A count: 9/66
   'Vyloučené činnosti': 'N/A' | expected: 'Široké standardní výluky' ← N/A
   'Čekací/karenční doba': '10 dní' | expected: '10 dní' ← has value
   'Výluky na kybernetická rizika': 'Neuvedeno' | expected: 'Neuvedeno' ← has value
-  'Dodatečné sublimity': 'Tržby a škodní průběh ovlivňují' | expected: 'CZK 30,000–CZK 100,000,000' ← has value
+  'Dodatečné sublimity': 'Odpovědnost za věci převzaté a v užívání, Nemajetková újma, Čistá finanční újma, Osoby ve výkonu trestu' | expected: 'CZK 30,000–CZK 100,000,000' ← has value
   'Vyloučené státy/sankce': 'N/A' | expected: 'Celosvětově, bez USA/Kanady' ← N/A
   'Krytí subdodavatel/subdodávky': 'N/A' | expected: 'Ano' ← N/A
   'Smluvní pokuty': 'Vynecháno' | expected: 'Vynecháno' ← has value
   'Odpovědnost za škodu vadnou činností': 'Základní odpovědnost z činnosti a ze vztahu' | expected: 'Ano' ← has value
   'Objasnění podpojištění': 'N/A' | expected: '15 % tolerance' ← N/A
   'Způsob stanovení prémia': 'Tržby a škodní průběh ovlivňují' | expected: 'Tržby a škodní průběh ovlivňují' ← has value
-  'Limit na práce v rámci holdingové skupiny': 'CZK 50,000,000–100,000,000' | expected: 'Hlavní limit smlouvy' ← has value
+  'Limit na práce v rámci holdingové skupiny': 'pojištění se vztahuje i na odpovědnost za újmu, za níž pojištěný odpovídá osobě, která je v relevantním vztahu k pojištěnému.' | expected: 'Hlavní limit smlouvy' ← has value
   'Asistenční služby': 'Ne' | expected: 'Ne' ← has value
   'Dvě a více spoluúčastí': 'Jedna spoluúčast (nejvyšší)' | expected: 'Jedna spoluúčast (nejvyšší)' ← has value
 
 DEBUG lodě | pred ranking: ['yacht_pool', 'pantaenius', 'allianz'] | exp ranking: ['pantaenius', 'yacht_pool', 'allianz']
   pred best_offer_id: yacht_pool | exp: pantaenius
 
-  Offer: allianz  (N/A: 15/16, non-N/A: 1)
-    [lower] roční pojistné: pred='48.15' exp='?'
+  Offer: allianz  (N/A: 8/16, non-N/A: 8)
+    [higher] pro újmu na životě: pred='2000000' exp='10000000'
+    [higher] pro škodu na věci: pred='2000000' exp='2000000'
+    [higher] pro jinou újmu na jmění: pred='2000000' exp='80000'
+    [higher] Kombinovaný jednotný limit pro úrazové pojištění a škody na majetku: pred='2000000' exp='?'
+    [higher] Limit pro finanční škody: pred='2000000' exp='?'
+    [higher] Maximální výše odškodného za újmu na zdraví: pred='2000000' exp='?'
+    [lower] roční pojistné: pred='50' exp='?'
+    [higher] Pojištění odpovědnosti za škodu: pred='2000000' exp='?'
 
-  Offer: pantaenius  (N/A: 11/16, non-N/A: 5)
+  Offer: pantaenius  (N/A: 12/16, non-N/A: 4)
     [higher] pro újmu na životě: pred='20000000' exp='?'
     [higher] pro škodu na věci: pred='20000000' exp='?'
-    [higher] Limit pro finanční škody: pred='20000' exp='6000000'
-    [higher] Maximální výše odškodného za újmu na zdraví: pred='20000000' exp='8000000'
+    [higher] Maximální výše odškodného za újmu na zdraví: pred='12000000' exp='8000000'
     [higher] Pojištění odpovědnosti za škodu: pred='20000000' exp='?'
 
   Offer: yacht_pool  (N/A: 10/16, non-N/A: 6)
@@ -179,19 +163,19 @@ EVALUATION RESULTS
 
 Segment: odpovědnost
   Fields scored:     264
-  Extraction score:  0.196  (weight 60%)
-  Ranking score:     0.750  (weight 25%)
-  Best offer score:  1.000  (weight 15%)
-  TOTAL SCORE:       0.455
+  Extraction score:  0.210  (weight 60%)
+  Ranking score:     0.625  (weight 25%)
+  Best offer score:  0.000  (weight 15%)
+  TOTAL SCORE:       0.282
 
   Hardest fields (lowest scores):
     Regresní náhrady                               0.00
     Dodatečné sublimity                            0.00
     Vyloučené činnosti                             0.00
-    Osoby ve výkonu trestu                         0.00
     Krytí vadného výrobku                          0.00
     Vyloučené státy/sankce                         0.00
     Objasnění podpojištění                         0.00
+    Odpovědnost za věci limit                      0.00
     Regres pojišťoven limit I                      0.00
     Věci zaměstnanců limit I                       0.00
     Věci zaměstnanců limit II                      0.00
@@ -199,45 +183,45 @@ Segment: odpovědnost
 
 Segment: auta
   Fields scored:     68
-  Extraction score:  0.767  (weight 60%)
-  Ranking score:     0.750  (weight 25%)
+  Extraction score:  0.757  (weight 60%)
+  Ranking score:     0.875  (weight 25%)
   Best offer score:  1.000  (weight 15%)
-  TOTAL SCORE:       0.798
+  TOTAL SCORE:       0.823
 
   Hardest fields (lowest scores):
-    Právní ochrana                                 0.00
-    Počet zásahů asistence                         0.00
-    Havarijní pojištění – limit                    0.00
-    Krytí skel                                     0.00
-    Právní ochrana                                 0.00
-    Spoluúčast skla                                0.00
     Úrazové pojištění                              0.00
+    Typ havarijního pojištění                      0.00
+    Asistenční služby – rozsah                     0.00
     Havarijní pojištění – limit                    0.00
     Spoluúčast skla                                0.00
-    Krytí živelních rizik                          0.00
+    Přímá likvidace                                0.00
+    Úrazové pojištění                              0.00
+    Asistenční služby – rozsah                     0.00
+    Havarijní pojištění – limit                    0.00
+    Spoluúčast skla                                0.00
 ----------------------------------------------
 
 Segment: lodě
   Fields scored:     25
-  Extraction score:  0.160  (weight 60%)
+  Extraction score:  0.200  (weight 60%)
   Ranking score:     0.833  (weight 25%)
   Best offer score:  0.000  (weight 15%)
-  TOTAL SCORE:       0.304
+  TOTAL SCORE:       0.328
 
   Hardest fields (lowest scores):
     Sleva                                          0.00
     CELKEM                                         0.00
     Roční pojistné:                                0.00
-    pro škodu na věci                              0.00
     pro újmu na životě                             0.00
     pojistné před slevou                           0.00
     Havarijní pojištění                            0.00
     pro jinou újmu na jmění                        0.00
     Havarijní pojištění - spoluúčast               0.00
     CELKEM                                         0.00
+    roční pojistné                                 0.00
 ----------------------------------------------
 
 ==============================================
-OVERALL WEIGHTED AVERAGE: 0.519
+OVERALL WEIGHTED AVERAGE: 0.478
 ==============================================
 

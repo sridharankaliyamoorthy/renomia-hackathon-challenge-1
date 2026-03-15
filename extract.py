@@ -145,19 +145,35 @@ _SEGMENT_CONTEXT = {
         "- 'Havarijní pojištění - spoluúčast' is the hull deductible amount\n\n"
         "PERSONAL ACCIDENT FIELDS — look in the personal accident / crew accident\n"
         "section specifically:\n"
-        "- 'Pojištěná částka v případě úmrtí' = death benefit\n"
+        "- 'Pojištěná částka v případě úmrtí' = death benefit amount (10K-100K EUR range)\n"
         "- 'Pojistná částka v případě trvalého invalidního stavu' = permanent\n"
-        "  disability benefit\n"
-        "- 'roční pojistné' = personal accident annual premium\n\n"
+        "  disability benefit (10K-100K EUR range)\n"
+        "- 'roční pojistné' = personal accident annual premium (30-60 EUR range)\n\n"
         "TPL / LIABILITY FIELDS — look in liability section:\n"
-        "- 'pro škodu na věci' = property damage limit\n"
-        "- 'pro újmu na životě' = bodily injury limit\n"
-        "- 'pro jinou újmu na jmění' = financial loss limit\n"
-        "- 'Kombinovaný jednotný limit...' = combined single limit\n"
-        "- 'Limit pro finanční škody' = financial damage limit\n"
-        "- 'Pojištění odpovědnosti za škodu' = TPL premium amount\n"
+        "- 'pro škodu na věci' = property damage COVERAGE LIMIT (millions EUR/CZK)\n"
+        "- 'pro újmu na životě' = bodily injury COVERAGE LIMIT (millions EUR/CZK)\n"
+        "- 'pro jinou újmu na jmění' = financial loss COVERAGE LIMIT\n"
+        "- 'Kombinovaný jednotný limit...' = combined single COVERAGE LIMIT\n"
+        "- 'Limit pro finanční škody' = financial damage COVERAGE LIMIT\n"
+        "- 'Pojištění odpovědnosti za škodu' = TPL COVERAGE LIMIT (millions),\n"
+        "  NOT the premium amount. If the document says 'Up to X mil €',\n"
+        "  extract the X million value.\n"
         "- 'Maximální výše odškodného za újmu na zdraví' = max personal injury\n"
-        "  indemnity\n\n"
+        "  indemnity LIMIT\n\n"
+        "DOCUMENT FORMAT HINTS:\n"
+        "- YACHT-POOL documents use English labels with Czech translations:\n"
+        "  'Hull insurance premium (Havarijní pojištění - pojistné): 370.00 €'\n"
+        "  'Hull insurance deductible (Havarijní pojištění - spoluúčast): 500.00 €'\n"
+        "  'Total insurance cost (celková cena pojišťení): 578 €'\n"
+        "  'TPL premium ... (Up to 7,5mil €)' → extract 7500000 for the LIMIT field\n"
+        "  'Passenger accident insurance premium (Pojištění posádky - pojistné): 46.00 €'\n"
+        "- PANTAENIUS documents show EUR decimal values (e.g. EUR 342,11)\n"
+        "  Conditions.pdf is generic terms — pricing is in the quotation/recommendation\n\n"
+        "CRITICAL: Return only the RAW NUMBER without currency symbol.\n"
+        "- '370.00 €' → return '370'\n"
+        "- 'EUR 342,11' → return '342.11'\n"
+        "- '578 €' → return '578'\n"
+        "- 'EUR 7.500.000' → return '7500000'\n\n"
         "VALUES may appear as:\n"
         "- Plain integers: 578, 15562, 342.11\n"
         "- EUR decimals: 342.11, 370.00, 459.35\n"
@@ -1471,6 +1487,46 @@ def postprocess_lode_fields(fields: dict,
                 "lodě PA scale guard: reset %s=%s (parsed=%s > 500K)", pa_field, val, parsed
             )
             fields[pa_field] = "N/A"
+
+    # Clean up .00 suffix and € symbol from extracted values.
+    # yacht_pool docs produce "370.00 €", "500.00 €" but expected is "370", "500".
+    for field in list(fields.keys()):
+        val = fields.get(field, "N/A")
+        if is_missing(val):
+            continue
+        val_str = str(val).strip()
+        # "500.00 €" → "500", "370.00 €" → "370"
+        m = re.match(r'^(\d+)\.00\s*€?$', val_str)
+        if m:
+            fields[field] = m.group(1)
+            continue
+        # "342.11 €" → "342.11" (non-.00 decimal with €)
+        m = re.match(r'^(\d+\.\d+)\s*€$', val_str)
+        if m:
+            fields[field] = m.group(1)
+            continue
+        # "578 €" → "578" (integer with €)
+        m = re.match(r'^(\d+)\s*€$', val_str)
+        if m:
+            fields[field] = m.group(1)
+            continue
+        # "EUR 342,11" → "342.11" (EUR prefix with European decimal)
+        m = re.match(r'^EUR\s+(\d+),(\d{2})$', val_str, re.IGNORECASE)
+        if m:
+            fields[field] = f"{m.group(1)}.{m.group(2)}"
+            continue
+        # "EUR 7.500.000" → "7500000" (EUR with thousand separators)
+        m = re.match(r'^EUR\s+([\d.]+)$', val_str, re.IGNORECASE)
+        if m:
+            cleaned = m.group(1).replace('.', '')
+            if cleaned.isdigit():
+                fields[field] = cleaned
+                continue
+        # "EUR 700" → "700"
+        m = re.match(r'^EUR\s+(\d+)$', val_str, re.IGNORECASE)
+        if m:
+            fields[field] = m.group(1)
+            continue
 
     # Hallucination guard: reset any NUMBER field whose value cannot be
     # found in the combined OCR text. Gemini sometimes invents values for
