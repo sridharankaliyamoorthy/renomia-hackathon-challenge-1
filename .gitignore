@@ -17,6 +17,9 @@ venv/
 .venv/
 env/
 
+# Node (Docusaurus documentation/)
+node_modules/
+
 # IDE
 .idea/
 .vscode/

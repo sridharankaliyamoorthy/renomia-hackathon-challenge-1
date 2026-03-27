@@ -1,5 +1,7 @@
 # Team MrRooT.Ai — Challenge 1: Insurance Offer Comparison
 
+**Documentation (Docusaurus):** see the [`documentation/`](documentation/) folder — run `npm start` inside it for a browsable docs site, or read the same content on GitHub under [`documentation/docs/`](documentation/docs/).
+
 ![MrRooT.Ai - Onepager](presentation/MrRooT.Ai%20-%20Onepager.png)
 
 ![MrRooT.Ai - Pipeline Overview](presentation/MrRooT.Ai%20-%20Pipeline%20Overview.png)
